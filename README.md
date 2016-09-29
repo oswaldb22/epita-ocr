@@ -1,0 +1,2 @@
+# OCR
+A fonctionnal OCR :)
