@@ -9,15 +9,18 @@ CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2
 LDFLAGS= 
 LDLIBS=  
 
-SRC = main.c 
+SRC = src/main.c 
 OBJ = ${SRC:.c=.o} 
 DEP = ${SRC:.c=.d}  
 
 all: main  
 
-main: ${OBJ}  
+main: ${OBJ} build
 
--include ${DEP}  
+#-include ${DEP} # I removed this becaus it is useless atm
+
+build:
+	gcc src/main.o -o main
 
 clean:      
 	rm -f ${OBJ} ${DEP}     
