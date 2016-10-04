@@ -9,9 +9,9 @@ CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2
 LDFLAGS= 
 LDLIBS=  
 
-SRC = src/main.c 
-OBJ = ${SRC:.c=.o} 
-DEP = ${SRC:.c=.d}  
+SRC = main.c 
+OBJ = src/${SRC:.c=.o} 
+DEP = src/${SRC:.c=.d}  
 
 all: main  
 
