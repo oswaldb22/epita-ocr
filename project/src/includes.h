@@ -4,7 +4,7 @@
 #include <stdlib.h>		//Malloc
 #include <stdbool.h>	//Bool type
 #include <time.h>		//Time (Mainly for RNG)
-
+#include <assert.h> 	//Assert!
 //Typedef
 #ifndef TYPEDEF_CUSTOM
 #define TYPEDEF_CUSTOM

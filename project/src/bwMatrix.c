@@ -1,5 +1,14 @@
 /*
 	TODO : Insert fancy header
+
+	setVal need to be a void !
+	put some assert !
+	it will return an error if the case you tryna to reach is not avaliable
+
+
+	IN GETVAL ? Bool does return -1 ??
+
+
 */
 
 #include "bwMatrix.h"
@@ -25,6 +34,12 @@ bool bwMatrix_GetVal(bwMatrix mat, ulong w, ulong h) {
 		return -1;
 	return mat.matrix[w][h];
 }
+
+int bwMatrixGetVal(bwMatrix mat, ulong w, ulong h) {
+	assert(mat.width <= w || mat.height <= h){
+	return mat.matrix[w][h];}
+}
+
 
 int bwMatrix_SetVal(bwMatrix mat, ulong w, ulong h, bool value) {
 	if (mat.width <= w || mat.height <= h)
