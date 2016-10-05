@@ -9,7 +9,7 @@ CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2
 LDFLAGS= 
 LDLIBS=  
 
-SRC = main.c
+SRC = main.c src/bwMatrix.c
 OBJ = src/${SRC:.c=.o} 
 DEP = src/${SRC:.c=.d}  
 

@@ -5,14 +5,11 @@
 
 void Testbw0() {
 
+	/*/
 	time_t t;
 	srand((unsigned)time(&t));
 
-	bwMatrix test;
-	test.width = 20;
-	test.height = 20;
-	test.matrix = malloc(20 * sizeof(int*));
-	for (int i = 0; i<20; i++) test.matrix[i] = malloc(20 * sizeof(int));
+	bwMatrix test = bwMatrix_new(20, 20);
 
 	for (size_t i = 0; i < test.width; i++)
 	{
@@ -24,4 +21,5 @@ void Testbw0() {
 		}
 		printf("\n");
 	}
+	//*/
 }

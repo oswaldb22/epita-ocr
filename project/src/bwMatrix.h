@@ -37,6 +37,6 @@ bwMatrix bwMatrix_new(ulong witdh, ulong height);
 bool bwMatrix_GetVal(bwMatrix mat, ulong w, ulong h);
 
 /* Sets the content of given bwMatrix at position (w,h) to given value */
-void bwMatrix_SetVal(bwMatrix mat, ulong w, ulong h, bool value);
+int bwMatrix_SetVal(bwMatrix mat, ulong w, ulong h, bool value);
 
 #endif
