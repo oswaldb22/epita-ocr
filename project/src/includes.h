@@ -1,13 +1,15 @@
 /* Put all general includes here, we will optimize them later */
 
-//Input/Output
-#include <stdio.h>
+#include <stdio.h>		//Input/Output
+#include <stdlib.h>		//Malloc
+#include <stdbool.h>	//Bool type
+#include <time.h>		//Time (Mainly for RNG)
 
-//Malloc
-#include <stdlib.h>
+//Typedef
+#ifndef TYPEDEF_CUSTOM
+#define TYPEDEF_CUSTOM
 
-//Bool type
-#include <stdbool.h>
+typedef unsigned long ulong;
 
-//Time (Mainly for RNG)
-#include <time.h>
+#endif
+

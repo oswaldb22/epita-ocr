@@ -7,7 +7,7 @@
 
 	Disposition :
 
-		w i d t h
+        w i d t h
 	h
 	e   0 1 0 0 1
 	i   0 1 0 0 0
@@ -25,9 +25,18 @@
 //TODO : Struct header
 typedef struct
 {
-	unsigned long width;	//width of the matrix
-	unsigned long height;	//height of the matrix
-	int **matrix;			//matrix
+	ulong width;	//width of the matrix
+	ulong height;	//height of the matrix
+	int **matrix;   //matrix
 } bwMatrix;
+
+/* Returns a new bwMatrix of size width x height initialized at 0 */
+bwMatrix bwMatrix_new(ulong witdh, ulong height);
+
+/* Returns the value contained in given bwMatrix at position (w,h) */
+bool bwMatrix_GetVal(bwMatrix mat, ulong w, ulong h);
+
+/* Sets the content of given bwMatrix at position (w,h) to given value */
+void bwMatrix_SetVal(bwMatrix mat, ulong w, ulong h, bool value);
 
 #endif
