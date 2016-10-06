@@ -18,32 +18,24 @@ bwMatrix bwMatrix_new(ulong witdh, ulong height) {
 	res.width = witdh;
 	res.height = height;
 
-	res.matrix = malloc(witdh * sizeof(bool*));
+	res.matrix = malloc(witdh * sizeof(int*));
 	for (size_t i = 0; i < witdh; i++)
-		res.matrix[i] = malloc(height * sizeof(bool));
+		res.matrix[i] = malloc(height * sizeof(int));
 
 	for (size_t i = 0; i < res.width; i++)
 		for (size_t j = 0; j < res.height; j++)
-			res.matrix[i][j] = 0;
+			res->matrix[i][j];
 
 	return res;
 }
 
-bool bwMatrix_GetVal(bwMatrix mat, ulong w, ulong h) {
-	if (mat.width <= w || mat.height <= h)
-		return -1;
-	return mat.matrix[w][h];
-}
-
-int bwMatrixGetVal(bwMatrix mat, ulong w, ulong h) {
+int bwMatrixGetVal(const bwMatrix *mat, ulong w, ulong h) {
 	assert(mat.width <= w || mat.height <= h){
-	return mat.matrix[w][h];}
+	return mat->matrix[w][h];}
 }
 
 
-int bwMatrix_SetVal(bwMatrix mat, ulong w, ulong h, bool value) {
-	if (mat.width <= w || mat.height <= h)
-		return -1;
-	mat.matrix[w][h] = value;
-	return 0;
+void bwMatrix_SetVal(bwMatrix *mat, ulong w, ulong h, bool value) {
+	assert(mat.width <= w || mat.height <= h){
+	mat->matrix[w][h] = value;}
 }
