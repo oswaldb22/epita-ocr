@@ -27,16 +27,16 @@ typedef struct
 {
 	ulong width;	//width of the matrix
 	ulong height;	//height of the matrix
-	int **matrix;   //matrix
+	uint **matrix;  //matrix
 } bwMatrix;
 
 /* Returns a new bwMatrix of size width x height initialized at 0 */
-bwMatrix bwMatrix_new(ulong witdh, ulong height);
+bwMatrix bwMatrix_New(ulong witdh, ulong height);
 
 /* Returns the value contained in given bwMatrix at position (w,h) */
-bool bwMatrix_GetVal(bwMatrix mat, ulong w, ulong h);
+uint bwMatrix_GetVal(bwMatrix mat, ulong w, ulong h);
 
 /* Sets the content of given bwMatrix at position (w,h) to given value */
-int bwMatrix_SetVal(bwMatrix mat, ulong w, ulong h, bool value);
+void bwMatrix_SetVal(bwMatrix mat, ulong w, ulong h, uint value);
 
 #endif

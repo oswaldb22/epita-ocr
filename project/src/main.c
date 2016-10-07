@@ -19,6 +19,9 @@ int main(int argc, const char* argv[])
 {
 	printf("\nHello World\n\n");
 
+	UNUSED(argc);
+	UNUSED(argv);
+
 	//Testbw0();
 
 	return 0;

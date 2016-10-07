@@ -2,14 +2,15 @@
 
 #include <stdio.h>		//Input/Output
 #include <stdlib.h>		//Malloc
-#include <stdbool.h>	//Bool type
 #include <time.h>		//Time (Mainly for RNG)
 #include <assert.h> 	//Assert!
 //Typedef
 #ifndef TYPEDEF_CUSTOM
 #define TYPEDEF_CUSTOM
 
+#define UNUSED(x) (void)(x)
 typedef unsigned long ulong;
+typedef unsigned int uint;
 
 #endif
 

@@ -9,15 +9,21 @@ void Testbw0() {
 	time_t t;
 	srand((unsigned)time(&t));
 
-	bwMatrix test = bwMatrix_new(20, 20);
+	bwMatrix test = bwMatrix_New(20, 20);
 
-	for (size_t i = 0; i < test.width; i++)
-	{
-		for (size_t j = 0; j < test.height; j++)
+	for (ulong w = 0; w < test.width; w++)
+		for (ulong h = 0; h < test.height; h++) 
 		{
-			unsigned int A = rand() % 2;
-			test.matrix[i][j] = A;
-			printf("%u ", A);
+			ulong r = rand() % 2;
+			bwMatrix_SetVal(test, w, h, r);
+		}
+
+	for (ulong w = 0; w < test.width; w++)
+	{
+		for (ulong h = 0; h < test.height; h++)
+		{
+			ulong val = bwMatrix_GetVal(test, w, h);
+			printf(" %lu", val);
 		}
 		printf("\n");
 	}

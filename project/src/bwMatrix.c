@@ -13,29 +13,29 @@
 
 #include "bwMatrix.h"
 
-bwMatrix bwMatrix_new(ulong witdh, ulong height) {
+bwMatrix bwMatrix_New(ulong witdh, ulong height) {
 	bwMatrix res;
 	res.width = witdh;
 	res.height = height;
 
-	res.matrix = malloc(witdh * sizeof(int*));
-	for (size_t i = 0; i < witdh; i++)
-		res.matrix[i] = malloc(height * sizeof(int));
+	res.matrix = malloc(witdh * sizeof(uint*));
+	for (ulong i = 0; i < witdh; i++)
+		res.matrix[i] = malloc(height * sizeof(uint));
 
-	for (size_t i = 0; i < res.width; i++)
-		for (size_t j = 0; j < res.height; j++)
-			res->matrix[i][j];
+	for (ulong i = 0; i < res.width; i++)
+		for (ulong j = 0; j < res.height; j++)
+			res.matrix[i][j] = 0;
 
 	return res;
 }
 
-int bwMatrixGetVal(const bwMatrix *mat, ulong w, ulong h) {
-	assert(mat.width <= w || mat.height <= h){
-	return mat->matrix[w][h];}
+uint bwMatrix_GetVal(const bwMatrix mat, ulong w, ulong h) {
+	assert(mat.width <= w || mat.height <= h);
+	return mat.matrix[w][h];
 }
 
 
-void bwMatrix_SetVal(bwMatrix *mat, ulong w, ulong h, bool value) {
-	assert(mat.width <= w || mat.height <= h){
-	mat->matrix[w][h] = value;}
+void bwMatrix_SetVal(bwMatrix mat, ulong w, ulong h, uint value) {
+	assert(mat.width <= w || mat.height <= h);
+	mat.matrix[w][h] = value;
 }
