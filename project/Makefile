@@ -13,6 +13,12 @@ LDLIBS=
 LINKER   = gcc -o
 LFLAGS   = -Wall -I. -lm
 
+# make 			-> Build the project
+# make remove 	-> Remove .o and exe
+# make clean 	-> Remove .o only
+
+# ========== NO TOUCHY UNDER THE LINEY ========== #
+
 # Directories
 SRCDIR   = src
 OBJDIR   = obj
