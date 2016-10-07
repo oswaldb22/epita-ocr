@@ -5,7 +5,7 @@
 
 void Testbw0() {
 
-	/*/
+	//*/
 	time_t t;
 	srand((unsigned)time(&t));
 

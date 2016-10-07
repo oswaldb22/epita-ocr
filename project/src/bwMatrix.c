@@ -30,12 +30,12 @@ bwMatrix bwMatrix_New(ulong witdh, ulong height) {
 }
 
 uint bwMatrix_GetVal(const bwMatrix mat, ulong w, ulong h) {
-	assert(mat.width <= w || mat.height <= h);
+	assert(w < mat.width || h < mat.height);
 	return mat.matrix[w][h];
 }
 
 
 void bwMatrix_SetVal(bwMatrix mat, ulong w, ulong h, uint value) {
-	assert(mat.width <= w || mat.height <= h);
+	assert(w < mat.width || h < mat.height);
 	mat.matrix[w][h] = value;
 }
