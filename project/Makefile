@@ -13,9 +13,10 @@ LDLIBS=
 LINKER   = gcc -o
 LFLAGS   = -Wall -I. -lm
 
-# make 			-> Build the project
-# make remove 	-> Remove .o and exe
+# make			-> Build the project
+# make remove 	-> Remove .o .d and exe
 # make clean 	-> Remove .o only
+# make remdep	-> Remove .d only
 
 # ========== NO TOUCHY UNDER THE LINEY ========== #
 
@@ -30,6 +31,7 @@ TARGET = main
 # Sources
 SOURCES  := $(wildcard $(SRCDIR)/*.c)
 INCLUDES := $(wildcard $(SRCDIR)/*.h)
+DEPENDS  := $(wildcard $(OBJDIR)/*.d)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm       = rm -f
 
@@ -43,11 +45,16 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 
 .PHONEY: clean
 clean:
-	@$(rm) $(OBJECTS)
+	$(rm) $(OBJECTS)
 	@echo "Cleanup complete!"
 
 .PHONEY: remove
 remove: clean
-	@$(rm) $(BINDIR)/$(TARGET)
+	$(rm) $(BINDIR)/$(TARGET)
 	@echo "Executable removed!"
+	
+.PHONEY: remdep
+remdep:
+	$(rm) $(DEPENDS)
+	@echo "Dependencies removed!"
 # END
