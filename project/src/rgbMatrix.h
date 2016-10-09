@@ -22,11 +22,28 @@ typedef struct{
 
 }rgbMatrix;
 
+/*Color Primitive*/
 
-void setColor(color *color,const uint *r, const unint *g, const unit *b);
+void setColor(color *color,const uint r, const uint g, const uint b);
 
-color getColor(const color *color);
 
- 
+
+/*rgbMatrix Primitive*/
+
+void rgbInit(rgbMatrix *rgbM,const ulong w, const ulong h);
+
+void rgbFree(rgbMatrix *rgbM);
+
+
+color rgbGetColor(const rgbMatrix *rgbM);
+
+void rgbSetWidth(rgbMatrix *rgbM, const ulong w);
+ulong rgbGetWidth(const rgbMatrix *rgbM);
+
+void rgbSetHeight(rgbMatrix *rgbM,const ulong h);
+ulong rgbGetHeight(const rgbMatrix *rgbM);
+
+color rgbGetXY(const rgbMatrix *rgbM); 
+void rgbSetColorXY(const rgbMatrix *rgbM,const ulong w,const ulong h,const color c); 
 
 #endif
