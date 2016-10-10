@@ -1,14 +1,5 @@
 /*
 	TODO : Insert fancy header
-
-	setVal need to be a void !
-	put some assert !
-	it will return an error if the case you tryna to reach is not avaliable
-
-
-	IN GETVAL ? Bool does return -1 ??
-
-
 */
 
 #include "bwMatrix.h"
@@ -35,7 +26,7 @@ uint bwMatrix_GetVal(const bwMatrix mat, ulong w, ulong h) {
 }
 
 
-void bwMatrix_SetVal(bwMatrix mat, ulong w, ulong h, uint value) {
-	assert(w < mat.width || h < mat.height);
-	mat.matrix[w][h] = value;
+void bwMatrix_SetVal(bwMatrix *mat, ulong w, ulong h, uint value) {
+	assert(w < mat->width || h < mat->height);
+	mat->matrix[w][h] = value;
 }

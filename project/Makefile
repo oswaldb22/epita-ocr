@@ -35,6 +35,8 @@ DEPENDS  := $(wildcard $(OBJDIR)/*.d)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm       = rm -f
 
+all: $(BINDIR)/$(TARGET)
+
 $(BINDIR)/$(TARGET): $(OBJECTS)
 	@$(LINKER) $@ $(LFLAGS) $(OBJECTS)
 	@echo "Linking complete!"
