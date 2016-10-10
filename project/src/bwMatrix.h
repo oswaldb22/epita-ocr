@@ -22,7 +22,7 @@
 #ifndef BWMATRIX
 #define BWMATRIX
 
-//TODO : Struct header
+/* Structure defining an array supposed to contain 0 and 1 only */
 typedef struct
 {
 	ulong width;	//width of the matrix
@@ -30,13 +30,11 @@ typedef struct
 	uint **matrix;  //matrix
 } bwMatrix;
 
-/* Returns a new bwMatrix of size width x height initialized at 0 */
-bwMatrix bwMatrix_New(ulong witdh, ulong height);
+/* Prototypes */
 
-/* Returns the value contained in given bwMatrix at position (w,h) */
-uint bwMatrix_GetVal(bwMatrix mat, ulong w, ulong h);
-
-/* Sets the content of given bwMatrix at position (w,h) to given value */
-void bwMatrix_SetVal(bwMatrix *mat, ulong w, ulong h, uint value);
+void bwMatrixInit(bwMatrix *bwMat, const ulong w, const ulong h);
+void bwMatrixFree(bwMatrix *bwMat);
+uint bwMatrixGetValue(const bwMatrix *bwMat, const ulong w, const ulong h);
+void bwMatrixSetValue(const bwMatrix *bwMat, const ulong w, const ulong h, const uint newvalue);
 
 #endif
