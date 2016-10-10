@@ -5,7 +5,7 @@
 // (http://www.libsdl.org/release/SDL-1.2.15/docs/html/guidevideo.html)
  
 # include "pixel_operations.h"
-#include <SDL.h>
+#include <SDL/SDL.h>
  
 static inline
 Uint8* pixelref(SDL_Surface *surf, unsigned x, unsigned y) 
