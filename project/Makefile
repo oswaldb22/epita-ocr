@@ -7,7 +7,7 @@ CC=gcc
 CPPFLAGS= -MMD 
 CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2 
 LDFLAGS= 
-LDLIBS=  
+LDLIBS=`pkg-config --libs sdl` -lSDL_image
 
 # Linker
 LINKER   = gcc -o

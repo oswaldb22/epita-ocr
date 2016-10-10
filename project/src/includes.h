@@ -3,7 +3,7 @@
 #include <stdio.h>		//Input/Output
 #include <stdlib.h>		//Malloc
 #include <time.h>		//Time (Mainly for RNG)
-#include <assert.h> 	//Assert!
+#include <assert.h> 		//Assert!
 //Typedef
 #ifndef TYPEDEF_CUSTOM
 #define TYPEDEF_CUSTOM
