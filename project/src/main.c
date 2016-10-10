@@ -22,7 +22,7 @@ int main(int argc, const char* argv[])
 	UNUSED(argc);
 	UNUSED(argv);
 
-	Testbw0();
+	//Testbw0();
 
 	return 0;
 }
