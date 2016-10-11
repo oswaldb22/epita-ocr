@@ -4,7 +4,7 @@
 
 # Compilers and options 
 CC=gcc 
-CPPFLAGS= -MMD 
+CPPFLAGS= -MMD `pkg-config --cflags sdl` 
 CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2 
 LDFLAGS= 
 LDLIBS=`pkg-config --libs sdl` -lSDL_image

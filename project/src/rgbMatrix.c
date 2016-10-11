@@ -15,7 +15,7 @@ void setColor(color *color,const uint r, const uint g, const uint b){
 /*
 matrix est initialisé par defaut a 0
 taille w et h passé en paramètres
-color par defaut BLANC  (r,g,b=0)
+color par defaut NOIR (r,g,b=0)
 
 */
 void rgbInit(rgbMatrix *rgbM,const ulong w, const ulong h){
@@ -78,4 +78,47 @@ color rgbGetColorXY(const rgbMatrix *rgbM,const ulong w,const ulong h){
 void rgbSetColorXY(const rgbMatrix *rgbM,const ulong w,const ulong h,const color c){
 	rgbM->matrix[h][w]=c;
 } 
+
+void rgbMprint(rgbMatrix *rgbM){
+
+for (int i = 0; i < rgbM->width; i++)
+  {
+    for (int j = 0; j < rgbM->height; j++)
+    {
+      printf("r=%d,g=%d,b=%d",rgbM->matrix[j][i].r,rgbM->matrix[j][i].g,rgbM->matrix[j][i].b);
+
+    }
+  }	
+
+}
+
+void load_rgbM(rgbMatrix *rgbM,SDL_Surface* img){
+	
+  color c;
+  for (int i = 0; i < rgbM->width; i++)
+  {
+    for (int j = 0; j < rgbM->height; j++)
+    {
+      Uint32 pixel = getpixel(img,i,j);
+      Uint8 r = 0;
+      Uint8 g = 0;
+      Uint8 b = 0;
+      SDL_GetRGB(pixel, img->format, &r, &g, &b);
+      
+	  setColor(&c,(uint)r,(uint)g,(uint)b);
+		rgbM->matrix[j][i]=c;
+
+	  /*float res = (float)r * 0.3 +(float)b * 0.11 +(float)g * 0.59;
+      Uint32 grey = SDL_MapRGB(img->format, res, res, res);
+	 putpixel (img, i, j, grey);*/
+
+    }
+  }	
+	
+}
+
+
+
+
+
  

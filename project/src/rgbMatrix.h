@@ -5,6 +5,7 @@
 @file rgbMatrix.h
 
 */
+#include "pixel_operations.h"
 #include "includes.h"
 
 typedef struct{

@@ -2,6 +2,7 @@
 # include <SDL/SDL_image.h>
 # include <err.h>
 # include "pixel_operations.h"
+#include "load_to_bw.h"
 
 
 void wait_for_keypressed(void) {
@@ -63,7 +64,7 @@ SDL_Surface* display_image(SDL_Surface *img) {
   return screen;
 }
 
-int main(int argc, char *argv[])
+/*int main(int argc, char *argv[])
 {
   if(argc < 2)
     return 1;
@@ -93,6 +94,6 @@ int main(int argc, char *argv[])
   // test fonctionnement treshold
   display_image(img); // a enlever
   //wait_for_keypressed();
-}
+}*/
 
  
