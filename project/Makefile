@@ -4,14 +4,10 @@
 
 # Compilers and options 
 CC=gcc 
-CPPFLAGS= -MMD 
+CPPFLAGS= `pkg-config --cflags sdl` -MMD 
 CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2 
 LDFLAGS= 
-LDLIBS=`pkg-config --libs sdl` -lSDL_image
-
-# Linker
-LINKER   = gcc -o
-LFLAGS   = -Wall -I. -lm
+LDLIBS=`pkg-config --libs sdl` -lSDL -lSDL_image
 
 # make		-> Build the project
 # make remove 	-> Remove .o .d and exe
@@ -38,7 +34,7 @@ rm       = rm -f
 all: makedirs $(BINDIR)/$(TARGET)
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	@$(LINKER) $@ $(LFLAGS) $(OBJECTS)
+	@$(CC) $(OBJECTS) $(LDLIBS) -o $@
 	@echo "Linking complete!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
