@@ -46,8 +46,9 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@echo "Compiled "$<" successfully!"
 
 makedirs:
-	mkdir -p $(OBJDIR)
-	mkdir -p $(BINDIR)
+	@mkdir -p $(OBJDIR)
+	@mkdir -p $(BINDIR)
+	@echo "Created directories : $(BINDIR) $(OBJDIR)"
 
 .PHONEY: clean
 clean:
