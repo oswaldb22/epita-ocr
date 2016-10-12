@@ -47,4 +47,7 @@ ulong rgbGetHeight(const rgbMatrix *rgbM);
 color rgbGetXY(const rgbMatrix *rgbM); 
 void rgbSetColorXY(const rgbMatrix *rgbM,const ulong w,const ulong h,const color c); 
 
+void load_rgbM(rgbMatrix *rgbM,SDL_Surface* img);
+void rgbMprint(rgbMatrix *rgbM);
+
 #endif

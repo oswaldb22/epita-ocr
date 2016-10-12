@@ -29,14 +29,28 @@ int main(int argc,  char* argv[])
 	*/
 
 
-	 if(argc < 2)
-    return 1;
+  if(argc < 2)
+  return 1;
   init_sdl();
   SDL_Surface* img = NULL;
   //SDL_Surface* screen = NULL;
   img = load_image(argv[1]);
+  
+  rgbMatrix rgbM;
+  rgbInit(&rgbM,img->w,img->h);
+  printf("Size = %d, %d\n",rgbM.width,rgbM.height);
+  
+  //load_rgbM(&rgbM,img);
 
-  for (int i = 0; i < img->w; i++)
+  load_rgbM(&rgbM,img);
+   rgbMprint(&rgbM);
+ 
+
+
+
+
+
+  /*for (int i = 0; i < img->w; i++)
   {
     for (int j = 0; j < img->h; j++)
     {
@@ -46,7 +60,7 @@ int main(int argc,  char* argv[])
       Uint8 b = 0;
       SDL_GetRGB(pixel, img->format, &r, &g, &b);
       float res = (float)r * 0.3 +(float)b * 0.11 +(float)g * 0.59;
-      if (res < 128)
+      if (res < 150)
           res = 0;
       else 
           res = 255;
@@ -58,13 +72,7 @@ int main(int argc,  char* argv[])
   display_image(img); // a enlever
   //wait_for_keypressed();
 
-
-
-
-
-
-
-
+*/
 
 	return 0;
 }
