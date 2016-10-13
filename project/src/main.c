@@ -36,15 +36,22 @@ int main(int argc,  char* argv[])
   //SDL_Surface* screen = NULL;
   img = load_image(argv[1]);
   
-  rgbMatrix rgbM;
+  /*rgbMatrix rgbM;
   rgbInit(&rgbM,img->w,img->h);
-  printf("Size = %d, %d\n",rgbM.width,rgbM.height);
+  printf("Size = %d, %d\n",rgbM.width,rgbM.height);*/
+	
+  bwMatrix bwM;
+  bwMatrixInit(&bwM,img->w,img->h);
+  printf("Size = %d, %d\n",bwM.width,bwM.height);
+
   
   //load_rgbM(&rgbM,img);
 
-  load_rgbM(&rgbM,img);
-   rgbMprint(&rgbM);
+  /*load_rgbM(&rgbM,img);
+   rgbMprint(&rgbM);*/
  
+ load_bwM(&bwM,img);
+   bwMprint(&bwM);
 
 
 
