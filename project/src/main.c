@@ -17,9 +17,12 @@
 
 int main(int argc, const char* argv[])
 {
+	UNUSED(argc);
+	UNUSED(argv);
 	printf("\nHello World\n\n");
 
 	//Testbw0();
+	//TestbndBox();
 
 	return 0;
 }
