@@ -14,5 +14,5 @@ bndBox bndBoxNew(const ulong x1, const ulong y1, const ulong x2, const ulong y2)
 }
 
 void bndBoxDebugPrint(const bndBox *box) {
-	printf("bndBox : (%lu,%lu) (%lu,%lu)\n", box->x1, box->y1, box->x2, box->y2);
+	printf("bndBox : (x:%lu,y:%lu) (x:%lu,y:%lu)\n", box->x1, box->y1, box->x2, box->y2);
 }

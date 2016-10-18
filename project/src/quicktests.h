@@ -3,6 +3,7 @@
 #include "includes.h"
 #include "bwMatrix.h"
 #include "bndBox.h"
+#include "bndBoxList.h"
 
 
 void TestMat(bwMatrix *mat) {
@@ -44,4 +45,22 @@ void TestbndBox() {
 
 	bndBox box = bndBoxNew(2, 3, 12, 14);
 	bndBoxDebugPrint(&box);
+}
+
+void TestbndBoxList() {
+
+	bndBoxList myboxlist;
+	bndBoxListInit(&myboxlist);
+	bndBox box0 = bndBoxNew(0, 0, 10, 10);
+	bndBox box1 = bndBoxNew(1, 1, 11, 11);
+	bndBox box2 = bndBoxNew(2, 2, 12, 12);
+	bndBox box3 = bndBoxNew(3, 3, 13, 13);
+	bndBox box4 = bndBoxNew(4, 4, 14, 14);
+	bndBoxListAdd(&myboxlist, box0);
+	bndBoxListAdd(&myboxlist, box1);
+	bndBoxListAdd(&myboxlist, box2);
+	bndBoxListAdd(&myboxlist, box3);
+	bndBoxListAdd(&myboxlist, box4);
+	bndBoxListDebugPrint(&myboxlist);
+	bndBoxListFree(&myboxlist);
 }
