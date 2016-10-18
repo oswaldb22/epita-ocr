@@ -2,6 +2,7 @@
 
 #include "includes.h"
 #include "bwMatrix.h"
+#include "bndBox.h"
 
 
 void TestMat(bwMatrix *mat) {
@@ -37,4 +38,10 @@ void Testbw0() {
 	bwMatrixFree(&test);
 
 	//*/
+}
+
+void TestbndBox() {
+
+	bndBox box = bndBoxNew(2, 3, 12, 14);
+	bndBoxDebugPrint(&box);
 }

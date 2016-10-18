@@ -20,13 +20,7 @@
 
 int main(int argc,  char* argv[])
 {
-	/*printf("\nHello World\n\n");
 
-	UNUSED(argc);
-	UNUSED(argv);
-
-	//Testbw0();
-	*/
 
 
   if(argc < 2)
@@ -80,6 +74,8 @@ int main(int argc,  char* argv[])
   //wait_for_keypressed();
 
 */
+//TestbndBox();
+
 
 	return 0;
 }
