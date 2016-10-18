@@ -4,12 +4,16 @@
 
 # Compilers and options 
 CC=gcc 
-CPPFLAGS= `pkg-config --cflags sdl` -MMD 
+CPPFLAGS= -MMD `pkg-config --cflags sdl` 
 CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2 
 LDFLAGS= 
-LDLIBS=`pkg-config --libs sdl` -lSDL -lSDL_image
+LDLIBS=`pkg-config --libs sdl` -lSDL_image
 
-# make		-> Build the project
+# Linker
+LINKER   = gcc -o
+LFLAGS   = -Wall -I. -lm
+
+# make			-> Build the project
 # make remove 	-> Remove .o .d and exe
 # make clean 	-> Remove .o only
 # make remdep	-> Remove .d only
@@ -31,20 +35,15 @@ DEPENDS  := $(wildcard $(OBJDIR)/*.d)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm       = rm -f
 
-all: makedirs $(BINDIR)/$(TARGET)
+all: $(BINDIR)/$(TARGET)
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	@$(CC) $(OBJECTS) $(LDLIBS) -o $@
+	@$(LINKER) $@ $(LFLAGS) $(OBJECTS)
 	@echo "Linking complete!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "Compiled "$<" successfully!"
-
-makedirs:
-	@mkdir -p $(OBJDIR)
-	@mkdir -p $(BINDIR)
-	@echo "Created directories : $(BINDIR) $(OBJDIR)"
 
 .PHONEY: clean
 clean:

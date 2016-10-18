@@ -18,6 +18,8 @@
 */
 
 #include "includes.h"
+#include "pixel_operations.h"
+
 
 #ifndef BWMATRIX
 #define BWMATRIX
@@ -35,6 +37,6 @@ typedef struct
 void bwMatrixInit(bwMatrix *bwMat, const ulong w, const ulong h);
 void bwMatrixFree(bwMatrix *bwMat);
 uint bwMatrixGetValue(const bwMatrix *bwMat, const ulong w, const ulong h);
-void bwMatrixSetValue(const bwMatrix *bwMat, const ulong w, const ulong h, const uint newvalue);
-
+void bwMatrixSetValue(bwMatrix *bwMat, const ulong w, const ulong h, const uint newvalue);
+void load_bwM(bwMatrix *bwM,SDL_Surface* img);
 #endif

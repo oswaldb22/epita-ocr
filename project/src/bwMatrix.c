@@ -31,10 +31,71 @@ uint bwMatrixGetValue(const bwMatrix *bwMat, const ulong w, const ulong h) {
 	return bwMat->matrix[h][w];
 }
 
-void bwMatrixSetValue(const bwMatrix *bwMat, const ulong w, const ulong h, const uint newvalue) {
+void bwMatrixSetValue(bwMatrix *bwMat, const ulong w, const ulong h, const uint newvalue) {
 	assert(w < bwMat->width || h < bwMat->height);
 	bwMat->matrix[h][w] = newvalue;
 }
+
+
+
+
+void load_bwM(bwMatrix *bwM,SDL_Surface* img){
+	
+
+  for (ulong i = 0; i < bwM->width; i++)
+  {
+    for (ulong j = 0; j < bwM->height; j++)
+    {
+      Uint32 pixel = getpixel(img,i,j);
+      Uint8 r = 0;
+      Uint8 g = 0;
+      Uint8 b = 0;
+      SDL_GetRGB(pixel, img->format, &r, &g, &b);
+
+      float res = (float)r * 0.3 +(float)b * 0.11 +(float)g * 0.59;
+      if (res < 128)
+      	res = 0;
+      else 
+         res = 1;
+	
+      bwM->matrix[j][i] = (uint)res;
+
+     }
+  }	
+	
+}
+
+
+void bwMprint(bwMatrix *bwM){
+
+for (ulong i = 0; i < bwM->width; i++)
+  {
+    for (ulong j = 0; j < bwM->height; j++)
+    {
+      printf("%d",bwM->matrix[j][i]);
+
+    }
+      printf("\n");
+  }	
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*/
 
