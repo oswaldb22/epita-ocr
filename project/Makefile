@@ -10,8 +10,8 @@ LDFLAGS=
 LDLIBS=`pkg-config --libs sdl` -lSDL -lSDL_image
 
 # make		-> Build the project
-# make remove 	-> Remove .o .d and exe
-# make clean 	-> Remove .o only
+# make clean 	-> Remove .o .d and exe
+# make remove 	-> Remove .o only
 # make remdep	-> Remove .d only
 
 # ========== NO TOUCHY UNDER THE LINEY ========== #
@@ -47,14 +47,14 @@ makedirs:
 	@echo "Created directories : $(BINDIR) $(OBJDIR)"
 
 .PHONEY: clean
-clean:
-	$(rm) $(OBJECTS)
-	@echo "Cleanup complete!"
-
-.PHONEY: remove
-remove: clean
+clean: remove
 	$(rm) $(BINDIR)/$(TARGET)
 	@echo "Executable removed!"
+
+.PHONEY: remove
+remove:
+	$(rm) $(OBJECTS)
+	@echo "Cleanup complete!"
 	
 .PHONEY: remdep
 remdep:
