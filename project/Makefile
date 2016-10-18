@@ -46,13 +46,13 @@ makedirs:
 	@mkdir -p $(BINDIR)
 	@echo "Created directories : $(BINDIR) $(OBJDIR)"
 
-.PHONEY: clean
-clean:
+.PHONEY: remove
+remove:
 	$(rm) $(OBJECTS)
 	@echo "Cleanup complete!"
 
-.PHONEY: remove
-remove: clean
+.PHONEY: clean
+clean: remove
 	$(rm) $(BINDIR)/$(TARGET)
 	@echo "Executable removed!"
 	
