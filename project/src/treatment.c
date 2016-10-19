@@ -17,18 +17,18 @@ bwMatrix convertToBw(rgbMatrix *rgbM) {
 	//*/
 }
 
-bwMatrix cropUsingBox(bwMatrix *mat, bndBox *box) {
+bwMatrix cropUsingBox(bwMatrix *bwM_toCrop, bndBox *box) {
 
 	ulong width = bndBoxGetWidth(box);
 	ulong height = bndBoxGetHeight(box);
 
-	bwMatrix bwM;
-	bwMatrixInit(&bwM, width, height);
+	bwMatrix bwM_res;
+	bwMatrixInit(&bwM_res, width, height);
 
 	for (ulong w = 0; w < width; ++w)
 		for (ulong h = 0; h < height; ++h) {
-			uint newval = bwMatrixGetValue(mat, box->x1 + w, box->y1 + h);
-			bwMatrixSetValue(&bwM, w, h, newval);
+			uint newval = bwMatrixGetValue(bwM_toCrop, box->x1 + w, box->y1 + h);
+			bwMatrixSetValue(&bwM_res, w, h, newval);
 		}
-	return bwM;
+	return bwM_res;
 }

@@ -57,7 +57,6 @@ void TestTreatment0() {
 		}
 		printf("\n");
 	}
-
 }
 
 void TestbndBox() {
