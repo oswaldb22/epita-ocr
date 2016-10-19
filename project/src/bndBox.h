@@ -15,4 +15,6 @@ typedef struct
 
 bndBox bndBoxNew(const ulong x1, const ulong y1, const ulong x2, const ulong y2);
 void bndBoxDebugPrint(const bndBox *box);
+ulong bndBoxGetWidth(const bndBox *box);
+ulong bndBoxGetHeight(const bndBox *box);
 #endif

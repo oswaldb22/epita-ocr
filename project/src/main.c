@@ -35,6 +35,7 @@ int main(int argc, char* argv[])
 
 	/*/ BLOC 1 - Used for quicktests
 	TestbndBoxList();
+	TestTreatment0();
 	//*/
 
 	/*/	BLOC 2

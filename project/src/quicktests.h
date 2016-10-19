@@ -4,7 +4,7 @@
 #include "bwMatrix.h"
 #include "bndBox.h"
 #include "bndBoxList.h"
-
+#include "treatment.h"
 
 void TestMat(bwMatrix *mat) {
 
@@ -16,9 +16,9 @@ void TestMat(bwMatrix *mat) {
 			uint r = rand() % 2;
 			bwMatrixSetValue(mat, w, h, r);
 		}
-	for (ulong w = 0; w < mat->width; w++)
+	for (ulong h = 0; h < mat->height; h++)
 	{
-		for (ulong h = 0; h < mat->height; h++)
+		for (ulong w = 0; w < mat->width; w++)
 		{
 			uint val = bwMatrixGetValue(mat, w, h);
 			printf(" %i", val);
@@ -39,6 +39,25 @@ void Testbw0() {
 	bwMatrixFree(&test);
 
 	//*/
+}
+
+void TestTreatment0() {
+	bndBox box = bndBoxNew(1, 2, 4, 3);
+	bwMatrix test;
+	bwMatrixInit(&test, 5, 5);
+	TestMat(&test);
+	bwMatrix two = cropUsingBox(&test, &box);
+	printf("=====\n");
+	for (ulong h = 0; h < two.height; h++)
+	{
+		for (ulong w = 0; w < two.width; w++)
+		{
+			uint val = bwMatrixGetValue(&two, w, h);
+			printf(" %i", val);
+		}
+		printf("\n");
+	}
+
 }
 
 void TestbndBox() {
