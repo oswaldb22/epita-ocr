@@ -15,6 +15,7 @@ bwMatrix convertToBw(rgbMatrix *rgbM) {
 		}
 	}
 	//*/
+	return bwM;/*A modifier*/
 }
 
 bwMatrix cropUsingBox(bwMatrix *bwM_toCrop, bndBox *box) {

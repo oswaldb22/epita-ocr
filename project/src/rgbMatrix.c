@@ -5,10 +5,22 @@
 
 #include "rgbMatrix.h"
 
-void setColor(color *color,const uint r, const uint g, const uint b){
+/*
+	Primitive de la structure de Color
+
+*/
+
+void colorSetRGB(color *color,const uint r, const uint g, const uint b){
 	color->r=r;
 	color->g=g;
 	color->b=b;
+}
+
+
+void colorGetRGB(const color *color,uint *r,uint *g,uint *b){
+	*r=color->r;
+	*g=color->g;
+	*b=color->b;
 }
 
 
@@ -18,6 +30,7 @@ taille w et h passé en paramètres
 color par defaut NOIR (r,g,b=0)
 
 */
+
 void rgbInit(rgbMatrix *rgbM,const ulong w, const ulong h){
 	ulong i=0,j=0;
 	color Color;
@@ -25,7 +38,7 @@ void rgbInit(rgbMatrix *rgbM,const ulong w, const ulong h){
 	rgbM->width=w;
 	rgbM->height=h;
 	
-	setColor(&Color,0,0,0);
+	colorSetRGB(&Color,0,0,0);
 
 	rgbM->matrix = malloc(w * sizeof(color*));
 	for(i=0;i<w;i++){
@@ -106,7 +119,7 @@ void load_rgbM(rgbMatrix *rgbM,SDL_Surface* img){
       Uint8 b = 0;
       SDL_GetRGB(pixel, img->format, &r, &g, &b);
       
-	  setColor(&c,(uint)r,(uint)g,(uint)b);
+	  colorSetRGB(&c,(uint)r,(uint)g,(uint)b);
 		rgbM->matrix[j][i]=c;
 
 	  /*float res = (float)r * 0.3 +(float)b * 0.11 +(float)g * 0.59;
