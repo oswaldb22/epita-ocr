@@ -1,15 +1,12 @@
-#include <stdlib.h>
-#include <time.h>
-#include <math.h>
 #include "neuron.h"
 
-struct Neuron *init(int nbSynapses) {
+struct Neuron *initNeuron(int nbSynapse) {
 
 	struct Neuron *neuron = malloc(sizeof(struct Neuron));
-	neuron->nbSynapses = nbSynapses;
+	neuron->nbSynapse = nbSynapse;
 
-	neuron->synapses = malloc(nbSynapses * sizeof(double));
-	for (int i = 0; i < nbSynapses; i++)
+	neuron->synapses = malloc(nbSynapse * sizeof(double));
+	for (int i = 0; i < nbSynapse; i++)
 		neuron->synapses[i] = ((double)rand() / (double)RAND_MAX);
 
 	neuron->sum = 0;
@@ -27,6 +24,6 @@ double derivateSigmoid(double x) {
 	return sigmoid(x) * (1 - sigmoid(x));
 }
 
-void calculateOutput(struct Neuron *neuron) {
+void compute(struct Neuron *neuron) {
 	neuron->out = sigmoid(neuron->sum);
 }

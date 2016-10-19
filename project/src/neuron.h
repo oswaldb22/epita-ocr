@@ -1,9 +1,11 @@
+#include "includes.h"
+
 #ifndef NEURON
 #define NEURON
 
 struct Neuron
 {
-	int nbSynapses;
+	int nbSynapse;
 	double *synapses;
 	double bias;
 	double sum;
@@ -11,9 +13,9 @@ struct Neuron
 	double out;
 };
 
-struct Neuron *init(int nbSynapses);
+struct Neuron *initNeuron(int nbSynapses);
 double sigmoid(double val);
 double derivateSigmoid(double x);
-void calculateOutput(struct Neuron *neuron);
+void compute(struct Neuron *neuron);
 
 #endif
