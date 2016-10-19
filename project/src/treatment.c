@@ -11,7 +11,7 @@ bwMatrix convertToBw(rgbMatrix *rgbM) {
 	{
 		for (ulong j = 0; j < rgbGetHeight(rgbM); j++)
 		{
-			c = rgb
+			c = rgbGetColorXY(rgbM,i,j);
 		}
 	}
 	//*/
