@@ -43,5 +43,5 @@ void bwMatrixSetValue(bwMatrix *bwMat, const ulong w, const ulong h, const uint 
 void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode printMode);
 
 void load_bwM(bwMatrix *bwM, SDL_Surface* img);
-void bwMprint(bwMatrix *bwM);
+
 #endif

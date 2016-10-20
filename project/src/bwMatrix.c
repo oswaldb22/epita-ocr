@@ -88,20 +88,6 @@ void load_bwM(bwMatrix *bwM, SDL_Surface* img) {
 }
 
 
-void bwMprint(bwMatrix *bwM) {
-
-	for (ulong i = 0; i < bwM->width; i++)
-	{
-		for (ulong j = 0; j < bwM->height; j++)
-		{
-			printf("%d", bwMatrixGetValue(bwM, i, j));
-
-		}
-		printf("\n");
-	}
-
-}
-
 
 
 
