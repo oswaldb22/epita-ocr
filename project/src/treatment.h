@@ -18,6 +18,4 @@ rgbMatrix drawBoundingBoxes(rgbMatrix *rgbM, color c);
 /* Returns the bwMatrix cropped from given bwMatrix using bndBox as boundaries (included) */
 bwMatrix cropUsingBox(bwMatrix *bwM_toCrop, bndBox *box);
 
-
-
 #endif

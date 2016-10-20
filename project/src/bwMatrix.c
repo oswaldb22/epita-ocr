@@ -36,6 +36,18 @@ void bwMatrixSetValue(bwMatrix *bwMat, const ulong w, const ulong h, const uint 
 	bwMat->matrix[h][w] = newvalue;
 }
 
+void bwMatrixPrintCompact(const bwMatrix *bwM) {
+	for (ulong h = 0; h < bwM->height; h++)
+	{
+		for (ulong w = 0; w < bwM->width; w++)
+		{
+			uint val = bwMatrixGetValue(bwM, w, h);
+			printf("%i", val);
+		}
+		printf("\n");
+	}
+}
+
 
 
 

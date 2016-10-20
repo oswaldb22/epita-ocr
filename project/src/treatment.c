@@ -5,16 +5,18 @@ bwMatrix convertToBw(rgbMatrix *rgbM) {
 	bwMatrix bwM;
 	bwMatrixInit(&bwM, rgbGetWidth(rgbM), rgbGetHeight(rgbM));
 
-	/*/ WIP - waiting for rbgM fix
 	color c;
-	for (ulong i = 0; i < rgbGetWidth(rgbM); i++)
+	for (ulong w = 0; w < rgbGetWidth(rgbM); w++)
 	{
-		for (ulong j = 0; j < rgbGetHeight(rgbM); j++)
+		for (ulong h = 0; h < rgbGetHeight(rgbM); h++)
 		{
-			c = rgbGetColorXY(rgbM,i,j);
+			c = rgbGetColorXY(rgbM, w, h);
+			float res = (float)c.r * 0.3 + (float)c.b * 0.11 + (float)c.g * 0.59;
+			res = res < 128 ? 0 : 1;
+			bwMatrixSetValue(&bwM, w, h, (uint)res);
 		}
 	}
-	//*/
+
 	return bwM;/*A modifier*/
 }
 
@@ -32,4 +34,11 @@ bwMatrix cropUsingBox(bwMatrix *bwM_toCrop, bndBox *box) {
 			bwMatrixSetValue(&bwM_res, w, h, newval);
 		}
 	return bwM_res;
+}
+
+bndBoxList getLines(bwMatrix *bwM_block) {
+	bndBoxList boxList;
+	bndBoxListInit(&boxList);
+
+	return boxList;
 }
