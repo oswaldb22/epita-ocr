@@ -10,12 +10,12 @@
 bwMatrix convertToBw(rgbMatrix *rgbM);
 rgbMatrix convertToRgb(bwMatrix *bwM);
 
-bndBoxList getLines(bwMatrix *bwM_block);
+void getLines(bwMatrix *bwM_block, bndBoxList *bwM_out);
 bndBoxList getChars(bwMatrix *bwM_line);
 
 rgbMatrix drawBoundingBoxes(rgbMatrix *rgbM, color c);
 
 /* Returns the bwMatrix cropped from given bwMatrix using bndBox as boundaries (included) */
-bwMatrix cropUsingBox(bwMatrix *bwM_toCrop, bndBox *box);
+void cropUsingBox(bwMatrix *bwM_toCrop, bwMatrix *bwM_res, bndBox *box);
 
 #endif

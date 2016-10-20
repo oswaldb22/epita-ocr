@@ -6,34 +6,34 @@
 
 void bwMatrixInit(bwMatrix *bwMat, const ulong w, const ulong h) {
 
-	ulong i = 0, j = 0;
-
 	bwMat->width = w;
 	bwMat->height = h;
 
-	bwMat->matrix = malloc(w * sizeof(uint*));
-	for (ulong i = 0; i < w; i++)
-		bwMat->matrix[i] = malloc(h * sizeof(uint));
-
-	for (i = 0; i < w; i++)
-		for (j = 0; j < h; j++)
-			bwMat->matrix[i][j] = 0;
+	bwMat->matrix = (uint*)malloc(w * h * sizeof(uint));
+	if (bwMat->matrix == NULL)
+	{
+		printf("Memory allocation failed");
+		return;
+	}
+	ulong i = 0;
+	for (i = 0; i < w * h; ++i)
+		bwMat->matrix[i] = 0;
 }
 
 void bwMatrixFree(bwMatrix *bwMat) {
 	bwMat->width = 0;
 	bwMat->height = 0;
-	free(bwMat->matrix);
+	free(bwMat);
 }
 
 uint bwMatrixGetValue(const bwMatrix *bwMat, const ulong w, const ulong h) {
 	assert(w < bwMat->width || h < bwMat->height);
-	return bwMat->matrix[h][w];
+	return bwMat->matrix[w * bwMat->width + h];
 }
 
 void bwMatrixSetValue(bwMatrix *bwMat, const ulong w, const ulong h, const uint newvalue) {
 	assert(w < bwMat->width || h < bwMat->height);
-	bwMat->matrix[h][w] = newvalue;
+	bwMat->matrix[w * bwMat->width + h] = newvalue;
 }
 
 void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode printMode) {
@@ -80,7 +80,7 @@ void load_bwM(bwMatrix *bwM, SDL_Surface* img) {
 			else
 				res = 1;
 
-			bwM->matrix[j][i] = (uint)res;
+			bwMatrixSetValue(bwM, i, j, (uint)res);
 
 		}
 	}
@@ -94,7 +94,7 @@ void bwMprint(bwMatrix *bwM) {
 	{
 		for (ulong j = 0; j < bwM->height; j++)
 		{
-			printf("%d", bwM->matrix[j][i]);
+			printf("%d", bwMatrixGetValue(bwM, i, j));
 
 		}
 		printf("\n");

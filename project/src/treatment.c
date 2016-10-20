@@ -20,28 +20,23 @@ bwMatrix convertToBw(rgbMatrix *rgbM) {
 	return bwM;/*A modifier*/
 }
 
-bwMatrix cropUsingBox(bwMatrix *bwM_toCrop, bndBox *box) {
+void cropUsingBox(bwMatrix *bwM_toCrop, bwMatrix *bwM_res, bndBox *box) {
 
 	ulong width = bndBoxGetWidth(box);
 	ulong height = bndBoxGetHeight(box);
 
-	bwMatrix bwM_res;
-	bwMatrixInit(&bwM_res, width, height);
-	bwMatrixPrintCompact(&bwM_res, Simple);
-	bwMatrixPrintCompact(&bwM_res, Advanced);
+	bwMatrixPrintCompact(bwM_res, Simple);
+	bwMatrixPrintCompact(bwM_res, Advanced);
 
 	for (ulong w = 0; w < width; ++w)
-		for (ulong h = 0; h < height - 1; ++h) {
+		for (ulong h = 0; h < height; ++h) {
 			uint newval = bwMatrixGetValue(bwM_toCrop, box->x1 + w, box->y1 + h);
-			bwMatrixSetValue(&bwM_res, w, h, newval);
-			//bwMatrixPrintCompact(&bwM_res, Advanced);
+			bwMatrixSetValue(bwM_res, w, h, newval);
+			//bwMatrixPrintCompact(bwM_res, Advanced);
 		}
-	return bwM_res;
 }
 
-bndBoxList getLines(bwMatrix *bwM_block) {
-	bndBoxList boxList;
-	bndBoxListInit(&boxList);
+void getLines(bwMatrix *bwM_block, bndBoxList *bwM_out) {
 
 	int buildingline = 0;
 	ulong h = 0;
@@ -66,7 +61,7 @@ bndBoxList getLines(bwMatrix *bwM_block) {
 				//If we reach the end of the row without encountering anything, end the line
 				if (w == bwM_block->width - 1) {
 					bndBox newline = bndBoxNew(0, start, w, h - 1);
-					bndBoxListAdd(&boxList, newline);
+					bndBoxListAdd(bwM_out, newline);
 					buildingline = 0;
 					break;
 				}
@@ -75,6 +70,4 @@ bndBoxList getLines(bwMatrix *bwM_block) {
 		}
 		h++;
 	}
-
-	return boxList;
 }

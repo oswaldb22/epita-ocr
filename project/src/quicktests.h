@@ -6,65 +6,6 @@
 #include "bndBoxList.h"
 #include "treatment.h"
 
-void TestCut() {
-	bwMatrix test;
-	bwMatrixInit(&test, 10, 10);
-	bwMatrixPrintCompact(&test, Advanced);
-
-	bwMatrixSetValue(&test, 1, 1, 1);
-	bwMatrixSetValue(&test, 1, 2, 1);
-	bwMatrixSetValue(&test, 1, 3, 1);
-	bwMatrixSetValue(&test, 1, 4, 1);
-	bwMatrixSetValue(&test, 1, 6, 1);
-	bwMatrixSetValue(&test, 1, 7, 1);
-	bwMatrixSetValue(&test, 1, 8, 1);
-
-	bwMatrixSetValue(&test, 2, 1, 1);
-	bwMatrixSetValue(&test, 2, 3, 1);
-
-	bwMatrixSetValue(&test, 3, 1, 1);
-	bwMatrixSetValue(&test, 3, 2, 1);
-	bwMatrixSetValue(&test, 3, 3, 1);
-	bwMatrixSetValue(&test, 3, 4, 1);
-	bwMatrixSetValue(&test, 3, 6, 1);
-	bwMatrixSetValue(&test, 3, 7, 1);
-
-	bwMatrixSetValue(&test, 4, 6, 1);
-	bwMatrixSetValue(&test, 4, 7, 1);
-
-	bwMatrixSetValue(&test, 5, 1, 1);
-	bwMatrixSetValue(&test, 5, 2, 1);
-	bwMatrixSetValue(&test, 5, 3, 1);
-	bwMatrixSetValue(&test, 5, 4, 1);
-
-	bwMatrixSetValue(&test, 6, 1, 1);
-	bwMatrixSetValue(&test, 6, 4, 1);
-	bwMatrixSetValue(&test, 6, 6, 1);
-	bwMatrixSetValue(&test, 6, 8, 1);
-
-	bwMatrixSetValue(&test, 7, 7, 1);
-	bwMatrixSetValue(&test, 7, 8, 1);
-
-	bwMatrixSetValue(&test, 8, 1, 1);
-	bwMatrixSetValue(&test, 8, 2, 1);
-	bwMatrixSetValue(&test, 8, 4, 1);
-
-	bwMatrixPrintCompact(&test, Advanced);
-
-
-	bndBoxList testList = getLines(&test);
-
-	for (ulong i = 0; i < testList.size; i++)
-	{
-		bndBox current = testList.list[i];
-		bwMatrix line = cropUsingBox(&test, &current);
-		bwMatrixPrintCompact(&line, Advanced);
-		bwMatrixFree(&line);
-	}
-
-
-	bwMatrixFree(&test);
-}
 
 void TestMat(bwMatrix *mat) {
 	srand(time(NULL));
@@ -74,8 +15,71 @@ void TestMat(bwMatrix *mat) {
 			uint r = rand() % 2;
 			bwMatrixSetValue(mat, w, h, r);
 		}
-	bwMatrixPrintCompact(mat, Simple);
+	bwMatrixPrintCompact(mat, Advanced);
 }
+
+void TestCut() {
+	bwMatrix *test = (bwMatrix*)malloc(sizeof(bwMatrix));
+	bwMatrixInit(test, 10, 10);
+	bwMatrixPrintCompact(test, Advanced);
+
+	bwMatrixSetValue(test, 1, 1, 1);
+	bwMatrixSetValue(test, 1, 2, 1);
+	bwMatrixSetValue(test, 1, 3, 1);
+	bwMatrixSetValue(test, 1, 4, 1);
+	bwMatrixSetValue(test, 1, 6, 1);
+	bwMatrixSetValue(test, 1, 7, 1);
+	bwMatrixSetValue(test, 1, 8, 1);
+
+	bwMatrixSetValue(test, 2, 1, 1);
+	bwMatrixSetValue(test, 2, 3, 1);
+
+	bwMatrixSetValue(test, 3, 1, 1);
+	bwMatrixSetValue(test, 3, 2, 1);
+	bwMatrixSetValue(test, 3, 3, 1);
+	bwMatrixSetValue(test, 3, 4, 1);
+	bwMatrixSetValue(test, 3, 6, 1);
+	bwMatrixSetValue(test, 3, 7, 1);
+
+	bwMatrixSetValue(test, 4, 6, 1);
+	bwMatrixSetValue(test, 4, 7, 1);
+
+	bwMatrixSetValue(test, 5, 1, 1);
+	bwMatrixSetValue(test, 5, 2, 1);
+	bwMatrixSetValue(test, 5, 3, 1);
+	bwMatrixSetValue(test, 5, 4, 1);
+
+	bwMatrixSetValue(test, 6, 1, 1);
+	bwMatrixSetValue(test, 6, 4, 1);
+	bwMatrixSetValue(test, 6, 6, 1);
+	bwMatrixSetValue(test, 6, 8, 1);
+
+	bwMatrixSetValue(test, 7, 7, 1);
+	bwMatrixSetValue(test, 7, 8, 1);
+
+	bwMatrixSetValue(test, 8, 1, 1);
+	bwMatrixSetValue(test, 8, 2, 1);
+	bwMatrixSetValue(test, 8, 4, 1);
+
+	bwMatrixPrintCompact(test, Advanced);
+
+	bndBoxList *testList = (bndBoxList*)malloc(sizeof(bndBoxList));
+	bndBoxListInit(testList);
+	getLines(test, testList);
+	
+	for (ulong i = 0; i < testList->size; i++)
+	{
+		bwMatrix *line = (bwMatrix*)malloc(sizeof(bwMatrix));
+		bndBox current = testList->list[i];
+		bwMatrixInit(line, bndBoxGetWidth(&current), bndBoxGetHeight(&current));
+		cropUsingBox(test, line, &current);
+		bwMatrixPrintCompact(line, Advanced);
+		bwMatrixFree(line);
+	}
+	bndBoxListFree(testList);
+	bwMatrixFree(test);
+}
+
 
 void Testbw0() {
 
@@ -94,8 +98,10 @@ void TestTreatment0() {
 	bwMatrix test;
 	bwMatrixInit(&test, 5, 5);
 	TestMat(&test);
-	bwMatrix two = cropUsingBox(&test, &box);
-	printf("=====\n");
+	bwMatrix two;
+	bwMatrixInit(&two, bndBoxGetWidth(&box), bndBoxGetHeight(&box));
+	cropUsingBox(&test, &two, &box);
+	printf("=====");
 	bwMatrixPrintCompact(&two, Simple);
 	bwMatrixPrintCompact(&two, Advanced);
 	bwMatrixFree(&test);

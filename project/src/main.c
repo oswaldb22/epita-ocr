@@ -34,6 +34,7 @@ int main(int argc, char* argv[])
 	//*/
 
 	//*/ BLOC 1 - Used for quicktests
+	//Testbw0();
 	//TestbndBoxList();
 	//TestTreatment0();
 	//TestCut();
