@@ -62,7 +62,8 @@ int main(int argc, char* argv[])
 	printf("Size = %lu, %lu\n", bwM.width, bwM.height);
 
 	load_bwM(&bwM, img);
-	bwMprint(&bwM);
+	bwMatrixPrintCompact(&bwM,Simple);
+	bwMatrixPrintCompact(&bwM,Advanced);
 	//*/
 
 	return 0;
