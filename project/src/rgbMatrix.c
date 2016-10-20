@@ -94,15 +94,14 @@ void rgbSetColorXY(const rgbMatrix *rgbM,const ulong w,const ulong h,const color
 
 void rgbMprint(rgbMatrix *rgbM){
 
-for (ulong i = 0; i < rgbM->width; i++)
-  {
-    for (ulong j = 0; j < rgbM->height; j++)
-    {
-      printf("r=%d,g=%d,b=%d",rgbM->matrix[j][i].r,rgbM->matrix[j][i].g,rgbM->matrix[j][i].b);
-
-    }
-      printf("\n");
-  }	
+  for (ulong j = 0; j < rgbM->height; j++)
+	{
+		for (ulong i = 0; i < rgbM->width; i++)
+		{
+	printf("r=%d,g=%d,b=%d",rgbM->matrix[j][i].r,rgbM->matrix[j][i].g,rgbM->matrix[j][i].b);
+		}
+		printf("\n");
+	}
 
 }
 
