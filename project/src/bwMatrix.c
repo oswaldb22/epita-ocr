@@ -23,7 +23,7 @@ void bwMatrixInit(bwMatrix *bwMat, const ulong w, const ulong h) {
 void bwMatrixFree(bwMatrix *bwMat) {
 	bwMat->width = 0;
 	bwMat->height = 0;
-	free(bwMat);
+	free(bwMat->matrix);
 }
 
 uint bwMatrixGetValue(const bwMatrix *bwMat, const ulong w, const ulong h) {
