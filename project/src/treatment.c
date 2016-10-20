@@ -39,6 +39,6 @@ bwMatrix cropUsingBox(bwMatrix *bwM_toCrop, bndBox *box) {
 bndBoxList getLines(bwMatrix *bwM_block) {
 	bndBoxList boxList;
 	bndBoxListInit(&boxList);
-
+	UNUSED(bwM_block);
 	return boxList;
 }

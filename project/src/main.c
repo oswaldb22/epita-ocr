@@ -52,14 +52,14 @@ int main(int argc, char* argv[])
 
 	bwMatrix bwM;
 	bwMatrixInit(&bwM, img->w, img->h);
-	printf("Size = %u, %u\n", bwM.width, bwM.height);
+	printf("Size = %lu, %lu\n", bwM.width, bwM.height);
 
 
 	//load_rgbM(&rgbM,img);
 	//rgbMprint(&rgbM);
 
 	load_bwM(&bwM, img);
-	bwMprint(&bwM);
+	bwMatrixPrintCompact(&bwM);	//bwMprint(&bwM);
 	
 
 	return 0;
