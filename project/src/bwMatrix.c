@@ -1,11 +1,11 @@
-/*
+﻿/*
 	TODO : Insert fancy header
 */
 
 #include "bwMatrix.h"
 
 void bwMatrixInit(bwMatrix *bwMat, const ulong w, const ulong h) {
-	
+
 	ulong i = 0, j = 0;
 
 	bwMat->width = w;
@@ -36,59 +36,69 @@ void bwMatrixSetValue(bwMatrix *bwMat, const ulong w, const ulong h, const uint 
 	bwMat->matrix[h][w] = newvalue;
 }
 
-void bwMatrixPrintCompact(const bwMatrix *bwM) {
+void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode printMode) {
+	printf("\n");
 	for (ulong h = 0; h < bwM->height; h++)
 	{
 		for (ulong w = 0; w < bwM->width; w++)
 		{
 			uint val = bwMatrixGetValue(bwM, w, h);
-			printf("%i", val);
+			if (printMode == Simple)
+				printf("%d", val);
+			if (printMode == Advanced) {
+				if (val == 0)
+					printf("░");
+				else
+					printf("█");
+			}
+
 		}
 		printf("\n");
 	}
+	printf("\n");
 }
 
 
 
 
-void load_bwM(bwMatrix *bwM,SDL_Surface* img){
-	
+void load_bwM(bwMatrix *bwM, SDL_Surface* img) {
 
-  for (ulong i = 0; i < bwM->width; i++)
-  {
-    for (ulong j = 0; j < bwM->height; j++)
-    {
-      Uint32 pixel = getpixel(img,i,j);
-      Uint8 r = 0;
-      Uint8 g = 0;
-      Uint8 b = 0;
-      SDL_GetRGB(pixel, img->format, &r, &g, &b);
 
-      float res = (float)r * 0.3 +(float)b * 0.11 +(float)g * 0.59;
-      if (res < 128)
-      	res = 0;
-      else 
-         res = 1;
-	
-      bwM->matrix[j][i] = (uint)res;
+	for (ulong i = 0; i < bwM->width; i++)
+	{
+		for (ulong j = 0; j < bwM->height; j++)
+		{
+			Uint32 pixel = getpixel(img, i, j);
+			Uint8 r = 0;
+			Uint8 g = 0;
+			Uint8 b = 0;
+			SDL_GetRGB(pixel, img->format, &r, &g, &b);
 
-     }
-  }	
-	
+			float res = (float)r * 0.3 + (float)b * 0.11 + (float)g * 0.59;
+			if (res < 128)
+				res = 0;
+			else
+				res = 1;
+
+			bwM->matrix[j][i] = (uint)res;
+
+		}
+	}
+
 }
 
 
-void bwMprint(bwMatrix *bwM){
+void bwMprint(bwMatrix *bwM) {
 
-for (ulong i = 0; i < bwM->width; i++)
-  {
-    for (ulong j = 0; j < bwM->height; j++)
-    {
-      printf("%d",bwM->matrix[j][i]);
+	for (ulong i = 0; i < bwM->width; i++)
+	{
+		for (ulong j = 0; j < bwM->height; j++)
+		{
+			printf("%d", bwM->matrix[j][i]);
 
-    }
-      printf("\n");
-  }	
+		}
+		printf("\n");
+	}
 
 }
 

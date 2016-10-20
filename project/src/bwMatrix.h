@@ -7,7 +7,7 @@
 
 	Disposition :
 
-        w i d t h
+		w i d t h
 	h
 	e   0 1 0 0 1
 	i   0 1 0 0 0
@@ -24,6 +24,8 @@
 #ifndef BWMATRIX
 #define BWMATRIX
 
+typedef enum { Simple, Advanced } PrintMode;
+
 /* Structure defining an array supposed to contain 0 and 1 only */
 typedef struct
 {
@@ -38,6 +40,8 @@ void bwMatrixInit(bwMatrix *bwMat, const ulong w, const ulong h);
 void bwMatrixFree(bwMatrix *bwMat);
 uint bwMatrixGetValue(const bwMatrix *bwMat, const ulong w, const ulong h);
 void bwMatrixSetValue(bwMatrix *bwMat, const ulong w, const ulong h, const uint newvalue);
-void load_bwM(bwMatrix *bwM,SDL_Surface* img);
-void bwMatrixPrintCompact(const bwMatrix *bwM);
+void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode printMode);
+
+void load_bwM(bwMatrix *bwM, SDL_Surface* img);
+void bwMprint(bwMatrix *bwM);
 #endif

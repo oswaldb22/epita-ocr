@@ -6,27 +6,75 @@
 #include "bndBoxList.h"
 #include "treatment.h"
 
-void TestMat(bwMatrix *mat) {
+void TestCut() {
+	bwMatrix test;
+	bwMatrixInit(&test, 10, 10);
+	bwMatrixPrintCompact(&test, Advanced);
 
+	bwMatrixSetValue(&test, 1, 1, 1);
+	bwMatrixSetValue(&test, 1, 2, 1);
+	bwMatrixSetValue(&test, 1, 3, 1);
+	bwMatrixSetValue(&test, 1, 4, 1);
+	bwMatrixSetValue(&test, 1, 6, 1);
+	bwMatrixSetValue(&test, 1, 7, 1);
+	bwMatrixSetValue(&test, 1, 8, 1);
+
+	bwMatrixSetValue(&test, 2, 1, 1);
+	bwMatrixSetValue(&test, 2, 3, 1);
+
+	bwMatrixSetValue(&test, 3, 1, 1);
+	bwMatrixSetValue(&test, 3, 2, 1);
+	bwMatrixSetValue(&test, 3, 3, 1);
+	bwMatrixSetValue(&test, 3, 4, 1);
+	bwMatrixSetValue(&test, 3, 6, 1);
+	bwMatrixSetValue(&test, 3, 7, 1);
+
+	bwMatrixSetValue(&test, 4, 6, 1);
+	bwMatrixSetValue(&test, 4, 7, 1);
+
+	bwMatrixSetValue(&test, 5, 1, 1);
+	bwMatrixSetValue(&test, 5, 2, 1);
+	bwMatrixSetValue(&test, 5, 3, 1);
+	bwMatrixSetValue(&test, 5, 4, 1);
+
+	bwMatrixSetValue(&test, 6, 1, 1);
+	bwMatrixSetValue(&test, 6, 4, 1);
+	bwMatrixSetValue(&test, 6, 6, 1);
+	bwMatrixSetValue(&test, 6, 8, 1);
+
+	bwMatrixSetValue(&test, 7, 7, 1);
+	bwMatrixSetValue(&test, 7, 8, 1);
+
+	bwMatrixSetValue(&test, 8, 1, 1);
+	bwMatrixSetValue(&test, 8, 2, 1);
+	bwMatrixSetValue(&test, 8, 4, 1);
+
+	bwMatrixPrintCompact(&test, Advanced);
+
+
+	bndBoxList testList = getLines(&test);
+
+	for (ulong i = 0; i < testList.size; i++)
+	{
+		bndBox current = testList.list[i];
+		bwMatrix line = cropUsingBox(&test, &current);
+		bwMatrixPrintCompact(&line, Advanced);
+		bwMatrixFree(&line);
+	}
+
+
+	bwMatrixFree(&test);
+}
+
+void TestMat(bwMatrix *mat) {
 	srand(time(NULL));
-	//*/
 	for (ulong w = 0; w < mat->width; w++)
 		for (ulong h = 0; h < mat->height; h++)
 		{
 			uint r = rand() % 2;
 			bwMatrixSetValue(mat, w, h, r);
 		}
-	for (ulong h = 0; h < mat->height; h++)
-	{
-		for (ulong w = 0; w < mat->width; w++)
-		{
-			uint val = bwMatrixGetValue(mat, w, h);
-			printf(" %i", val);
-		}
-		printf("\n");
-	}
-	//*/
-
+	bwMatrixPrintCompact(mat, Simple);
 }
 
 void Testbw0() {
@@ -48,15 +96,10 @@ void TestTreatment0() {
 	TestMat(&test);
 	bwMatrix two = cropUsingBox(&test, &box);
 	printf("=====\n");
-	for (ulong h = 0; h < two.height; h++)
-	{
-		for (ulong w = 0; w < two.width; w++)
-		{
-			uint val = bwMatrixGetValue(&two, w, h);
-			printf(" %i", val);
-		}
-		printf("\n");
-	}
+	bwMatrixPrintCompact(&two, Simple);
+	bwMatrixPrintCompact(&two, Advanced);
+	bwMatrixFree(&test);
+	bwMatrixFree(&two);
 }
 
 void TestbndBox() {

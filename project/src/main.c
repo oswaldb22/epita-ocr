@@ -29,16 +29,17 @@ int main(int argc, char* argv[])
 	//			/*/	 -> //*/	Commenté
 
 	//*/ BLOC 0 - Used to remove warning when testing without args
-	//UNUSED(argc);
-	//UNUSED(argv);
+	UNUSED(argc);
+	UNUSED(argv);
 	//*/
 
-	/*/ BLOC 1 - Used for quicktests
-	TestbndBoxList();
-	TestTreatment0();
+	//*/ BLOC 1 - Used for quicktests
+	//TestbndBoxList();
+	//TestTreatment0();
+	//TestCut();
 	//*/
 
-	//BLOC 2
+	//*/BLOC 2
 	if (argc < 2)
 		return 1;
 	init_sdl();
@@ -46,9 +47,9 @@ int main(int argc, char* argv[])
 	//SDL_Surface* screen = NULL;
 	img = load_image(argv[1]);
 
-	/*rgbMatrix rgbM;
-	rgbInit(&rgbM,img->w,img->h);
-	printf("Size = %d, %d\n",rgbM.width,rgbM.height);*/
+	//rgbMatrix rgbM;
+	//rgbInit(&rgbM,img->w,img->h);
+	//printf("Size = %d, %d\n",rgbM.width,rgbM.height);
 
 	bwMatrix bwM;
 	bwMatrixInit(&bwM, img->w, img->h);
@@ -59,8 +60,8 @@ int main(int argc, char* argv[])
 	//rgbMprint(&rgbM);
 
 	load_bwM(&bwM, img);
-	bwMatrixPrintCompact(&bwM);	//bwMprint(&bwM);
-	
+	bwMprint(&bwM);
+	//*/
 
 	return 0;
 }
