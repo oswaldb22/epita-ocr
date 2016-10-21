@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 	//PRINTING RGB
 	/*load_rgbM(&rgbM,img);
 	rgbMprint(&rgbM);*/
-	
+
 	bwMatrix bwM;
 	bwMatrixInit(&bwM, img->w, img->h);
 	printf("Size = %lu, %lu\n", bwM.width, bwM.height);

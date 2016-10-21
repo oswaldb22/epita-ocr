@@ -63,22 +63,39 @@ void TestCut() {
 
 	bwMatrixPrintCompact(&test, Advanced);
 	
-	bndBoxList testList;
-	bndBoxListInit(&testList);
-	getLines(&test, &testList);
+	bndBoxList lineList;
+	bndBoxListInit(&lineList);
+	getLines(&test, &lineList);
 	
 	
-	for (ulong i = 0; i < testList.size; i++)
+	
+	for (ulong i = 0; i < lineList.size; i++)
 	{
 		bwMatrix line;
-		bndBox current = testList.list[i];
+		bndBox current = lineList.list[i];
 		bwMatrixInit(&line, bndBoxGetWidth(&current), bndBoxGetHeight(&current));
 		cropUsingBox(&test, &line, &current);
 		bwMatrixPrintCompact(&line, Advanced);
+
+		bndBoxList charList;
+		bndBoxListInit(&charList);
+		getChars(&line, &charList);
+
+		for (ulong i = 0; i < charList.size; i++)
+		{
+			bwMatrix charac;
+			bndBox current = charList.list[i];
+			bwMatrixInit(&charac, bndBoxGetWidth(&current), bndBoxGetHeight(&current));
+			cropUsingBox(&line, &charac, &current);
+			bwMatrixPrintCompact(&charac, Advanced);
+			bwMatrixFree(&charac);
+		}
+
+		bndBoxListFree(&charList);
 		bwMatrixFree(&line);
 	}
-	
-	bndBoxListFree(&testList);
+
+	bndBoxListFree(&lineList);
 	bwMatrixFree(&test);
 }
 

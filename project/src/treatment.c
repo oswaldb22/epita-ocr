@@ -21,9 +21,18 @@ bwMatrix convertToBw(rgbMatrix *rgbM) {
 }
 
 void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
+
+	if (bwMatrixGetValue(bwM_noModify, box_toResize->x1, box_toResize->y1) && bwMatrixGetValue(bwM_noModify, box_toResize->x2, box_toResize->y2))
+		return;
+
+	if (bwMatrixGetValue(bwM_noModify, box_toResize->x2, box_toResize->y1) && bwMatrixGetValue(bwM_noModify, box_toResize->x1, box_toResize->y2))
+		return;
+
 	int getOut = 0;
 	//Left
 	while (!getOut) {
+		if (box_toResize->x1 == box_toResize->x2)
+			break;
 		for (ulong i = box_toResize->y1; i < box_toResize->y2; ++i) {
 			if (bwMatrixGetValue(bwM_noModify, box_toResize->x1, i) != 0) {
 				getOut = 1;
@@ -36,6 +45,8 @@ void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
 	//Right
 	getOut = 0;
 	while (!getOut) {
+		if (box_toResize->x1 == box_toResize->x2)
+			break;
 		for (ulong i = box_toResize->y1; i < box_toResize->y2; ++i) {
 			if (bwMatrixGetValue(bwM_noModify, box_toResize->x2, i) != 0) {
 				getOut = 1;
@@ -48,6 +59,8 @@ void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
 	//Top
 	getOut = 0;
 	while (!getOut) {
+		if (box_toResize->y1 == box_toResize->y2)
+			break;
 		for (ulong i = box_toResize->x1; i < box_toResize->x2; ++i) {
 			if (bwMatrixGetValue(bwM_noModify, i, box_toResize->y1) != 0) {
 				getOut = 1;
@@ -56,10 +69,13 @@ void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
 		}
 		if (!getOut)
 			++box_toResize->y1;
+
 	}
 	//Bottom
 	getOut = 0;
 	while (!getOut) {
+		if (box_toResize->y1 == box_toResize->y2)
+			break;
 		for (ulong i = box_toResize->x1; i < box_toResize->x2; ++i) {
 			if (bwMatrixGetValue(bwM_noModify, i, box_toResize->y2) != 0) {
 				getOut = 1;
@@ -123,42 +139,48 @@ void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out) {
 	}
 }
 
-void getChars(bwMatrix *bwM_line, bndBoxList *bwM_out) {
+void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out) {
 
-	/* TODO : COPY PASTA from getlines, to replace for getchar
-	int buildingline = 0;
-	ulong h = 0;
+	int buildingchar = 0;
+	ulong w = 0;
 	ulong start = 0;
-
-	//For each row in the Matrix
-	while (h < bwM_block->height)
+	//For each column in the Matrix
+	while (w < bwM_line->width)
 	{
-		ulong w = 0;
-		while (w < bwM_block->width) {
-			//If we encounter a line and are not building one, start a new line
-			if (buildingline == 0 && bwMatrixGetValue(bwM_block, w, h) == 1) {
-				start = h;
-				buildingline = 1;
+		ulong h = 0;
+		while (h < bwM_line->height) {
+			//If we encounter a char and are not building one, start a new char
+			if (buildingchar == 0 && bwMatrixGetValue(bwM_line, w, h) == 1) {
+				start = w;
+				buildingchar = 1;
 				break;
 			}
-			//If we are building a line
-			if (buildingline == 1) {
-				//If we encounter something, this is part of our line so go to next row
-				if (bwMatrixGetValue(bwM_block, w, h) == 1)
+			//If we are building a char
+			if (buildingchar == 1) {
+				//If we encounter something, this is part of our char so go to next column
+				if (bwMatrixGetValue(bwM_line, w, h) == 1)
 					break;
-				//If we reach the end of the row without encountering anything, end the line
-				if (w == bwM_block->width - 1) {
-					bndBox newline;
-					bndBoxInit(&newline, 0, start, w, h - 1);
-					bndBoxListAdd(bwM_out, newline);
-					buildingline = 0;
-					bndBoxFree(&newline);
+				//If we reach the end of the column without encountering anything, end the char
+				if (h == bwM_line->height - 1) {
+					bndBox newchar;
+					bndBoxInit(&newchar, start, 0, w - 1, h);
+					removeWhiteSpaces(bwM_line, &newchar);
+					bndBoxListAdd(bndList_out, newchar);
+					buildingchar = 0;
+					bndBoxFree(&newchar);
 					break;
 				}
 			}
-			w++;
+			h++;
 		}
-		h++;
+		if (w == bwM_line->width - 1 && buildingchar == 1) {
+			bndBox newchar;
+			bndBoxInit(&newchar, start, 0, w, bwM_line->height - 1);
+			removeWhiteSpaces(bwM_line, &newchar);
+			bndBoxListAdd(bndList_out, newchar);
+			buildingchar = 0;
+			bndBoxFree(&newchar);
+		}
+		w++;
 	}
-	*/
 }
