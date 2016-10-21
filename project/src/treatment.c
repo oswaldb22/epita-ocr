@@ -20,6 +20,57 @@ bwMatrix convertToBw(rgbMatrix *rgbM) {
 	return bwM;/*A modifier*/
 }
 
+void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
+	int getOut = 0;
+	//Left
+	while (!getOut) {
+		for (ulong i = box_toResize->y1; i < box_toResize->y2; ++i) {
+			if (bwMatrixGetValue(bwM_noModify, box_toResize->x1, i) != 0) {
+				getOut = 1;
+				break;
+			}
+		}
+		if (!getOut)
+			++box_toResize->x1;
+	}
+	//Right
+	getOut = 0;
+	while (!getOut) {
+		for (ulong i = box_toResize->y1; i < box_toResize->y2; ++i) {
+			if (bwMatrixGetValue(bwM_noModify, box_toResize->x2, i) != 0) {
+				getOut = 1;
+				break;
+			}
+		}
+		if (!getOut)
+			--box_toResize->x2;
+	}
+	//Top
+	getOut = 0;
+	while (!getOut) {
+		for (ulong i = box_toResize->x1; i < box_toResize->x2; ++i) {
+			if (bwMatrixGetValue(bwM_noModify, i, box_toResize->y1) != 0) {
+				getOut = 1;
+				break;
+			}
+		}
+		if (!getOut)
+			++box_toResize->y1;
+	}
+	//Bottom
+	getOut = 0;
+	while (!getOut) {
+		for (ulong i = box_toResize->x1; i < box_toResize->x2; ++i) {
+			if (bwMatrixGetValue(bwM_noModify, i, box_toResize->y2) != 0) {
+				getOut = 1;
+				break;
+			}
+		}
+		if (!getOut)
+			--box_toResize->y2;
+	}
+}
+
 void cropUsingBox(bwMatrix *bwM_toCrop, bwMatrix *bwM_res, bndBox *box) {
 
 	ulong width = bndBoxGetWidth(box);
@@ -33,8 +84,48 @@ void cropUsingBox(bwMatrix *bwM_toCrop, bwMatrix *bwM_res, bndBox *box) {
 		}
 }
 
-void getLines(bwMatrix *bwM_block, bndBoxList *bwM_out) {
+void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out) {
 
+	int buildingline = 0;
+	ulong h = 0;
+	ulong start = 0;
+
+	//For each row in the Matrix
+	while (h < bwM_block->height)
+	{
+		ulong w = 0;
+		while (w < bwM_block->width) {
+			//If we encounter a line and are not building one, start a new line
+			if (buildingline == 0 && bwMatrixGetValue(bwM_block, w, h) == 1) {
+				start = h;
+				buildingline = 1;
+				break;
+			}
+			//If we are building a line
+			if (buildingline == 1) {
+				//If we encounter something, this is part of our line so go to next row
+				if (bwMatrixGetValue(bwM_block, w, h) == 1)
+					break;
+				//If we reach the end of the row without encountering anything, end the line
+				if (w == bwM_block->width - 1) {
+					bndBox newline;
+					bndBoxInit(&newline, 0, start, w, h - 1);
+					removeWhiteSpaces(bwM_block, &newline);
+					bndBoxListAdd(bndList_out, newline);
+					buildingline = 0;
+					bndBoxFree(&newline);
+					break;
+				}
+			}
+			w++;
+		}
+		h++;
+	}
+}
+
+void getChars(bwMatrix *bwM_line, bndBoxList *bwM_out) {
+
+	/* TODO : COPY PASTA from getlines, to replace for getchar
 	int buildingline = 0;
 	ulong h = 0;
 	ulong start = 0;
@@ -69,4 +160,5 @@ void getLines(bwMatrix *bwM_block, bndBoxList *bwM_out) {
 		}
 		h++;
 	}
+	*/
 }
