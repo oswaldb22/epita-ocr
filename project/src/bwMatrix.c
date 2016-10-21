@@ -15,8 +15,8 @@ void bwMatrixInit(bwMatrix *bwMat, const ulong w, const ulong h) {
 		printf("Memory allocation failed");
 		return;
 	}
-	ulong i = 0;
-	for (i = 0; i < w * h; ++i)
+
+	for (ulong i = 0; i < w * h; ++i)
 		bwMat->matrix[i] = 0;
 }
 
@@ -28,19 +28,19 @@ void bwMatrixFree(bwMatrix *bwMat) {
 
 uint bwMatrixGetValue(const bwMatrix *bwMat, const ulong w, const ulong h) {
 	assert(w < bwMat->width || h < bwMat->height);
-	return bwMat->matrix[w * bwMat->width + h];
+	return bwMat->matrix[(h * bwMat->width) + w];
 }
 
 void bwMatrixSetValue(bwMatrix *bwMat, const ulong w, const ulong h, const uint newvalue) {
 	assert(w < bwMat->width || h < bwMat->height);
-	bwMat->matrix[w * bwMat->width + h] = newvalue;
+	bwMat->matrix[(h * bwMat->width) + w] = newvalue;
 }
 
 void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode printMode) {
 	printf("\n");
-	for (ulong h = 0; h < bwM->height; h++)
+	for (ulong h = 0; h < bwM->height; ++h)
 	{
-		for (ulong w = 0; w < bwM->width; w++)
+		for (ulong w = 0; w < bwM->width; ++w)
 		{
 			uint val = bwMatrixGetValue(bwM, w, h);
 			if (printMode == Simple)
@@ -86,23 +86,3 @@ void load_bwM(bwMatrix *bwM, SDL_Surface* img) {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

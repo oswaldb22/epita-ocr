@@ -25,9 +25,6 @@ void cropUsingBox(bwMatrix *bwM_toCrop, bwMatrix *bwM_res, bndBox *box) {
 	ulong width = bndBoxGetWidth(box);
 	ulong height = bndBoxGetHeight(box);
 
-	bwMatrixPrintCompact(bwM_res, Simple);
-	bwMatrixPrintCompact(bwM_res, Advanced);
-
 	for (ulong w = 0; w < width; ++w)
 		for (ulong h = 0; h < height; ++h) {
 			uint newval = bwMatrixGetValue(bwM_toCrop, box->x1 + w, box->y1 + h);
@@ -60,9 +57,11 @@ void getLines(bwMatrix *bwM_block, bndBoxList *bwM_out) {
 					break;
 				//If we reach the end of the row without encountering anything, end the line
 				if (w == bwM_block->width - 1) {
-					bndBox newline = bndBoxNew(0, start, w, h - 1);
+					bndBox newline;
+					bndBoxInit(&newline, 0, start, w, h - 1);
 					bndBoxListAdd(bwM_out, newline);
 					buildingline = 0;
+					bndBoxFree(&newline);
 					break;
 				}
 			}
