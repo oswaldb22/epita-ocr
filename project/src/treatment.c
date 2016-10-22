@@ -1,23 +1,33 @@
 #include "treatment.h"
 
-bwMatrix convertToBw(rgbMatrix *rgbM) {
-
-	bwMatrix bwM;
-	bwMatrixInit(&bwM, rgbGetWidth(rgbM), rgbGetHeight(rgbM));
+void convertToBw(rgbMatrix *rgbM_in, bwMatrix *bwM_out, int threshold) {
 
 	color c;
 	for (ulong w = 0; w < rgbGetWidth(rgbM); w++)
-	{
 		for (ulong h = 0; h < rgbGetHeight(rgbM); h++)
 		{
 			c = rgbGetColorXY(rgbM, w, h);
 			float res = (float)c.r * 0.3 + (float)c.b * 0.11 + (float)c.g * 0.59;
-			res = res < 128 ? 0 : 1;
+			res = res < threshold ? 0 : 1;
 			bwMatrixSetValue(&bwM, w, h, (uint)res);
 		}
-	}
+}
 
-	return bwM;/*A modifier*/
+void convertToRgb(bwMatrix *bwM_in, rgbMatrix *rgbM_out) {
+
+	color c;
+	uint val;
+	for (ulong w = 0; w < bwM_in->width; w++)
+		for (ulong h = 0; h < bwM_in->height; h++)
+		{
+			newval = bwMatrixGetValue(bwM_in, w, h) * 255;
+			colorSetRGB(c, newval, newval, newval);
+			rgbSetColorXY(rgbM_out, w, h, c);
+		}
+}
+
+void drawBoundingBoxes(rgbMatrix *rgbM_in, bndBoxList *bndList_draw, DrawMode mode) {
+	// TODO
 }
 
 void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
