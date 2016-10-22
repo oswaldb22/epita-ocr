@@ -3,12 +3,15 @@
 #ifndef BNDBOX
 #define BNDBOX
 
+typedef enum { NONE, LINE, CHAR } DrawMode;
+
 typedef struct
 {
-	ulong x1;	//x axis coordinate of top left corner
-	ulong y1;	//y axis coordinate of top left corner
-	ulong x2;	//x axis coordinate of bottom right corner
-	ulong y2;	//y axis coordinate of bottom right corner
+	ulong x1;		//x axis coordinate of top left corner
+	ulong y1;		//y axis coordinate of top left corner
+	ulong x2;		//x axis coordinate of bottom right corner
+	ulong y2;		//y axis coordinate of bottom right corner
+	DrawMode mode;	//(DISPLAY) Used to remember if this was a line or a char box
 } bndBox;
 
 /* Prototypes */

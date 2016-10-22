@@ -100,7 +100,7 @@ void cropUsingBox(bwMatrix *bwM_toCrop, bwMatrix *bwM_res, bndBox *box) {
 		}
 }
 
-void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out) {
+void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out, bndBoxList *bndList_draw, ulong originW, ulong originH) {
 
 	int buildingline = 0;
 	ulong h = 0;
@@ -128,6 +128,15 @@ void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out) {
 					bndBoxInit(&newline, 0, start, w, h - 1);
 					removeWhiteSpaces(bwM_block, &newline);
 					bndBoxListAdd(bndList_out, newline);
+
+					//Gives modified version in global coordinates to draw
+					newline.x1 += originW;
+					newline.x2 += originW;
+					newline.y1 += originH;
+					newline.y2 += originH;
+					newline.mode = LINE;
+					bndBoxListAdd(bndList_draw, newline);
+
 					buildingline = 0;
 					bndBoxFree(&newline);
 					break;
@@ -139,7 +148,7 @@ void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out) {
 	}
 }
 
-void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out) {
+void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out, bndBoxList *bndList_draw, ulong originW, ulong originH) {
 
 	int buildingchar = 0;
 	ulong w = 0;
@@ -166,6 +175,15 @@ void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out) {
 					bndBoxInit(&newchar, start, 0, w - 1, h);
 					removeWhiteSpaces(bwM_line, &newchar);
 					bndBoxListAdd(bndList_out, newchar);
+
+					//Gives modified version in global coordinates to draw
+					newchar.x1 += originW;
+					newchar.x2 += originW;
+					newchar.y1 += originH;
+					newchar.y2 += originH;
+					newchar.mode = CHAR;
+					bndBoxListAdd(bndList_draw, newchar);
+
 					buildingchar = 0;
 					bndBoxFree(&newchar);
 					break;
@@ -178,6 +196,15 @@ void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out) {
 			bndBoxInit(&newchar, start, 0, w, bwM_line->height - 1);
 			removeWhiteSpaces(bwM_line, &newchar);
 			bndBoxListAdd(bndList_out, newchar);
+
+			//Gives modified version in global coordinates to draw
+			newchar.x1 += originW;
+			newchar.x2 += originW;
+			newchar.y1 += originH;
+			newchar.y2 += originH;
+			newchar.mode = CHAR;
+			bndBoxListAdd(bndList_draw, newchar);
+
 			buildingchar = 0;
 			bndBoxFree(&newchar);
 		}

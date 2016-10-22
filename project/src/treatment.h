@@ -10,8 +10,8 @@
 bwMatrix convertToBw(rgbMatrix *rgbM);
 rgbMatrix convertToRgb(bwMatrix *bwM);
 
-void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out);
-void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out);
+void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out, bndBoxList *bndList_draw, ulong originW, ulong originH);
+void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out, bndBoxList *bndList_draw, ulong originW, ulong originH);
 
 /*	When used in cunjunction with a bwMatrix/bndBox pair, 
 	this will remove the whitespaces 
