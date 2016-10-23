@@ -3,13 +3,13 @@
 void convertToBw(rgbMatrix *rgbM_in, bwMatrix *bwM_out, int threshold) {
 
 	color c;
-	for (ulong w = 0; w < rgbGetWidth(rgbM); w++)
-		for (ulong h = 0; h < rgbGetHeight(rgbM); h++)
+	for (ulong w = 0; w < rgbGetWidth(rgbM_in); w++)
+		for (ulong h = 0; h < rgbGetHeight(rgbM_in); h++)
 		{
-			c = rgbGetColorXY(rgbM, w, h);
+			c = rgbGetColorXY(rgbM_in, w, h);
 			float res = (float)c.r * 0.3 + (float)c.b * 0.11 + (float)c.g * 0.59;
 			res = res < threshold ? 0 : 1;
-			bwMatrixSetValue(&bwM, w, h, (uint)res);
+			bwMatrixSetValue(bwM_out, w, h, (uint)res);
 		}
 }
 
@@ -20,13 +20,17 @@ void convertToRgb(bwMatrix *bwM_in, rgbMatrix *rgbM_out) {
 	for (ulong w = 0; w < bwM_in->width; w++)
 		for (ulong h = 0; h < bwM_in->height; h++)
 		{
-			newval = bwMatrixGetValue(bwM_in, w, h) * 255;
-			colorSetRGB(c, newval, newval, newval);
+			val = bwMatrixGetValue(bwM_in, w, h) * 255;
+			colorSetRGB(&c, val, val, val);
 			rgbSetColorXY(rgbM_out, w, h, c);
 		}
 }
 
 void drawBoundingBoxes(rgbMatrix *rgbM_in, bndBoxList *bndList_draw, DrawMode mode) {
+	
+	UNUSED(rgbM_in);
+	UNUSED(bndList_draw);
+	UNUSED(mode);
 	// TODO
 }
 
