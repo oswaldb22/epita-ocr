@@ -27,7 +27,7 @@ void convertToRgb(bwMatrix *bwM_in, rgbMatrix *rgbM_out) {
 }
 
 void drawBoundingBoxes(rgbMatrix *rgbM_in, bndBoxList *bndList_draw, DrawMode mode) {
-	
+
 	UNUSED(rgbM_in);
 	UNUSED(bndList_draw);
 	UNUSED(mode);
@@ -224,4 +224,43 @@ void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out, bndBoxList *bndList_d
 		}
 		w++;
 	}
+}
+
+void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out, bwMatrixList *bwMList_chars_out, bndBoxList *bndList_draw_lines, bndBoxList *bndList_draw_chars) {
+
+	bndBoxList lineList;
+	bndBoxListInit(&lineList);
+	getLines(bwM_block_in, &lineList, bndList_draw_lines, 0, 0);
+
+	for (ulong i = 0; i < lineList.size; i++)
+	{
+		bwMatrix line;
+		bndBox linebox = lineList.list[i];
+		bwMatrixInit(&line, bndBoxGetWidth(&linebox), bndBoxGetHeight(&linebox));
+		cropUsingBox(bwM_block_in, &line, &linebox);
+		bwMatrixListAdd(bwMList_lines_out, line);
+
+		bndBoxList charList;
+		bndBoxListInit(&charList);
+		getChars(&line, &charList, bndList_draw_chars, linebox.x1, linebox.y1);
+
+		for (ulong j = 0; j < charList.size; j++)
+		{
+			bwMatrix charac;
+			bndBox charbox = charList.list[j];
+			bwMatrixInit(&charac, bndBoxGetWidth(&charbox), bndBoxGetHeight(&charbox));
+			cropUsingBox(&line, &charac, &charbox);
+			bwMatrixListAdd(bwMList_chars_out, charac);
+
+			bwMatrixFree(&charac);
+		}
+
+		bndBoxListFree(&charList);
+		bwMatrixFree(&line);
+	}
+
+	bndBoxListFree(&lineList);
+
+	bwMatrixListDebugPrint(bwMList_lines_out);
+	bwMatrixListDebugPrint(bwMList_chars_out);
 }

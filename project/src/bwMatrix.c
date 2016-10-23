@@ -46,10 +46,17 @@ void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode printMode) {
 			if (printMode == Simple)
 				printf("%d", val);
 			if (printMode == Advanced) {
-				if (val == 0)
+				switch (val) {
+				case 0:
 					printf("░");
-				else
+					break;
+				case 1:
 					printf("█");
+					break;
+				default:
+					printf("X");
+					break;
+				}
 			}
 
 		}
