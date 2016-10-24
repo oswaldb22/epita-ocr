@@ -37,10 +37,11 @@ int main(int argc, char* argv[])
 	//Testbw0();
 	//TestbndBoxList();
 	//TestTreatment0();
-	TestCut();
+	//TestCut();
+	//TestBounding();
 	//*/
 
-	/*/BLOC 2
+	//*/BLOC 2
 	if (argc < 2)
 		return 1;
 	init_sdl();
@@ -56,7 +57,7 @@ int main(int argc, char* argv[])
 	//PRINTING RGB
 	/*load_rgbM(&rgbM,img);
 	rgbMprint(&rgbM);*/
-	/*
+	//*
 	bwMatrix bwM;
 	bwMatrixInit(&bwM, img->w, img->h);
 	printf("Size = %lu, %lu\n", bwM.width, bwM.height);

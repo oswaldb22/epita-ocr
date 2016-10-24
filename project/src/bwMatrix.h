@@ -31,7 +31,7 @@ typedef struct
 {
 	ulong width;	//width of the matrix
 	ulong height;	//height of the matrix
-	uint *matrix;  //matrix
+	uint *matrix;	//matrix
 } bwMatrix;
 
 /* Prototypes */

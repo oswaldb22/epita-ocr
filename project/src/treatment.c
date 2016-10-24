@@ -26,12 +26,38 @@ void convertToRgb(bwMatrix *bwM_in, rgbMatrix *rgbM_out) {
 		}
 }
 
-void drawBoundingBoxes(rgbMatrix *rgbM_in, bndBoxList *bndList_draw, DrawMode mode) {
+void drawBoundingBoxes(rgbMatrix *rgbM_in, bndBoxList *bndList_draw) {
 
-	UNUSED(rgbM_in);
-	UNUSED(bndList_draw);
-	UNUSED(mode);
-	// TODO
+	ulong maxW = rgbGetWidth(rgbM_in);
+	ulong maxH = rgbGetHeight(rgbM_in);
+
+	color c;
+	colorSetRGB(&c, 0, 255, 0);
+
+	for (ulong i = 0; i < bndList_draw->size; ++i)
+	{
+		bndBox charbox = bndList_draw->list[i];
+		ulong hmin = charbox.y1 - 1;
+		ulong hmax = charbox.y2 + 1;
+		for (ulong w = charbox.x1 - 1; w < charbox.x2 + 1; ++w)
+			if (0 < w && w < maxW) {
+				if (0 < hmin)
+					rgbSetColorXY(rgbM_in, w, hmin, c);
+				if (hmax < maxH)
+					rgbSetColorXY(rgbM_in, w, hmax, c);
+			}
+
+		ulong wmin = charbox.x1 - 1;
+		ulong wmax = charbox.x2 + 1;
+		for (ulong h = charbox.y1 - 1; h < charbox.y2 + 1; ++h)
+			if (0 < h && h < maxH) {
+				if (0 < wmin)
+					rgbSetColorXY(rgbM_in, wmin, h, c);
+				if (wmax < maxW)
+					rgbSetColorXY(rgbM_in, wmax, h, c);
+			}
+
+	}
 }
 
 void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
@@ -228,6 +254,9 @@ void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out, bndBoxList *bndList_d
 
 void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out, bwMatrixList *bwMList_chars_out, bndBoxList *bndList_draw_lines, bndBoxList *bndList_draw_chars) {
 
+	UNUSED(bwMList_lines_out);
+	UNUSED(bwMList_chars_out);
+
 	bndBoxList lineList;
 	bndBoxListInit(&lineList);
 	getLines(bwM_block_in, &lineList, bndList_draw_lines, 0, 0);
@@ -238,7 +267,7 @@ void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out, bwMa
 		bndBox linebox = lineList.list[i];
 		bwMatrixInit(&line, bndBoxGetWidth(&linebox), bndBoxGetHeight(&linebox));
 		cropUsingBox(bwM_block_in, &line, &linebox);
-		bwMatrixListAdd(bwMList_lines_out, line);
+		//bwMatrixListAdd(bwMList_lines_out, line);
 
 		bndBoxList charList;
 		bndBoxListInit(&charList);
@@ -250,7 +279,7 @@ void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out, bwMa
 			bndBox charbox = charList.list[j];
 			bwMatrixInit(&charac, bndBoxGetWidth(&charbox), bndBoxGetHeight(&charbox));
 			cropUsingBox(&line, &charac, &charbox);
-			bwMatrixListAdd(bwMList_chars_out, charac);
+			//bwMatrixListAdd(bwMList_chars_out, charac);
 
 			bwMatrixFree(&charac);
 		}
@@ -261,6 +290,6 @@ void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out, bwMa
 
 	bndBoxListFree(&lineList);
 
-	bwMatrixListDebugPrint(bwMList_lines_out);
-	bwMatrixListDebugPrint(bwMList_chars_out);
+	//bwMatrixListDebugPrint(bwMList_lines_out);
+	//bwMatrixListDebugPrint(bwMList_chars_out);
 }

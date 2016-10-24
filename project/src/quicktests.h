@@ -5,7 +5,54 @@
 #include "bndBox.h"
 #include "bndBoxList.h"
 #include "treatment.h"
+#include "load_to_bw.h"
+#include "rgbMatrix.h"
 
+
+void TestBounding() {
+	//init_sdl();
+	//SDL_Surface* img = NULL;
+	//SDL_Surface* screen = NULL;
+	//img = load_image("./data/Lorem-ju.bmp");
+
+	//display_image(img);
+	/*
+	rgbMatrix rgbM;
+	rgbInit(&rgbM, img->w, img->h);
+	printf("Size = %lu, %lu\n", rgbM.width, rgbM.height);
+
+	bwMatrix bwM;
+	bwMatrixInit(&bwM, img->w, img->h);
+	printf("Size = %lu, %lu\n", bwM.width, bwM.height);
+
+	load_rgbM(&rgbM, img);
+
+	load_bwM(&bwM, img);
+
+	bwMatrixList bwMList_lines;
+	bwMatrixListInit(&bwMList_lines);
+
+	bwMatrixList bwMList_chars;
+	bwMatrixListInit(&bwMList_chars);
+
+	bndBoxList drawList_lines;
+	bndBoxListInit(&drawList_lines);
+
+	bndBoxList drawList_chars;
+	bndBoxListInit(&drawList_chars);
+
+	getEverything(&bwM, &bwMList_lines, &bwMList_chars, &drawList_lines, &drawList_chars);
+
+	drawBoundingBoxes(&rgbM, &drawList_lines);
+
+	bndBoxListFree(&drawList_lines);
+	bndBoxListFree(&drawList_chars);
+	bwMatrixListFree(&bwMList_lines);
+	bwMatrixListFree(&bwMList_chars);
+	rgbFree(&rgbM);
+	bwMatrixFree(&bwM);
+	*/
+}
 
 void TestMat(bwMatrix *mat) {
 	srand(time(NULL));
@@ -21,7 +68,6 @@ void TestMat(bwMatrix *mat) {
 void TestCut() {
 	bwMatrix test;
 	bwMatrixInit(&test, 10, 10);
-	bwMatrixPrintCompact(&test, Advanced);
 
 	bwMatrixSetValue(&test, 1, 1, 1);
 	bwMatrixSetValue(&test, 1, 2, 1);
@@ -61,8 +107,6 @@ void TestCut() {
 	bwMatrixSetValue(&test, 8, 2, 1);
 	bwMatrixSetValue(&test, 8, 4, 1);
 
-	bwMatrixPrintCompact(&test, Advanced);
-
 	bwMatrixList bwMList_lines;
 	bwMatrixListInit(&bwMList_lines);
 
@@ -74,48 +118,6 @@ void TestCut() {
 
 	bndBoxList drawList_chars;
 	bndBoxListInit(&drawList_chars);
-
-	/*/
-	bndBoxList drawList;
-	bndBoxListInit(&drawList);
-
-	bndBoxList lineList;
-	bndBoxListInit(&lineList);
-	getLines(&test, &lineList, &drawList, 0, 0);
-
-	for (ulong i = 0; i < lineList.size; i++)
-	{
-		bwMatrix line;
-		bndBox linebox = lineList.list[i];
-		bwMatrixInit(&line, bndBoxGetWidth(&linebox), bndBoxGetHeight(&linebox));
-		cropUsingBox(&test, &line, &linebox);
-		bwMatrixPrintCompact(&line, Advanced);
-
-
-		bndBoxList charList;
-		bndBoxListInit(&charList);
-		getChars(&line, &charList, &drawList, linebox.x1, linebox.y1);
-
-		for (ulong j = 0; j < charList.size; j++)
-		{
-			bwMatrix charac;
-			bndBox charbox = charList.list[j];
-			bwMatrixInit(&charac, bndBoxGetWidth(&charbox), bndBoxGetHeight(&charbox));
-			cropUsingBox(&line, &charac, &charbox);
-			bwMatrixPrintCompact(&charac, Advanced);
-			bwMatrixFree(&charac);
-		}
-
-		bndBoxListFree(&charList);
-		bwMatrixFree(&line);
-	}
-
-	for (ulong i = 0; i < drawList.size; i++)
-		bndBoxDebugPrint(&drawList.list[i]);
-	bndBoxListFree(&drawList);
-	bndBoxListFree(&lineList);
-
-	//*/
 
 	getEverything(&test, &bwMList_lines, &bwMList_chars, &drawList_lines, &drawList_chars);
 

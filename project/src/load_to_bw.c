@@ -1,7 +1,6 @@
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-# include <err.h>
-# include "pixel_operations.h"
+
+
+# include "load_to_bw.h"
 
 
 void wait_for_keypressed(void) {
@@ -35,7 +34,7 @@ SDL_Surface* load_image(char *path) {
   img = IMG_Load(path);
   if (!img)
     // If it fails, die with an error message
-    errx(3, "can't load %s: %s", path, IMG_GetError());
+    errx(3, "can't load %s: %s\n", path, IMG_GetError());
   return img;
 }
 

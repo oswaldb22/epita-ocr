@@ -11,7 +11,7 @@
 void convertToBw(rgbMatrix *rgbM_in, bwMatrix *bwM_out, int threshold);
 void convertToRgb(bwMatrix *bwM_in, rgbMatrix *rgbM_out);
 
-void drawBoundingBoxes(rgbMatrix *rgbM_in, bndBoxList *bndList_draw, DrawMode mode);
+void drawBoundingBoxes(rgbMatrix *rgbM_in, bndBoxList *bndList_draw);
 
 void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out, bndBoxList *bndList_draw, ulong originW, ulong originH);
 void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out, bndBoxList *bndList_draw, ulong originW, ulong originH);
