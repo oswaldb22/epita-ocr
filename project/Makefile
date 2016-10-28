@@ -39,7 +39,7 @@ $(BINDIR)/$(TARGET): $(OBJECTS)
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "Compiled "$<" successfully!"
+	@echo -e "[\e[42mOK\e[0m] Compiled "$<""
 
 makedirs:
 	@mkdir -p $(OBJDIR)

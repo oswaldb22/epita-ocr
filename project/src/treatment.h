@@ -3,10 +3,17 @@
 #ifndef TREATMENT
 #define TREATMENT
 
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
+
+#include "pixel_operations.h"
 #include "bndBoxList.h"
 #include "bwMatrixList.h"
 #include "bwMatrix.h"
 #include "rgbMatrix.h"
+
+void convertRbgToBmp(rgbMatrix *rgbM_in, SDL_Surface *surface_out);
+void convertBwToBmp(bwMatrix *bwM_in, SDL_Surface *surface_out);
 
 void convertToBw(rgbMatrix *rgbM_in, bwMatrix *bwM_out, int threshold);
 void convertToRgb(bwMatrix *bwM_in, rgbMatrix *rgbM_out);

@@ -10,13 +10,13 @@
 
 
 void TestBounding() {
-	//init_sdl();
-	//SDL_Surface* img = NULL;
+	init_sdl();
+	SDL_Surface* img = NULL;
 	//SDL_Surface* screen = NULL;
-	//img = load_image("./data/Lorem-ju.bmp");
+	img = load_image("./data/Lorem-se.bmp");
 
-	//display_image(img);
-	/*
+	display_image(img);
+
 	rgbMatrix rgbM;
 	rgbInit(&rgbM, img->w, img->h);
 	printf("Size = %lu, %lu\n", rgbM.width, rgbM.height);
@@ -24,9 +24,9 @@ void TestBounding() {
 	bwMatrix bwM;
 	bwMatrixInit(&bwM, img->w, img->h);
 	printf("Size = %lu, %lu\n", bwM.width, bwM.height);
-
-	load_rgbM(&rgbM, img);
-
+	
+	//load_rgbM(&rgbM, img);
+	
 	load_bwM(&bwM, img);
 
 	bwMatrixList bwMList_lines;
@@ -41,17 +41,24 @@ void TestBounding() {
 	bndBoxList drawList_chars;
 	bndBoxListInit(&drawList_chars);
 
-	getEverything(&bwM, &bwMList_lines, &bwMList_chars, &drawList_lines, &drawList_chars);
+	//Not working to fix
+	//getEverything(&bwM, &bwMList_lines, &bwMList_chars, &drawList_lines, &drawList_chars);
+	
+	//printf("%lu %lu \n", drawList_lines.size, drawList_chars.size);
+	
+	//drawBoundingBoxes(&rgbM, &drawList_lines);
+	
+	convertBwToBmp(&bwM, img);
 
-	drawBoundingBoxes(&rgbM, &drawList_lines);
-
-	bndBoxListFree(&drawList_lines);
-	bndBoxListFree(&drawList_chars);
-	bwMatrixListFree(&bwMList_lines);
-	bwMatrixListFree(&bwMList_chars);
+	display_image(img);
+	
+	//bndBoxListFree(&drawList_lines);
+	//bndBoxListFree(&drawList_chars);
+	//bwMatrixListFree(&bwMList_lines);
+	//bwMatrixListFree(&bwMList_chars);
 	rgbFree(&rgbM);
 	bwMatrixFree(&bwM);
-	*/
+	//*/
 }
 
 void TestMat(bwMatrix *mat) {

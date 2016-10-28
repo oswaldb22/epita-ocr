@@ -1,5 +1,34 @@
 #include "treatment.h"
 
+void convertRgbToBmp(rgbMatrix *rgbM_in, SDL_Surface *surface_out){
+
+	for (ulong h = 0; h < rgbGetHeight(rgbM_in); h++){
+		for (ulong w = 0; w < rgbGetWidth(rgbM_in); w++){
+			color c = rgbGetColorXY(rgbM_in, w, h);
+			Uint8 r = c.r;
+			Uint8 g = c.g;
+			Uint8 b = c.b;
+			Uint32 pix = SDL_MapRGB(surface_out->format, r, g, b);
+			putpixel(surface_out, w, h, pix);
+		}
+	}
+}
+
+void convertBwToBmp(bwMatrix *bwM_in, SDL_Surface *surface_out){
+
+        for (ulong h = 0; h < bwM_in->height; h++){
+                for (ulong w = 0; w < bwM_in->width; w++){
+                        uint val = bwMatrixGetValue(bwM_in, w, h);
+                        Uint8 r = val * 255;
+                        Uint8 g = val * 255;
+                        Uint8 b = val * 255;
+                        Uint32 pix = SDL_MapRGB(surface_out->format, r, g, b);
+                        putpixel(surface_out, w, h, pix);
+                }
+        }
+}
+
+
 void convertToBw(rgbMatrix *rgbM_in, bwMatrix *bwM_out, int threshold) {
 
 	color c;
