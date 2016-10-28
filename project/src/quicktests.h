@@ -13,10 +13,12 @@ void TestBounding() {
 	init_sdl();
 	SDL_Surface* img = NULL;
 	//SDL_Surface* screen = NULL;
-	img = load_image("./data/Lorem-se.bmp");
-
+	img = load_image("./data/Lorem-ju.bmp");
+	
 	display_image(img);
-
+	invertImg(img);
+	display_image(img);
+	
 	rgbMatrix rgbM;
 	rgbInit(&rgbM, img->w, img->h);
 	printf("Size = %lu, %lu\n", rgbM.width, rgbM.height);
@@ -40,16 +42,20 @@ void TestBounding() {
 
 	bndBoxList drawList_chars;
 	bndBoxListInit(&drawList_chars);
-
-	//Not working to fix
-	//getEverything(&bwM, &bwMList_lines, &bwMList_chars, &drawList_lines, &drawList_chars);
 	
-	//printf("%lu %lu \n", drawList_lines.size, drawList_chars.size);
+	bwMatrixPrintCompact(&bwM, Advanced);
+	
+	//Not working to fix
+	getEverything(&bwM, &bwMList_lines, &bwMList_chars, &drawList_lines, &drawList_chars);
+	
+	printf("%lu %lu \n", drawList_lines.size, drawList_chars.size);
 	
 	//drawBoundingBoxes(&rgbM, &drawList_lines);
+	drawBoundingBoxesBw(&bwM, &drawList_chars);
 	
 	convertBwToBmp(&bwM, img);
 
+	invertImg(img);
 	display_image(img);
 	
 	//bndBoxListFree(&drawList_lines);

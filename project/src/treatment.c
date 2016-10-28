@@ -1,5 +1,24 @@
 #include "treatment.h"
 
+//TODO : here be demons #2
+void invertImg(SDL_Surface *img){
+	for (ulong h = 0; h < img->h; h++){
+                for (ulong w = 0; w < img->w; w++){
+                        Uint32 pix = getpixel(img, w, h);
+                        Uint8 r = 0;
+                        Uint8 g = 0;
+                        Uint8 b = 0;
+			SDL_GetRGB(pix, img->format, &r, &g, &b);
+			r = 255 - r;
+			g = 255 - g;
+			b = 255 - b;
+                        pix = SDL_MapRGB(img->format, r, g, b);
+                        putpixel(img, w, h, pix);
+                }
+        }
+
+}
+
 void convertRgbToBmp(rgbMatrix *rgbM_in, SDL_Surface *surface_out){
 
 	for (ulong h = 0; h < rgbGetHeight(rgbM_in); h++){
@@ -89,6 +108,39 @@ void drawBoundingBoxes(rgbMatrix *rgbM_in, bndBoxList *bndList_draw) {
 	}
 }
 
+// TODO : here be demons, to modify as soon as possible
+void drawBoundingBoxesBw(bwMatrix *rgbM_in, bndBoxList *bndList_draw) {
+
+        ulong maxW = rgbM_in->width;
+        ulong maxH = rgbM_in->height;
+
+        for (ulong i = 0; i < bndList_draw->size; ++i)
+        {
+                bndBox charbox = bndList_draw->list[i];
+                ulong hmin = charbox.y1 - 1;
+                ulong hmax = charbox.y2 + 1;
+                for (ulong w = charbox.x1 - 1; w < charbox.x2 + 1; ++w)
+                        if (0 < w && w < maxW) {
+                                if (0 < hmin)
+                                        bwMatrixSetValue(rgbM_in, w, hmin, 1);
+                                if (hmax < maxH)
+                                        bwMatrixSetValue(rgbM_in, w, hmax, 1);
+                        }
+
+                ulong wmin = charbox.x1 - 1;
+                ulong wmax = charbox.x2 + 1;
+                for (ulong h = charbox.y1 - 1; h < charbox.y2 + 1; ++h)
+                        if (0 < h && h < maxH) {
+                                if (0 < wmin)
+                                        bwMatrixSetValue(rgbM_in, wmin, h, 1);
+                                if (wmax < maxW)
+                                        bwMatrixSetValue(rgbM_in, wmax, h, 1);
+                        }
+
+        }
+}
+
+
 void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
 
 	if (bwMatrixGetValue(bwM_noModify, box_toResize->x1, box_toResize->y1) && bwMatrixGetValue(bwM_noModify, box_toResize->x2, box_toResize->y2))
@@ -174,7 +226,7 @@ void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out, bndBoxList *bndList_
 	int buildingline = 0;
 	ulong h = 0;
 	ulong start = 0;
-
+	
 	//For each row in the Matrix
 	while (h < bwM_block->height)
 	{
@@ -204,6 +256,7 @@ void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out, bndBoxList *bndList_
 					newline.y1 += originH;
 					newline.y2 += originH;
 					newline.mode = LINE;
+					bndBoxDebugPrint(&newline);
 					bndBoxListAdd(bndList_draw, newline);
 
 					buildingline = 0;
@@ -289,7 +342,8 @@ void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out, bwMa
 	bndBoxList lineList;
 	bndBoxListInit(&lineList);
 	getLines(bwM_block_in, &lineList, bndList_draw_lines, 0, 0);
-
+	printf("Lines : %lu \n", bndList_draw_lines->size);
+	
 	for (ulong i = 0; i < lineList.size; i++)
 	{
 		bwMatrix line;

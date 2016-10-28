@@ -12,6 +12,8 @@
 #include "bwMatrix.h"
 #include "rgbMatrix.h"
 
+void invertImg(SDL_Surface *img);
+
 void convertRbgToBmp(rgbMatrix *rgbM_in, SDL_Surface *surface_out);
 void convertBwToBmp(bwMatrix *bwM_in, SDL_Surface *surface_out);
 
@@ -19,6 +21,7 @@ void convertToBw(rgbMatrix *rgbM_in, bwMatrix *bwM_out, int threshold);
 void convertToRgb(bwMatrix *bwM_in, rgbMatrix *rgbM_out);
 
 void drawBoundingBoxes(rgbMatrix *rgbM_in, bndBoxList *bndList_draw);
+void drawBoundingBoxesBw(bwMatrix *rgbM_in, bndBoxList *bndList_draw);
 
 void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out, bndBoxList *bndList_draw, ulong originW, ulong originH);
 void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out, bndBoxList *bndList_draw, ulong originW, ulong originH);
