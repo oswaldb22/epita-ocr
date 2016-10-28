@@ -258,7 +258,6 @@ void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out, bndBoxList *bndList_
 					newline.y1 += originH;
 					newline.y2 += originH;
 					newline.mode = LINE;
-					bndBoxDebugPrint(&newline);
 					bndBoxListAdd(bndList_draw, newline);
 
 					buildingline = 0;
@@ -344,7 +343,7 @@ void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out, bwMa
 	bndBoxList lineList;
 	bndBoxListInit(&lineList);
 	getLines(bwM_block_in, &lineList, bndList_draw_lines, 0, 0);
-	printf("Lines : %lu \n", bndList_draw_lines->size);
+	//printf("Lines : %lu \n", bndList_draw_lines->size);
 	
 	for (ulong i = 0; i < lineList.size; i++)
 	{

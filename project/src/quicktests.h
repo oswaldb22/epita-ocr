@@ -48,9 +48,9 @@ void TestBounding() {
 	//Not working to fix
 	getEverything(&bwM, &bwMList_lines, &bwMList_chars, &drawList_lines, &drawList_chars);
 	
-	printf("%lu %lu \n", drawList_lines.size, drawList_chars.size);
+	//printf("%lu %lu \n", drawList_lines.size, drawList_chars.size);
 	
-	//drawBoundingBoxes(&rgbM, &drawList_lines);
+	//drawBoundingBoxesBw(&bwM, &drawList_lines);
 	drawBoundingBoxesBw(&bwM, &drawList_chars);
 	
 	convertBwToBmp(&bwM, img);
