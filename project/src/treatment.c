@@ -2,8 +2,10 @@
 
 //TODO : here be demons #2
 void invertImg(SDL_Surface *img){
-	for (ulong h = 0; h < img->h; h++){
-                for (ulong w = 0; w < img->w; w++){
+	ulong wi = img->w;
+	ulong he = img->h;
+	for (ulong h = 0; h < he; h++){
+                for (ulong w = 0; w < wi; w++){
                         Uint32 pix = getpixel(img, w, h);
                         Uint8 r = 0;
                         Uint8 g = 0;
@@ -38,9 +40,9 @@ void convertBwToBmp(bwMatrix *bwM_in, SDL_Surface *surface_out){
         for (ulong h = 0; h < bwM_in->height; h++){
                 for (ulong w = 0; w < bwM_in->width; w++){
                         uint val = bwMatrixGetValue(bwM_in, w, h);
-                        Uint8 r = val * 255;
-                        Uint8 g = val * 255;
-                        Uint8 b = val * 255;
+                        Uint8 r = (!val) * 255;
+                        Uint8 g = (!val) * 255;
+                        Uint8 b = (!val) * 255;
                         Uint32 pix = SDL_MapRGB(surface_out->format, r, g, b);
                         putpixel(surface_out, w, h, pix);
                 }
@@ -56,7 +58,7 @@ void convertToBw(rgbMatrix *rgbM_in, bwMatrix *bwM_out, int threshold) {
 		{
 			c = rgbGetColorXY(rgbM_in, w, h);
 			float res = (float)c.r * 0.3 + (float)c.b * 0.11 + (float)c.g * 0.59;
-			res = res < threshold ? 0 : 1;
+			res = res < threshold ? 1 : 0;
 			bwMatrixSetValue(bwM_out, w, h, (uint)res);
 		}
 }
@@ -68,7 +70,7 @@ void convertToRgb(bwMatrix *bwM_in, rgbMatrix *rgbM_out) {
 	for (ulong w = 0; w < bwM_in->width; w++)
 		for (ulong h = 0; h < bwM_in->height; h++)
 		{
-			val = bwMatrixGetValue(bwM_in, w, h) * 255;
+			val = !bwMatrixGetValue(bwM_in, w, h) * 255;
 			colorSetRGB(&c, val, val, val);
 			rgbSetColorXY(rgbM_out, w, h, c);
 		}

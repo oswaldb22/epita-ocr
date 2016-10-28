@@ -83,9 +83,9 @@ void load_bwM(bwMatrix *bwM, SDL_Surface* img) {
 
 			float res = (float)r * 0.3 + (float)b * 0.11 + (float)g * 0.59;
 			if (res < 128)
-				res = 0;
-			else
 				res = 1;
+			else
+				res = 0;
 
 			bwMatrixSetValue(bwM, i, j, (uint)res);
 

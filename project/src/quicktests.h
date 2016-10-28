@@ -16,8 +16,8 @@ void TestBounding() {
 	img = load_image("./data/Lorem-ju.bmp");
 	
 	display_image(img);
-	invertImg(img);
-	display_image(img);
+	//invertImg(img);
+	//display_image(img);
 	
 	rgbMatrix rgbM;
 	rgbInit(&rgbM, img->w, img->h);
@@ -43,7 +43,7 @@ void TestBounding() {
 	bndBoxList drawList_chars;
 	bndBoxListInit(&drawList_chars);
 	
-	bwMatrixPrintCompact(&bwM, Advanced);
+	//bwMatrixPrintCompact(&bwM, Advanced);
 	
 	//Not working to fix
 	getEverything(&bwM, &bwMList_lines, &bwMList_chars, &drawList_lines, &drawList_chars);
@@ -55,7 +55,6 @@ void TestBounding() {
 	
 	convertBwToBmp(&bwM, img);
 
-	invertImg(img);
 	display_image(img);
 	
 	//bndBoxListFree(&drawList_lines);
