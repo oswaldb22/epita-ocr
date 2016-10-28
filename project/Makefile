@@ -44,7 +44,7 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 makedirs:
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(BINDIR)
-	@echo "Created directories : $(BINDIR) $(OBJDIR)"
+	@echo -e "[\e[42mOK\e[0m] Created directories : $(BINDIR) $(OBJDIR)"
 
 .PHONEY: remove
 remove:
