@@ -17,6 +17,11 @@
 #include "load_to_bw.h"
 #include "rgbMatrix.h"
 
+const char usage[] =
+" <op>\n"
+"\tOperators:\n"
+"\t\t0: Lines on Lorem-ju.bmp\n"
+"\t\t1: Chars on Lorem-ju.bmp\n";
 
 int main(int argc, char* argv[])
 {
@@ -34,11 +39,25 @@ int main(int argc, char* argv[])
 	//*/
 
 	//*/ BLOC 1 - Used for quicktests
+	if (argc < 2)
+		errx(1, "%s", usage);
+	switch (argv[1][0]) {
+	case '0':
+		demoShowcase("./data/Lorem-ju.bmp", 0);
+		break;
+	case '1':
+		demoShowcase("./data/Lorem-ju.bmp", 1);
+		break;
+	default:
+		errx(1, "No operations for : %s\n", argv[1]);
+		break;
+	}
 	//Testbw0();
 	//TestbndBoxList();
 	//TestTreatment0();
 	//TestCut();
-	TestBounding();
+	//TestBounding();
+	//demoShowcase("./data/Lorem-ju.bmp");
 	//*/
 
 	/*/BLOC 2

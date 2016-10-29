@@ -1,30 +1,74 @@
 #include "treatment.h"
 
-//TODO : here be demons #2
-void invertImg(SDL_Surface *img){
+void demoShowcase(char *imgPath, int isCharMode) {
+
+	//Initialize display
+	init_sdl();
+	SDL_Surface* img = NULL;
+
+	img = load_image(imgPath);
+
+	display_image(img);
+
+	bwMatrix bwM;
+	bwMatrixInit(&bwM, img->w, img->h);
+
+	load_bwM(&bwM, img);
+
+	bwMatrixList bwMList_lines;
+	bwMatrixListInit(&bwMList_lines);
+
+	bwMatrixList bwMList_chars;
+	bwMatrixListInit(&bwMList_chars);
+
+	bndBoxList drawList_lines;
+	bndBoxListInit(&drawList_lines);
+
+	bndBoxList drawList_chars;
+	bndBoxListInit(&drawList_chars);
+
+	getEverything(&bwM, &bwMList_lines, &bwMList_chars, &drawList_lines, &drawList_chars);
+
+	if (isCharMode)
+		drawBoundingBoxesBw(&bwM, &drawList_chars);
+	else
+		drawBoundingBoxesBw(&bwM, &drawList_lines);
+
+	convertBwToBmp(&bwM, img);
+
+	display_image(img);
+
+	bndBoxListFree(&drawList_lines);
+	bndBoxListFree(&drawList_chars);
+	bwMatrixListFree(&bwMList_lines);
+	bwMatrixListFree(&bwMList_chars);
+	bwMatrixFree(&bwM);
+}
+
+void invertImg(SDL_Surface *img) {
 	ulong wi = img->w;
 	ulong he = img->h;
-	for (ulong h = 0; h < he; h++){
-                for (ulong w = 0; w < wi; w++){
-                        Uint32 pix = getpixel(img, w, h);
-                        Uint8 r = 0;
-                        Uint8 g = 0;
-                        Uint8 b = 0;
+	for (ulong h = 0; h < he; h++) {
+		for (ulong w = 0; w < wi; w++) {
+			Uint32 pix = getpixel(img, w, h);
+			Uint8 r = 0;
+			Uint8 g = 0;
+			Uint8 b = 0;
 			SDL_GetRGB(pix, img->format, &r, &g, &b);
 			r = 255 - r;
 			g = 255 - g;
 			b = 255 - b;
-                        pix = SDL_MapRGB(img->format, r, g, b);
-                        putpixel(img, w, h, pix);
-                }
-        }
+			pix = SDL_MapRGB(img->format, r, g, b);
+			putpixel(img, w, h, pix);
+		}
+	}
 
 }
 
-void convertRgbToBmp(rgbMatrix *rgbM_in, SDL_Surface *surface_out){
+void convertRgbToBmp(rgbMatrix *rgbM_in, SDL_Surface *surface_out) {
 
-	for (ulong h = 0; h < rgbGetHeight(rgbM_in); h++){
-		for (ulong w = 0; w < rgbGetWidth(rgbM_in); w++){
+	for (ulong h = 0; h < rgbGetHeight(rgbM_in); h++) {
+		for (ulong w = 0; w < rgbGetWidth(rgbM_in); w++) {
 			color c = rgbGetColorXY(rgbM_in, w, h);
 			Uint8 r = c.r;
 			Uint8 g = c.g;
@@ -35,20 +79,19 @@ void convertRgbToBmp(rgbMatrix *rgbM_in, SDL_Surface *surface_out){
 	}
 }
 
-void convertBwToBmp(bwMatrix *bwM_in, SDL_Surface *surface_out){
+void convertBwToBmp(bwMatrix *bwM_in, SDL_Surface *surface_out) {
 
-        for (ulong h = 0; h < bwM_in->height; h++){
-                for (ulong w = 0; w < bwM_in->width; w++){
-                        uint val = bwMatrixGetValue(bwM_in, w, h);
-                        Uint8 r = (!val) * 255;
-                        Uint8 g = (!val) * 255;
-                        Uint8 b = (!val) * 255;
-                        Uint32 pix = SDL_MapRGB(surface_out->format, r, g, b);
-                        putpixel(surface_out, w, h, pix);
-                }
-        }
+	for (ulong h = 0; h < bwM_in->height; h++) {
+		for (ulong w = 0; w < bwM_in->width; w++) {
+			uint val = bwMatrixGetValue(bwM_in, w, h);
+			Uint8 r = (!val) * 255;
+			Uint8 g = (!val) * 255;
+			Uint8 b = (!val) * 255;
+			Uint32 pix = SDL_MapRGB(surface_out->format, r, g, b);
+			putpixel(surface_out, w, h, pix);
+		}
+	}
 }
-
 
 void convertToBw(rgbMatrix *rgbM_in, bwMatrix *bwM_out, int threshold) {
 
@@ -76,7 +119,7 @@ void convertToRgb(bwMatrix *bwM_in, rgbMatrix *rgbM_out) {
 		}
 }
 
-void drawBoundingBoxes(rgbMatrix *rgbM_in, bndBoxList *bndList_draw) {
+void drawBoundingBoxesRgb(rgbMatrix *rgbM_in, bndBoxList *bndList_draw) {
 
 	ulong maxW = rgbGetWidth(rgbM_in);
 	ulong maxH = rgbGetHeight(rgbM_in);
@@ -111,35 +154,35 @@ void drawBoundingBoxes(rgbMatrix *rgbM_in, bndBoxList *bndList_draw) {
 }
 
 // TODO : here be demons, to modify as soon as possible
-void drawBoundingBoxesBw(bwMatrix *rgbM_in, bndBoxList *bndList_draw) {
+void drawBoundingBoxesBw(bwMatrix *bwM_in, bndBoxList *bndList_draw) {
 
-        ulong maxW = rgbM_in->width;
-        ulong maxH = rgbM_in->height;
+	ulong maxW = bwM_in->width;
+	ulong maxH = bwM_in->height;
 
-        for (ulong i = 0; i < bndList_draw->size; ++i)
-        {
-                bndBox charbox = bndList_draw->list[i];
-                ulong hmin = charbox.y1 - 1;
-                ulong hmax = charbox.y2 + 1;
-                for (ulong w = charbox.x1 - 1; w < charbox.x2 + 1; ++w)
-                        if (0 < w && w < maxW) {
-                                if (0 < hmin)
-                                        bwMatrixSetValue(rgbM_in, w, hmin, 1);
-                                if (hmax < maxH)
-                                        bwMatrixSetValue(rgbM_in, w, hmax, 1);
-                        }
+	for (ulong i = 0; i < bndList_draw->size; ++i)
+	{
+		bndBox charbox = bndList_draw->list[i];
+		ulong hmin = charbox.y1 - 1;
+		ulong hmax = charbox.y2 + 1;
+		for (ulong w = charbox.x1 - 1; w < charbox.x2 + 1; ++w)
+			if (0 < w && w < maxW) {
+				if (0 < hmin)
+					bwMatrixSetValue(bwM_in, w, hmin, 1);
+				if (hmax < maxH)
+					bwMatrixSetValue(bwM_in, w, hmax, 1);
+			}
 
-                ulong wmin = charbox.x1 - 1;
-                ulong wmax = charbox.x2 + 1;
-                for (ulong h = charbox.y1 - 1; h < charbox.y2 + 1; ++h)
-                        if (0 < h && h < maxH) {
-                                if (0 < wmin)
-                                        bwMatrixSetValue(rgbM_in, wmin, h, 1);
-                                if (wmax < maxW)
-                                        bwMatrixSetValue(rgbM_in, wmax, h, 1);
-                        }
+		ulong wmin = charbox.x1 - 1;
+		ulong wmax = charbox.x2 + 1;
+		for (ulong h = charbox.y1 - 1; h < charbox.y2 + 1; ++h)
+			if (0 < h && h < maxH) {
+				if (0 < wmin)
+					bwMatrixSetValue(bwM_in, wmin, h, 1);
+				if (wmax < maxW)
+					bwMatrixSetValue(bwM_in, wmax, h, 1);
+			}
 
-        }
+	}
 }
 
 
@@ -228,7 +271,7 @@ void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out, bndBoxList *bndList_
 	int buildingline = 0;
 	ulong h = 0;
 	ulong start = 0;
-	
+
 	//For each row in the Matrix
 	while (h < bwM_block->height)
 	{
@@ -344,7 +387,7 @@ void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out, bwMa
 	bndBoxListInit(&lineList);
 	getLines(bwM_block_in, &lineList, bndList_draw_lines, 0, 0);
 	//printf("Lines : %lu \n", bndList_draw_lines->size);
-	
+
 	for (ulong i = 0; i < lineList.size; i++)
 	{
 		bwMatrix line;

@@ -19,13 +19,13 @@ void TestBounding() {
 	//invertImg(img);
 	//display_image(img);
 	
-	rgbMatrix rgbM;
-	rgbInit(&rgbM, img->w, img->h);
-	printf("Size = %lu, %lu\n", rgbM.width, rgbM.height);
+	//rgbMatrix rgbM;
+	//rgbInit(&rgbM, img->w, img->h);
+	//printf("Size = %lu, %lu\n", rgbM.width, rgbM.height);
 
 	bwMatrix bwM;
 	bwMatrixInit(&bwM, img->w, img->h);
-	printf("Size = %lu, %lu\n", bwM.width, bwM.height);
+	//printf("Size = %lu, %lu\n", bwM.width, bwM.height);
 	
 	//load_rgbM(&rgbM, img);
 	
@@ -45,10 +45,7 @@ void TestBounding() {
 	
 	//bwMatrixPrintCompact(&bwM, Advanced);
 	
-	//Not working to fix
 	getEverything(&bwM, &bwMList_lines, &bwMList_chars, &drawList_lines, &drawList_chars);
-	
-	//printf("%lu %lu \n", drawList_lines.size, drawList_chars.size);
 	
 	//drawBoundingBoxesBw(&bwM, &drawList_lines);
 	drawBoundingBoxesBw(&bwM, &drawList_chars);
@@ -57,13 +54,12 @@ void TestBounding() {
 
 	display_image(img);
 	
-	//bndBoxListFree(&drawList_lines);
-	//bndBoxListFree(&drawList_chars);
-	//bwMatrixListFree(&bwMList_lines);
-	//bwMatrixListFree(&bwMList_chars);
-	rgbFree(&rgbM);
+	bndBoxListFree(&drawList_lines);
+	bndBoxListFree(&drawList_chars);
+	bwMatrixListFree(&bwMList_lines);
+	bwMatrixListFree(&bwMList_chars);
+	//rgbFree(&rgbM);
 	bwMatrixFree(&bwM);
-	//*/
 }
 
 void TestMat(bwMatrix *mat) {
