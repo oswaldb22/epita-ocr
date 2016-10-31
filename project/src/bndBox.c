@@ -4,7 +4,8 @@ TODO : Insert fancy header
 
 #include "bndBox.h"
 
-void bndBoxInit(bndBox *box, const ulong x1, const ulong y1, const ulong x2, const ulong y2) {
+void bndBoxInit(bndBox *box, const ulong x1, 
+				const ulong y1, const ulong x2, const ulong y2) {
 	box->x1 = x1;
 	box->y1 = y1;
 	box->x2 = x2;
@@ -29,7 +30,8 @@ ulong bndBoxGetHeight(const bndBox *box) {
 }
 
 void bndBoxDebugPrint(const bndBox *box) {
-	printf("bndBox : (x:%lu,y:%lu) (x:%lu,y:%lu)", box->x1, box->y1, box->x2, box->y2);
+	printf("bndBox : (x:%lu,y:%lu) (x:%lu,y:%lu)", 
+			box->x1, box->y1, box->x2, box->y2);
 	switch (box->mode) {
 
 	case LINE:

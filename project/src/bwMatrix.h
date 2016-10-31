@@ -39,7 +39,8 @@ typedef struct
 void bwMatrixInit(bwMatrix *bwMat, const ulong w, const ulong h);
 void bwMatrixFree(bwMatrix *bwMat);
 uint bwMatrixGetValue(const bwMatrix *bwMat, const ulong w, const ulong h);
-void bwMatrixSetValue(bwMatrix *bwMat, const ulong w, const ulong h, const uint newvalue);
+void bwMatrixSetValue(bwMatrix *bwMat, const ulong w,
+					const ulong h, const uint newvalue);
 void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode printMode);
 
 void load_bwM(bwMatrix *bwM, SDL_Surface* img);

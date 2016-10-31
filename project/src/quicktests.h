@@ -45,7 +45,8 @@ void TestBounding() {
 	
 	//bwMatrixPrintCompact(&bwM, Advanced);
 	
-	getEverything(&bwM, &bwMList_lines, &bwMList_chars, &drawList_lines, &drawList_chars);
+	getEverything(&bwM, &bwMList_lines, 
+	&bwMList_chars, &drawList_lines, &drawList_chars);
 	
 	//drawBoundingBoxesBw(&bwM, &drawList_lines);
 	drawBoundingBoxesBw(&bwM, &drawList_chars);
@@ -127,7 +128,8 @@ void TestCut() {
 	bndBoxList drawList_chars;
 	bndBoxListInit(&drawList_chars);
 
-	getEverything(&test, &bwMList_lines, &bwMList_chars, &drawList_lines, &drawList_chars);
+	getEverything(&test, &bwMList_lines, &bwMList_chars,
+	&drawList_lines, &drawList_chars);
 
 	bndBoxListFree(&drawList_lines);
 	bndBoxListFree(&drawList_chars);

@@ -26,7 +26,8 @@ const char usage[] =
 int main(int argc, char* argv[])
 {
 
-	// SVP, ne pushez pas de main non commenté avant que l'interface soit là, cela permet à chacun de tester ses functions indépendamment
+	// SVP, ne pushez pas de main non commenté avant que l'interface soit là,
+	//cela permet à chacun de tester ses functions indépendamment
 	// Voici un exemple de bloc de commentaire modulaire :
 
 	// Enlevez ou ajoutez un '/' devant pour décommenter / commenter votre bloc

@@ -31,7 +31,8 @@ uint bwMatrixGetValue(const bwMatrix *bwMat, const ulong w, const ulong h) {
 	return bwMat->matrix[(h * bwMat->width) + w];
 }
 
-void bwMatrixSetValue(bwMatrix *bwMat, const ulong w, const ulong h, const uint newvalue) {
+void bwMatrixSetValue(bwMatrix *bwMat, const ulong w,
+					const ulong h, const uint newvalue) {
 	assert(w < bwMat->width || h < bwMat->height);
 	bwMat->matrix[(h * bwMat->width) + w] = newvalue;
 }

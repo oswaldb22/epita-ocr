@@ -44,7 +44,8 @@ ulong rgbGetHeight(const rgbMatrix *rgbM);
 
 
 
-void rgbSetColorXY(const rgbMatrix *rgbM,const ulong w,const ulong h,const color c); 
+void rgbSetColorXY(const rgbMatrix *rgbM,const ulong w,
+				const ulong h,const color c); 
 color rgbGetColorXY(const rgbMatrix *rgbM,const ulong w,const ulong h);
 
 

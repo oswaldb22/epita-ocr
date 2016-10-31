@@ -16,13 +16,14 @@ void bwMatrixListFree(bwMatrixList *bwMList) {
 
 void bwMatrixListAdd(bwMatrixList *bwMList, const bwMatrix bwM_in) {
 	++bwMList->size;
-	bwMatrix* reallocated = realloc(bwMList->list, bwMList->size * (sizeof(bwMatrix)));
+	bwMatrix* reallocated = 
+	realloc(bwMList->list, bwMList->size * (sizeof(bwMatrix)));
 	if (reallocated) {
 		bwMList->list = reallocated;
 		bwMList->list[bwMList->size - 1] = bwM_in;
 	}
 	else {
-		printf("***ERROR*** : Realloc failing because memory could not be allocated.");
+		printf("***ERROR*** : Realloc failed.");
 	}
 }
 
