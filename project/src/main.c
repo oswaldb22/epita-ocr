@@ -18,10 +18,10 @@
 #include "rgbMatrix.h"
 
 const char usage[] =
-" <op>\n"
+" <op> <filepath>\n"
 "\tOperators:\n"
-"\t\t0: Lines on Lorem-ju.bmp\n"
-"\t\t1: Chars on Lorem-ju.bmp\n";
+"\t\t0: Lines\n"
+"\t\t1: Chars\n";
 
 int main(int argc, char* argv[])
 {
@@ -43,10 +43,10 @@ int main(int argc, char* argv[])
 		errx(1, "%s", usage);
 	switch (argv[1][0]) {
 	case '0':
-		demoShowcase("./data/Lorem-ju.bmp", 0);
+		demoShowcase(argv[2], 0);
 		break;
 	case '1':
-		demoShowcase("./data/Lorem-ju.bmp", 1);
+		demoShowcase(argv[2], 1);
 		break;
 	default:
 		errx(1, "No operations for : %s\n", argv[1]);
