@@ -1,0 +1,5 @@
+Pour utiliser l'application, il faut : 
+    make (pour compilier le projet)
+    entrer la commande ./bin/main argument1 argument2 
+L'argument1 est 0 ou 1. 0 pour afficher les lignes, 1 pour encadrer les caractères.
+L'argument2 correspond à l'image dont on souhaite executer le programme.   
