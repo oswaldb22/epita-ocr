@@ -2,8 +2,6 @@
 #include <math.h>
 
 
-
-
 void weight_init(float *weights, int size, float  minval, float maxval)
 {
      int i;
@@ -26,6 +24,22 @@ void neuralNetInit(NeuralNetwork* N,int sizes[],int len){
 	N->outputLayerSize=1;
 	N->hiddenLayerSize=sizes[1];
 
+    double w=1;
+    double h=1;
+
+    N->weight = malloc(w * sizeof(double*));
+	for(int i=0;i<w;i++){
+			N->weight[i]=malloc(h*sizeof(double));
+	}
+
+	/*WEIGHT INIT WITH RANDOM VALUE*/
+    for(int i=0;i<w;i++){
+		for(int j=0;j<h;j++){
+            srand(time(NULL));
+            float r = rand()%5;
+			N->weight[i][j]=r;
+		}
+	}
 
 
 
