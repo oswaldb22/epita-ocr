@@ -2,6 +2,8 @@
 #define NEURALNETWORK_H
 #include "includes.h"
 
+#define RANDOM_MAXIMUM 2147483647
+
 typedef struct{
 
 	/*int nbLayers;
