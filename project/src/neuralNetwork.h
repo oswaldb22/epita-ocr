@@ -21,6 +21,7 @@ typedef struct{
 
 	double **input;
 	double **weight;
+	double **weight2;
 
 }NeuralNetwork;
 
@@ -33,7 +34,7 @@ typedef struct{
 }Matrix;
 
 
-void neuralNetInit(NeuralNetwork* N,int sizes[],int len);
+void neuralNetInit(NeuralNetwork* N);
 
 void forward(NeuralNetwork *neuralN,Matrix *rgbM);
 

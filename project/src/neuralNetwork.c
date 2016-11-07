@@ -16,17 +16,36 @@ void weight_init(float *weights, int size, float  minval, float maxval)
      return;
 }
 
+//Primitive
 
 
-void neuralNetInit(NeuralNetwork* N,int sizes[],int len){
 
-	N->inputLayerSize=sizes[0];
+
+
+
+
+
+
+
+
+//void weight_iniT()
+
+void neuralNetInit(NeuralNetwork* N){
+
+	/*N->inputLayerSize=sizes[0];
 	N->outputLayerSize=1;
-	N->hiddenLayerSize=sizes[1];
+	N->hiddenLayerSize=sizes[1];*/
 
-    double w=1;
-    double h=1;
+   	N->inputLayerSize=2;
+	N->outputLayerSize=1;
+	N->hiddenLayerSize=3;
 
+
+    /*W1*/
+    double w=N->hiddenLayerSize;
+    double h=N->inputLayerSize;
+
+    /*WEIGHT INIT WITH SIZE*/
     N->weight = malloc(w * sizeof(double*));
 	for(int i=0;i<w;i++){
 			N->weight[i]=malloc(h*sizeof(double));
@@ -42,8 +61,40 @@ void neuralNetInit(NeuralNetwork* N,int sizes[],int len){
 	}
 
 
+    /*W2*/
+    w=N->outputLayerSize;
+    h=N->hiddenLayerSize;
+    /*WEIGHT INIT WITH SIZE*/
+    N->weight2 = malloc(w * sizeof(double*));
+	for(int i=0;i<w;i++){
+			N->weight2[i]=malloc(h*sizeof(double));
+	}
+
+	/*WEIGHT INIT WITH RANDOM VALUE*/
+    for(int i=0;i<w;i++){
+		for(int j=0;j<h;j++){
+            srand(time(NULL));
+            float r = rand()%5;
+			N->weight2[i][j]=r;
+		}
+	}
+
+
 
 }
+
+void matrixDot(Matrix *sum,Matrix *x, Matrix *y){
+
+    sum->width=y->width;
+    sum->height=x->height;
+
+
+    for(int i =0;i<sum->width;i++)
+        for(int j =0;j<sum->width;j++)
+            sum->height[j][i]=0;
+
+}
+
 
 void forward(NeuralNetwork *neuralN,Matrix *r){
 
@@ -73,4 +124,8 @@ float sigmoid(float x)
 {
     return 1 / (1 + exp((double) -x));
 }
+
+
+
+
 
