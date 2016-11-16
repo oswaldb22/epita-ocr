@@ -42,13 +42,13 @@ void rgbInit(rgbMatrix *rgbM,const ulong w, const ulong h){
 
 	rgbM->matrix = malloc(w * sizeof(color*));
 	for(i=0;i<w;i++){
-			rgbM->matrix[i]=malloc(h*sizeof(color));		
+			rgbM->matrix[i]=malloc(h*sizeof(color));
 	}	
-	
+
 
 	for(i=0;i<w;i++){
-		for(j=0;j<h;j++){			
-			rgbM->matrix[i][j]=Color;		
+		for(j=0;j<h;j++){
+			rgbM->matrix[i][j]=Color;
 		}
 	}	
 	

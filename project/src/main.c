@@ -25,15 +25,6 @@ const char usage[] =
 
 int main(int argc, char* argv[])
 {
-
-	// SVP, ne pushez pas de main non commenté avant que l'interface soit là,
-	//cela permet à chacun de tester ses functions indépendamment
-	// Voici un exemple de bloc de commentaire modulaire :
-
-	// Enlevez ou ajoutez un '/' devant pour décommenter / commenter votre bloc
-	//			//*/ -> //*/	Non commenté
-	//			/*/	 -> //*/	Commenté
-
 	//*/ BLOC 0 - Used to remove warning when testing without args
 	UNUSED(argc);
 	UNUSED(argv);
@@ -43,6 +34,9 @@ int main(int argc, char* argv[])
 	if (argc < 2)
 		errx(1, "%s", usage);
 	switch (argv[1][0]) {
+	case '!':
+		printf("Hello World!");
+		break;
 	case '0':
 		demoShowcase(argv[2], 0);
 		break;
@@ -53,12 +47,7 @@ int main(int argc, char* argv[])
 		errx(1, "No operations for : %s\n", argv[1]);
 		break;
 	}
-	//Testbw0();
-	//TestbndBoxList();
-	//TestTreatment0();
-	//TestCut();
-	//TestBounding();
-	//demoShowcase("./data/Lorem-ju.bmp");
+	
 	//*/
 
 	/*/BLOC 2

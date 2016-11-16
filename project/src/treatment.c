@@ -7,7 +7,6 @@ void demoShowcase(char *imgPath, int isCharMode) {
 	SDL_Surface* img = NULL;
 
 	img = load_image(imgPath);
-
 	display_image(img);
 
 	bwMatrix bwM;

@@ -4,7 +4,7 @@
 #ifndef BWMATRIXLIST
 #define BWMATRIXLIST
 
-typedef struct
+typedef struct bwMatrixList
 {
 	ulong size;		//Size of the array
 	bwMatrix *list;	//Array containing multiple bwMatrix
@@ -12,9 +12,9 @@ typedef struct
 
 /* Prototypes */
 
-void bwMatrixListInit(bwMatrixList *bwMList);
-void bwMatrixListFree(bwMatrixList *bwMList);
-void bwMatrixListAdd(bwMatrixList *bwMList, const bwMatrix bwM_in);
-void bwMatrixListDebugPrint(bwMatrixList *bwMList);
+void bwMatrixListInit(bwMatrixList *bwML);
+void bwMatrixListFree(bwMatrixList *bwML);
+void bwMatrixListAdd(bwMatrixList *bwML, const bwMatrix bwM_in);
+void bwMatrixListDebugPrint(bwMatrixList *bwML);
 
 #endif
