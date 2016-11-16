@@ -4,7 +4,7 @@
 
 #include "bwMatrix.h"
 
-bwMatrix* bwMatrixNew(const ulong w, const ulong h) {
+bwMatrix* bwMatrixNew(ULONG w, ULONG h) {
 	bwMatrix* bwM = malloc(sizeof(bwMatrix));
 	bwM->width = w;
 	bwM->height = h;
@@ -22,7 +22,7 @@ bwMatrix* bwMatrixNew(const ulong w, const ulong h) {
 	return bwM;
 }
 
-void bwMatrixInit(bwMatrix *bwM, const ulong w, const ulong h) {
+void bwMatrixInit(bwMatrix *bwM, ULONG w, ULONG h) {
 
 	bwM->width = w;
 	bwM->height = h;
@@ -44,13 +44,12 @@ void bwMatrixFree(bwMatrix *bwM) {
 	free(bwM->matrix);
 }
 
-uint bwMatrixGetValue(const bwMatrix *bwM, const ulong w, const ulong h) {
+uint bwMatrixGetValue(const bwMatrix *bwM, ULONG w, ULONG h) {
 	assert(w < bwM->width || h < bwM->height);
 	return bwM->matrix[(h * bwM->width) + w];
 }
 
-void bwMatrixSetValue(bwMatrix *bwM, const ulong w,
-					const ulong h, const uint val) {
+void bwMatrixSetValue(bwMatrix *bwM, ULONG w, ULONG h, UINT val) {
 	assert(w < bwM->width || h < bwM->height);
 	bwM->matrix[(h * bwM->width) + w] = val;
 }

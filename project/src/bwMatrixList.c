@@ -16,8 +16,8 @@ void bwMatrixListFree(bwMatrixList *bwML) {
 
 void bwMatrixListAdd(bwMatrixList *bwML, const bwMatrix bwM_in) {
 	++bwML->size;
-	bwMatrix* reallocated = 
-	realloc(bwML->list, bwML->size * (sizeof(bwMatrix)));
+	bwMatrix* reallocated =
+		realloc(bwML->list, bwML->size * (sizeof(bwMatrix)));
 	if (reallocated) {
 		bwML->list = reallocated;
 		bwML->list[bwML->size - 1] = bwM_in;

@@ -14,11 +14,11 @@ void TestBounding() {
 	SDL_Surface* img = NULL;
 	//SDL_Surface* screen = NULL;
 	img = load_image("./data/Lorem-ju.bmp");
-	
+
 	display_image(img);
 	//invertImg(img);
 	//display_image(img);
-	
+
 	//rgbMatrix rgbM;
 	//rgbInit(&rgbM, img->w, img->h);
 	//printf("Size = %lu, %lu\n", rgbM.width, rgbM.height);
@@ -26,9 +26,9 @@ void TestBounding() {
 	bwMatrix bwM;
 	bwMatrixInit(&bwM, img->w, img->h);
 	//printf("Size = %lu, %lu\n", bwM.width, bwM.height);
-	
+
 	//load_rgbM(&rgbM, img);
-	
+
 	load_bwM(&bwM, img);
 
 	bwMatrixList bwMList_lines;
@@ -42,19 +42,19 @@ void TestBounding() {
 
 	bndBoxList drawList_chars;
 	bndBoxListInit(&drawList_chars);
-	
+
 	//bwMatrixPrintCompact(&bwM, Advanced);
-	
-	getEverything(&bwM, &bwMList_lines, 
-	&bwMList_chars, &drawList_lines, &drawList_chars);
-	
+
+	getEverything(&bwM, &bwMList_lines,
+		&bwMList_chars, &drawList_lines, &drawList_chars);
+
 	//drawBoundingBoxesBw(&bwM, &drawList_lines);
 	drawBoundingBoxesBw(&bwM, &drawList_chars);
-	
+
 	convertBwToBmp(&bwM, img);
 
 	display_image(img);
-	
+
 	bndBoxListFree(&drawList_lines);
 	bndBoxListFree(&drawList_chars);
 	bwMatrixListFree(&bwMList_lines);
@@ -129,7 +129,7 @@ void TestCut() {
 	bndBoxListInit(&drawList_chars);
 
 	getEverything(&test, &bwMList_lines, &bwMList_chars,
-	&drawList_lines, &drawList_chars);
+		&drawList_lines, &drawList_chars);
 
 	bndBoxListFree(&drawList_lines);
 	bndBoxListFree(&drawList_chars);

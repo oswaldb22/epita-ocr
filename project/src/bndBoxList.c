@@ -17,7 +17,7 @@ void bndBoxListFree(bndBoxList *boxList) {
 void bndBoxListAdd(bndBoxList *boxList, const bndBox box) {
 	++boxList->size;
 	bndBox* reallocated = realloc(boxList->list,
-	boxList->size * sizeof(bndBox));
+		boxList->size * sizeof(bndBox));
 	if (reallocated) {
 		boxList->list = reallocated;
 		boxList->list[boxList->size - 1] = box;

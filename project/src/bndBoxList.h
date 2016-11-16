@@ -4,7 +4,7 @@
 #ifndef BNDBOXLIST
 #define BNDBOXLIST
 
-typedef struct
+typedef struct bndBoxList
 {
 	ulong size;		//Size of the array
 	bndBox *list;	//Array containing multiple bndBox

@@ -11,5 +11,7 @@
 #define UNUSED(x) (void)x
 typedef unsigned long ulong;
 typedef unsigned int uint;
+typedef const ulong ULONG;
+typedef const uint UINT;
 
 #endif

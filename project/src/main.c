@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 		errx(1, "No operations for : %s\n", argv[1]);
 		break;
 	}
-	
+
 	//*/
 
 	/*/BLOC 2
@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
 	SDL_Surface* img = NULL;
 	//SDL_Surface* screen = NULL;
 	img = load_image(argv[1]);
-	
+
 	//INITIALISATION RGBMATRIX
 	//rgbMatrix rgbM;
 	//rgbInit(&rgbM,img->w,img->h);
@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
 	//PRINTING RGB
 	//load_rgbM(&rgbM,img);
 	//rgbMprint(&rgbM);
-	
+
 	bwMatrix bwM;
 	bwMatrixInit(&bwM, img->w, img->h);
 	printf("Size = %lu, %lu\n", bwM.width, bwM.height);

@@ -35,14 +35,11 @@ typedef struct bwMatrix
 } bwMatrix;
 
 /* Prototypes */
-bwMatrix* bwMatrixNew(const ulong w, const ulong h);
-void bwMatrixInit(bwMatrix *bwM, const ulong w, const ulong h);
+bwMatrix* bwMatrixNew(ULONG w, ULONG h);
+void bwMatrixInit(bwMatrix *bwM, ULONG w, ULONG h);
 void bwMatrixFree(bwMatrix *bwM);
-uint bwMatrixGetValue(const bwMatrix *bwM, const ulong w, const ulong h);
-void bwMatrixSetValue(	bwMatrix *bwM,
-						const ulong w,
-						const ulong h,
-						const uint val);
+uint bwMatrixGetValue(const bwMatrix *bwM, ULONG w, ULONG h);
+void bwMatrixSetValue(bwMatrix *bwM, ULONG w, ULONG h, UINT val);
 void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode mode);
 
 void load_bwM(bwMatrix *bwM, SDL_Surface* img);

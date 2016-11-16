@@ -5,7 +5,7 @@
 
 typedef enum { NONE, LINE, CHAR } DrawMode;
 
-typedef struct
+typedef struct bndBox
 {
 	ulong x1;		//x axis coordinate of top left corner
 	ulong y1;		//y axis coordinate of top left corner
@@ -15,9 +15,8 @@ typedef struct
 } bndBox;
 
 /* Prototypes */
-
-void bndBoxInit(bndBox *box, const ulong x1, const ulong y1,
- const ulong x2, const ulong y2);
+bndBox bndBoxNew(ULONG x1, ULONG y1, ULONG x2, ULONG y2);
+void bndBoxInit(bndBox *box, ULONG x1, ULONG y1, ULONG x2, ULONG y2);
 void bndBoxFree(bndBox *box);
 void bndBoxDebugPrint(const bndBox *box);
 ulong bndBoxGetWidth(const bndBox *box);
