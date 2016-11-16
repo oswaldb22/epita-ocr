@@ -26,24 +26,19 @@ typedef struct{
 }NeuralNetwork;
 
 typedef struct{
-
-	ulong width;	//width of the matrix
-	ulong height;	//height of the matrix
+	ulong width;	//nombre de colonnes
+	ulong height;	//nombre de lignes
 	float **matrix;
-
 }Matrix;
 
 void matrixInit(Matrix *x,const ulong w, const ulong h);
 void matrixDot(Matrix *sum,Matrix *x, Matrix *y);
-
-
+void matrixPrint(Matrix *m);
+void randMatrix(Matrix *z,float max);
 
 void neuralNetInit(NeuralNetwork* N);
-
 void forward(NeuralNetwork *neuralN,Matrix *rgbM);
-
 void sigmoidMatrix(Matrix *z);
-
 float sigmoid(float x);
 
 

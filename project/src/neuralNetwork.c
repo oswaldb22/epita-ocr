@@ -1,27 +1,10 @@
 #include "neuralNetwork.h"
 #include <math.h>
 
-
-void weight_init(float *weights, int size, float  minval, float maxval)
-{
-     int i;
-     int random_generated;
-
-     for(i=0;i<size;i++)  {
-          random_generated = random();
-          *(weights + i) = (maxval - minval)
-	         * (float)random_generated / RANDOM_MAXIMUM + minval;
-     }
-
-     return;
-}
-
 void matrixInit(Matrix *x,const ulong w, const ulong h){
 	ulong i=0,j=0;
-
 	x->width=w;
 	x->height=h;
-
 
 	x->matrix = malloc(w * sizeof(float));
 	for(i=0;i<w;i++){
@@ -33,36 +16,28 @@ void matrixInit(Matrix *x,const ulong w, const ulong h){
 			x->matrix[i][j]=0;
 		}
 	}
+}
 
-
+void matrixPrint(Matrix *rgbM){
+  for (ulong j = 0; j < rgbM->height; j++)
+	{
+		for (ulong i = 0; i < rgbM->width; i++)
+		{
+            printf(" %f ",rgbM->matrix[j][i]);
+		}
+		printf("\n");
+	}
 }
 
 
+
+
 //Primitive
-
-
-
-
-
-
-
-
-
-
-
-//void weight_iniT()
-
 void neuralNetInit(NeuralNetwork* N){
-
-	/*N->inputLayerSize=sizes[0];
-	N->outputLayerSize=1;
-	N->hiddenLayerSize=sizes[1];*/
 
    	N->inputLayerSize=2;
 	N->outputLayerSize=1;
 	N->hiddenLayerSize=3;
-
-
     /*W1*/
     double w=N->hiddenLayerSize;
     double h=N->inputLayerSize;
@@ -106,33 +81,19 @@ void neuralNetInit(NeuralNetwork* N){
 }
 
 void matrixDot(Matrix *sum,Matrix *x, Matrix *y){
-
     matrixInit(sum,y->width,x->height);
-
-    sum->width=y->width;
-    sum->height=x->height;
-
-    for(int i =0;i<sum->width;i++)
-        for(int j =0;j<sum->width;j++)
-            sum->matrix[j][i]=0;
-
+    for(int i =0;i<x->height;i++){
+    	for(int j=0;j<y->height;j++){
+			for(int k = 0; k < y->width; k++){
+				sum->matrix[i][j]+=x->matrix[i][k]*y->matrix[k][j];
+			}
+		}
+	}
 }
-
 
 void forward(NeuralNetwork *neuralN,Matrix *r){
 
-
-
-
 }
-
-
-
-
-
-
-
-
 
 
 void sigmoidMatrix(Matrix *z){
@@ -142,13 +103,19 @@ void sigmoidMatrix(Matrix *z){
 			z->matrix[j][i]=sigmoid(z->matrix[j][i]);
 }
 
+void randMatrix(Matrix *z,float max){
+    srand(time(NULL));
+    for(int i=0;i<z->width;i++){
+		for(int j=0;j<z->height;j++){
+
+            float r = ((float)rand()/(float)(RAND_MAX)) * max;
+			z->matrix[i][j]=r;
+		}
+    }
+}
+
 
 float sigmoid(float x)
 {
     return 1 / (1 + exp((double) -x));
 }
-
-
-
-
-
