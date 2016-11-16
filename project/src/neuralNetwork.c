@@ -16,6 +16,28 @@ void weight_init(float *weights, int size, float  minval, float maxval)
      return;
 }
 
+void matrixInit(Matrix *x,const ulong w, const ulong h){
+	ulong i=0,j=0;
+
+	x->width=w;
+	x->height=h;
+
+
+	x->matrix = malloc(w * sizeof(float));
+	for(i=0;i<w;i++){
+			x->matrix[i]=malloc(h*sizeof(float));
+	}
+
+	for(i=0;i<w;i++){
+		for(j=0;j<h;j++){
+			x->matrix[i][j]=0;
+		}
+	}
+
+
+}
+
+
 //Primitive
 
 
@@ -85,13 +107,14 @@ void neuralNetInit(NeuralNetwork* N){
 
 void matrixDot(Matrix *sum,Matrix *x, Matrix *y){
 
+    matrixInit(sum,y->width,x->height);
+
     sum->width=y->width;
     sum->height=x->height;
 
-
     for(int i =0;i<sum->width;i++)
         for(int j =0;j<sum->width;j++)
-            sum->height[j][i]=0;
+            sum->matrix[j][i]=0;
 
 }
 

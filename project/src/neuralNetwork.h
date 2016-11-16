@@ -33,19 +33,18 @@ typedef struct{
 
 }Matrix;
 
+void matrixInit(Matrix *x,const ulong w, const ulong h);
+void matrixDot(Matrix *sum,Matrix *x, Matrix *y);
+
+
 
 void neuralNetInit(NeuralNetwork* N);
 
 void forward(NeuralNetwork *neuralN,Matrix *rgbM);
 
-
-
 void sigmoidMatrix(Matrix *z);
 
 float sigmoid(float x);
-
-
-
 
 
 #endif
