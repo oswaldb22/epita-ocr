@@ -4,49 +4,66 @@
 
 #include "bwMatrix.h"
 
-void bwMatrixInit(bwMatrix *bwMat, const ulong w, const ulong h) {
+bwMatrix* bwMatrixNew(ULONG w, ULONG h) {
+	bwMatrix* bwM = malloc(sizeof(bwMatrix));
+	bwM->width = w;
+	bwM->height = h;
 
-	bwMat->width = w;
-	bwMat->height = h;
+	bwM->matrix = malloc(w * h * sizeof(uint));
+	if (bwM->matrix == NULL)
+	{
+		printf("Memory allocation failed");
+		return NULL;
+	}
 
-	bwMat->matrix = (uint*)malloc(w * h * sizeof(uint));
-	if (bwMat->matrix == NULL)
+	for (ulong i = 0; i < w * h; ++i)
+		bwM->matrix[i] = 0;
+
+	return bwM;
+}
+
+void bwMatrixInit(bwMatrix *bwM, ULONG w, ULONG h) {
+
+	bwM->width = w;
+	bwM->height = h;
+
+	bwM->matrix = (uint*)malloc(w * h * sizeof(uint));
+	if (bwM->matrix == NULL)
 	{
 		printf("Memory allocation failed");
 		return;
 	}
 
 	for (ulong i = 0; i < w * h; ++i)
-		bwMat->matrix[i] = 0;
+		bwM->matrix[i] = 0;
 }
 
-void bwMatrixFree(bwMatrix *bwMat) {
-	bwMat->width = 0;
-	bwMat->height = 0;
-	free(bwMat->matrix);
+void bwMatrixFree(bwMatrix *bwM) {
+	bwM->width = 0;
+	bwM->height = 0;
+	free(bwM->matrix);
 }
 
-uint bwMatrixGetValue(const bwMatrix *bwMat, const ulong w, const ulong h) {
-	assert(w < bwMat->width || h < bwMat->height);
-	return bwMat->matrix[(h * bwMat->width) + w];
+uint bwMatrixGetValue(const bwMatrix *bwM, ULONG w, ULONG h) {
+	assert(w < bwM->width || h < bwM->height);
+	return bwM->matrix[(h * bwM->width) + w];
 }
 
-void bwMatrixSetValue(bwMatrix *bwMat, const ulong w,
-					const ulong h, const uint newvalue) {
-	assert(w < bwMat->width || h < bwMat->height);
-	bwMat->matrix[(h * bwMat->width) + w] = newvalue;
+void bwMatrixSetValue(bwMatrix *bwM, ULONG w, ULONG h, UINT val) {
+	assert(w < bwM->width || h < bwM->height);
+	bwM->matrix[(h * bwM->width) + w] = val;
 }
 
-void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode printMode) {
+void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode mode) {
 	printf("\n");
 	for (ulong h = 0; h < bwM->height; ++h)
 	{
 		for (ulong w = 0; w < bwM->width; ++w)
 		{
 			uint val = bwMatrixGetValue(bwM, w, h);
-			if (printMode == Simple)
+			if (mode == Simple)
 				printf("%d", val);
-			if (printMode == Advanced) {
+			if (mode == Advanced) {
 				switch (val) {
 				case 0:
 					printf("░");

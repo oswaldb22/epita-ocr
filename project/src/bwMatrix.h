@@ -27,7 +27,7 @@
 typedef enum { Simple, Advanced } PrintMode;
 
 /* Structure defining an array supposed to contain 0 and 1 only */
-typedef struct
+typedef struct bwMatrix
 {
 	ulong width;	//width of the matrix
 	ulong height;	//height of the matrix
@@ -35,13 +35,12 @@ typedef struct
 } bwMatrix;
 
 /* Prototypes */
-
-void bwMatrixInit(bwMatrix *bwMat, const ulong w, const ulong h);
-void bwMatrixFree(bwMatrix *bwMat);
-uint bwMatrixGetValue(const bwMatrix *bwMat, const ulong w, const ulong h);
-void bwMatrixSetValue(bwMatrix *bwMat, const ulong w,
-					const ulong h, const uint newvalue);
-void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode printMode);
+bwMatrix* bwMatrixNew(ULONG w, ULONG h);
+void bwMatrixInit(bwMatrix *bwM, ULONG w, ULONG h);
+void bwMatrixFree(bwMatrix *bwM);
+uint bwMatrixGetValue(const bwMatrix *bwM, ULONG w, ULONG h);
+void bwMatrixSetValue(bwMatrix *bwM, ULONG w, ULONG h, UINT val);
+void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode mode);
 
 void load_bwM(bwMatrix *bwM, SDL_Surface* img);
 

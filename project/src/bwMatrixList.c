@@ -4,31 +4,31 @@ TODO : Insert fancy header
 
 #include "bwMatrixList.h"
 
-void bwMatrixListInit(bwMatrixList *bwMList) {
-	bwMList->size = 0;
-	bwMList->list = malloc(0);
+void bwMatrixListInit(bwMatrixList *bwML) {
+	bwML->size = 0;
+	bwML->list = malloc(0);
 }
 
-void bwMatrixListFree(bwMatrixList *bwMList) {
-	bwMList->size = 0;
-	free(bwMList->list);
+void bwMatrixListFree(bwMatrixList *bwML) {
+	bwML->size = 0;
+	free(bwML->list);
 }
 
-void bwMatrixListAdd(bwMatrixList *bwMList, const bwMatrix bwM_in) {
-	++bwMList->size;
-	bwMatrix* reallocated = 
-	realloc(bwMList->list, bwMList->size * (sizeof(bwMatrix)));
+void bwMatrixListAdd(bwMatrixList *bwML, const bwMatrix bwM_in) {
+	++bwML->size;
+	bwMatrix* reallocated =
+		realloc(bwML->list, bwML->size * (sizeof(bwMatrix)));
 	if (reallocated) {
-		bwMList->list = reallocated;
-		bwMList->list[bwMList->size - 1] = bwM_in;
+		bwML->list = reallocated;
+		bwML->list[bwML->size - 1] = bwM_in;
 	}
 	else {
 		printf("***ERROR*** : Realloc failed.");
 	}
 }
 
-void bwMatrixListDebugPrint(bwMatrixList *bwMList) {
-	for (ulong i = 0; i < bwMList->size; ++i) {
-		bwMatrixPrintCompact(&bwMList->list[i], Advanced);
+void bwMatrixListDebugPrint(bwMatrixList *bwML) {
+	for (ulong i = 0; i < bwML->size; ++i) {
+		bwMatrixPrintCompact(&bwML->list[i], Advanced);
 	}
 }

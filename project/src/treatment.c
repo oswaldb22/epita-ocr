@@ -7,7 +7,6 @@ void demoShowcase(char *imgPath, int isCharMode) {
 	SDL_Surface* img = NULL;
 
 	img = load_image(imgPath);
-
 	display_image(img);
 
 	bwMatrix bwM;
@@ -28,7 +27,7 @@ void demoShowcase(char *imgPath, int isCharMode) {
 	bndBoxListInit(&drawList_chars);
 
 	getEverything(&bwM, &bwMList_lines, &bwMList_chars,
-					&drawList_lines, &drawList_chars);
+		&drawList_lines, &drawList_chars);
 
 	if (isCharMode)
 		drawBoundingBoxesBw(&bwM, &drawList_chars);
@@ -101,8 +100,8 @@ void convertToBw(rgbMatrix *rgbM_in, bwMatrix *bwM_out, int threshold) {
 		for (ulong h = 0; h < rgbGetHeight(rgbM_in); h++)
 		{
 			c = rgbGetColorXY(rgbM_in, w, h);
-			float res = (float)c.r * 0.3 + (float)c.b * 0.11 
-						+ (float)c.g * 0.59;
+			float res = (float)c.r * 0.3 + (float)c.b * 0.11
+				+ (float)c.g * 0.59;
 			res = res < threshold ? 1 : 0;
 			bwMatrixSetValue(bwM_out, w, h, (uint)res);
 		}
@@ -264,15 +263,15 @@ void cropUsingBox(bwMatrix *bwM_toCrop, bwMatrix *bwM_res, bndBox *box) {
 
 	for (ulong w = 0; w < width; ++w)
 		for (ulong h = 0; h < height; ++h) {
-			uint newval = 
-			bwMatrixGetValue(bwM_toCrop, box->x1 + w, box->y1 + h);
+			uint newval =
+				bwMatrixGetValue(bwM_toCrop, box->x1 + w, box->y1 + h);
 			bwMatrixSetValue(bwM_res, w, h, newval);
 			//bwMatrixPrintCompact(bwM_res, Advanced);
 		}
 }
 
 void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out,
-			bndBoxList *bndList_draw, ulong originW, ulong originH) {
+	bndBoxList *bndList_draw, ulong originW, ulong originH) {
 
 	int buildingline = 0;
 	ulong h = 0;
@@ -322,8 +321,8 @@ void getLines(bwMatrix *bwM_block, bndBoxList *bndList_out,
 	}
 }
 
-void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out, 
-		bndBoxList *bndList_draw, ulong originW, ulong originH) {
+void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out,
+	bndBoxList *bndList_draw, ulong originW, ulong originH) {
 
 	int buildingchar = 0;
 	ulong w = 0;
@@ -333,7 +332,8 @@ void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out,
 	{
 		ulong h = 0;
 		while (h < bwM_line->height) {
-			//If we encounter a char and are not building one, start a new char
+			//If we encounter a char and are not building one,
+			//start a new char
 			if (buildingchar == 0 && bwMatrixGetValue(bwM_line, w, h) == 1) {
 				start = w;
 				buildingchar = 1;
@@ -390,8 +390,8 @@ void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out,
 }
 
 void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out,
- bwMatrixList *bwMList_chars_out, bndBoxList *bndList_draw_lines,
- bndBoxList *bndList_draw_chars) {
+	bwMatrixList *bwMList_chars_out, bndBoxList *bndList_draw_lines,
+	bndBoxList *bndList_draw_chars) {
 
 	UNUSED(bwMList_lines_out);
 	UNUSED(bwMList_chars_out);
@@ -406,7 +406,7 @@ void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out,
 		bwMatrix line;
 		bndBox linebox = lineList.list[i];
 		bwMatrixInit(&line, bndBoxGetWidth(&linebox),
-		bndBoxGetHeight(&linebox));
+			bndBoxGetHeight(&linebox));
 		cropUsingBox(bwM_block_in, &line, &linebox);
 		//bwMatrixListAdd(bwMList_lines_out, line);
 
@@ -419,7 +419,7 @@ void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out,
 			bwMatrix charac;
 			bndBox charbox = charList.list[j];
 			bwMatrixInit(&charac, bndBoxGetWidth(&charbox),
-			bndBoxGetHeight(&charbox));
+				bndBoxGetHeight(&charbox));
 			cropUsingBox(&line, &charac, &charbox);
 			//bwMatrixListAdd(bwMList_chars_out, charac);
 
