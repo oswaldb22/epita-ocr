@@ -3,6 +3,11 @@
 #include "includes.h"
 
 #define RANDOM_MAXIMUM 2147483647
+typedef struct{
+	ulong width;	//nombre de colonnes
+	ulong height;	//nombre de lignes
+	float **matrix;
+}Matrix;
 
 typedef struct{
 
@@ -23,13 +28,12 @@ typedef struct{
 	double **weight;
 	double **weight2;
 
+	Matrix w1;
+	Matrix w2;
+
 }NeuralNetwork;
 
-typedef struct{
-	ulong width;	//nombre de colonnes
-	ulong height;	//nombre de lignes
-	float **matrix;
-}Matrix;
+
 
 void matrixInit(Matrix *x,const ulong w, const ulong h);
 void matrixDot(Matrix *sum,Matrix *x, Matrix *y);
@@ -37,7 +41,7 @@ void matrixPrint(Matrix *m);
 void randMatrix(Matrix *z,float max);
 
 void neuralNetInit(NeuralNetwork* N);
-void forward(NeuralNetwork *neuralN,Matrix *rgbM);
+Matrix* forward(NeuralNetwork *N,Matrix *rgbM);
 void sigmoidMatrix(Matrix *z);
 float sigmoid(float x);
 
