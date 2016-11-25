@@ -16,6 +16,7 @@
 #include "quicktests.h"
 #include "load_to_bw.h"
 #include "rgbMatrix.h"
+#include "neuralNetwork.h"
 
 const char usage[] =
 " <op> <filepath>\n"
@@ -42,6 +43,9 @@ int main(int argc, char* argv[])
 		break;
 	case '1':
 		demoShowcase(argv[2], 1);
+		break;
+	case 'X':
+		runXorNetwork();
 		break;
 	default:
 		errx(1, "No operations for : %s\n", argv[1]);

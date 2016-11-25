@@ -1,49 +1,22 @@
-#ifndef NEURALNETWORK_H
-#define NEURALNETWORK_H
-#include "includes.h"
+#ifndef NEURALNETWORK_H_DEFINE
+#define NEURALNETWORK_H_DEFINE
 
-#define RANDOM_MAXIMUM 2147483647
-typedef struct{
-	ulong width;	//nombre de colonnes
-	ulong height;	//nombre de lignes
-	float **matrix;
-}Matrix;
+struct NeuralNetwork
+{
+  struct Layer *layers;
+  int nbLayer;
+  struct Neuron *lastNeuron;
+  int nbLastNeuron;
+};
 
-typedef struct{
-
-	/*int nbLayers;
-	int size;
-
-	float biases;
-	float weights;*/
-
-
-	//Luminose
-	int inputLayerSize;
-	int outputLayerSize;
-	int hiddenLayerSize;
-
-
-	double **input;
-	double **weight;
-	double **weight2;
-
-	Matrix w1;
-	Matrix w2;
-
-}NeuralNetwork;
-
-
-
-void matrixInit(Matrix *x,const ulong w, const ulong h);
-void matrixDot(Matrix *sum,Matrix *x, Matrix *y);
-void matrixPrint(Matrix *m);
-void randMatrix(Matrix *z,float max);
-
-void neuralNetInit(NeuralNetwork* N);
-Matrix* forward(NeuralNetwork *N,Matrix *rgbM);
-void sigmoidMatrix(Matrix *z);
-float sigmoid(float x);
-
+void runNetwork(struct NeuralNetwork *network, int nbIte);
+void runXorNetwork();
+struct NeuralNetwork *initializingNetwork(int neurons[], int nbLayers);
+double computeError(struct Neuron *neuron, double expected);
+void forwardPropa(struct NeuralNetwork *network);
+void backPropa(struct NeuralNetwork *network, double *expected);
+void trainXOR(struct NeuralNetwork *network, double **entries,
+    double *expected, int entry_th, int nbEntries);
+void train(struct NeuralNetwork *network, double **entries, double *expected);
 
 #endif
