@@ -1,6 +1,8 @@
 #ifndef NEURALNETWORK_H_DEFINE
 #define NEURALNETWORK_H_DEFINE
 
+#define VERBOSE_TRAINXOR 0
+
 struct NeuralNetwork
 {
   struct Layer *layers;

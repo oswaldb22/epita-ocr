@@ -83,150 +83,191 @@
 
 void runXorNetwork()
 {
-  int structure[3] = {2, 4, 1};
-  double **entries = malloc(4 * sizeof(int*));
-  for (int i = 0; i < 4; i++)
-  {
-    entries[i] = malloc(2 * sizeof(int));
-  }
-  entries[0][0] = 0; entries[0][1] = 0;
-  entries[1][0] = 0; entries[1][1] = 1;
-  entries[2][0] = 1; entries[2][1] = 0;
-  entries[3][0] = 1; entries[3][1] = 1;
+	const int in_count = 4;
+	const int in_size = 2;
+	const int out_size = 1;
 
-  double *expected = malloc(4 * sizeof(double));
-  expected[0] = 0;
-  expected[1] = 1;
-  expected[2] = 1;
-  expected[3] = 0;
+	int data[3] = { in_count, in_size, out_size };
+	double **entries = malloc(in_count * sizeof(int*));
 
-  struct NeuralNetwork *network = initializingNetwork(structure, 3);
-  //struct NeuralNetwork *network = loadNetwork("Recognition/Xor");
+	int i = 0;
+	while (i < in_count) {
+		entries[i] = malloc(in_size * sizeof(int));
+		++i;
+	}
 
-  if (network != NULL)
-  {
-    for (int i = 0; i < network->nbLayer; i++)
-    {
-      printf("Couche %d - ", i);
-      for (int j = 0; j < network->layers[i].nbNeuron; j++)
-      {
-        printf("\nNeuron %d : ", j);
-        for (int k = 0; k < network->layers[i].neurons[j].nbSynap; k++)
-        {
-          printf("%f, ", network->layers[i].neurons[j].synapses[k]);
-        }
-      }
-      printf("\n");
-    }
+	entries[0][0] = 0; entries[0][1] = 0;
+	entries[1][0] = 0; entries[1][1] = 1;
+	entries[2][0] = 1; entries[2][1] = 0;
+	entries[3][0] = 1; entries[3][1] = 1;
 
-    for (int i=0; i<8000; i++)
-    do
-    {
-      trainXOR(network, entries, expected, 4, 2);
-    } while(network->lastNeuron->deltaError > 0.1 &&
-        network->lastNeuron->deltaError < -0.1);
-  }
+	double *expected = malloc(in_count * sizeof(double));
+	expected[0] = 0;
+	expected[1] = 1;
+	expected[2] = 1;
+	expected[3] = 0;
 
-  /*saveNetwork(network);*/
+	struct NeuralNetwork *network = initializingNetwork(data, 3);
+	//struct NeuralNetwork *network = loadNetwork("Recognition/Xor");
+
+	if (network != NULL)
+	{
+		printf("\nL");
+		do
+		{
+			switch (time(NULL) % 4)
+			{
+			case 0:
+				printf("\r|");
+				break;
+			case 1:
+				printf("\r/");
+				break;
+			case 2:
+				printf("\r-");
+				break;
+			case 3:
+				printf("\r\\");
+				break;
+			}
+			trainXOR(network, entries, expected, in_count, in_size);
+		} while (network->lastNeuron->deltaError > 0.1
+			|| network->lastNeuron->deltaError < -0.1);
+
+		printf("\r \n");
+
+		int i = 0;
+		while (i < in_count) {
+			int j = 0;
+			while (j < in_size) {
+				network->layers[0].neurons[j].out = entries[i][j];
+				++j;
+			}
+			forwardPropa(network);
+			backPropa(network, &expected[i]);
+			int in_A = (int)network->layers[0].neurons[0].out;
+			int in_B = (int)network->layers[0].neurons[1].out;
+			float delta = network->lastNeuron->deltaError;
+			float out = network->lastNeuron->out;
+			int res = out > 0.5;
+
+			printf("IN[ %d , %d ] \t(%f) \t%f \tOUT[ %d ]\n",
+				in_A,
+				in_B,
+				delta,
+				out,
+				res);
+			++i;
+		}
+	}
+	/*saveNetwork(network);*/
 }
 
 //neurons[] gives the number of neurons by layer
 struct NeuralNetwork *initializingNetwork(int neurons[], int nbLayers)
 {
-  struct NeuralNetwork *network = malloc(sizeof(struct NeuralNetwork));
-  network->nbLayer = nbLayers;
+	struct NeuralNetwork *network = malloc(sizeof(struct NeuralNetwork));
+	network->nbLayer = nbLayers;
+	network->layers = malloc(nbLayers * sizeof(struct Layer));
 
-  network->layers = malloc(nbLayers * sizeof(struct Layer));
-  int i = 0;
-  srand(time(NULL));
-  for (; i < nbLayers; i++)
-  {
-    if (!i)
-    {
-      network->layers[i] = *initializingLayer(neurons[i], 0);
-    }
-    else
-    {
-      network->layers[i] = *initializingLayer(neurons[i], neurons[i-1]);
-    }
-  }
+	int i = 0;
+	srand(2);	//total random
+	while (i < nbLayers)
+	{
+		network->layers[i] = (i == 0) ? *initializingLayer(neurons[i], 0) :
+			*initializingLayer(neurons[i], neurons[i - 1]);
+		++i;
+	}
 
-  network->lastNeuron = network->layers[i-1].neurons;
-  network->nbLastNeuron = network->layers[i-1].nbNeuron;
+	network->lastNeuron = network->layers[i - 1].neurons;
+	network->nbLastNeuron = network->layers[i - 1].nbNeuron;
 
-  return network;
+	return network;
 }
 
 double computeError(struct Neuron *neuron, double expected)
 {
-  /*for (int i = 0; i < network->nbLastNeuron; i++)
-  {
-    network->lastNeuron[i].deltaError = expected[i] - network->lastNeuron[i].out;
-  }*/
-  return expected - neuron->out;
+	return expected - neuron->out;
 }
 
 void forwardPropa(struct NeuralNetwork *network)
 {
-  for (int i = 1; i < network->nbLayer; i++)
-  {
-    computeSum(&network->layers[i-1], &network->layers[i]);
-  }
+	int i = 1;
+	while (i < network->nbLayer) {
+		computeSum(&network->layers[i - 1], &network->layers[i]);
+		++i;
+	}
 }
 
 void backPropa(struct NeuralNetwork *network, double *expected)
 {
-  for (int i = 0; i < network->nbLastNeuron; i++)
-  {
-    network->lastNeuron[i].deltaError = computeError(&network->lastNeuron[i], expected[i]);
-  }
+	int i = 0;
+	while (i < network->nbLastNeuron) {
+		network->lastNeuron[i].deltaError =
+			computeError(&network->lastNeuron[i], expected[i]);
+		++i;
+	}
 
-  for (int i = network->nbLayer - 2; i > 0; i--)
-  {
-    updateError(&network->layers[i], &network->layers[i+1]);
-  }
+	i = network->nbLayer - 2;
+	while (i > 0) {
+		updateError(&network->layers[i], &network->layers[i + 1]);
+		--i;
+	}
 
-  for (int i = 1; i < network->nbLayer; i++)
-  {
-    updateWeight(&network->layers[i-1], &network->layers[i]);
-  }
+	i = 1;
+	while (i < network->nbLayer) {
+		updateWeight(&network->layers[i - 1], &network->layers[i]);
+		++i;
+	}
 }
 
-void trainXOR(struct NeuralNetwork *network, double **entries, 
-    double *expected,
-    int entry_th, int nbEntries)
+void trainXOR(struct NeuralNetwork *network, double **entries,
+	double *expected,
+	int entry_th, int nbEntries)
 {
-  for (int i = 0; i < entry_th; i++)
-  {
-    for (int j = 0; j < nbEntries; j++)
-    {
-      network->layers[0].neurons[j].out = entries[i][j];
-    }
+	int i = 0;
+	while (i < entry_th) {
+		int j = 0;
+		while (j < nbEntries) {
+			network->layers[0].neurons[j].out = entries[i][j];
+			++j;
+		}
+		forwardPropa(network);
+		backPropa(network, &expected[i]);
 
-    forwardPropa(network);
-    backPropa(network, &expected[i]);
-    printf("a = %f, b = %f (e : %f) -- XOR = %f\n",
-        network->layers[0].neurons[0].out,
-        network->layers[0].neurons[1].out,
-        network->lastNeuron->deltaError,
-        network->lastNeuron->out);
-  }
-  printf("\n");
+		if (VERBOSE_TRAINXOR) {
+			int in_A = (int)network->layers[0].neurons[0].out;
+			int in_B = (int)network->layers[0].neurons[1].out;
+			float delta = network->lastNeuron->deltaError;
+			float out = network->lastNeuron->out;
+			int res = out > 0.5;
+
+			printf("IN[ %d , %d ] \t(%f) \t%f \tOUT[ %d ]\n",
+				in_A,
+				in_B,
+				delta,
+				out,
+				res);
+		}
+		++i;
+	}
 }
 
 void train(struct NeuralNetwork *network, double **entries, double *expected)
 {
-  int count = 0;
-  for (int j = 0; j < 10; j++)
-  {
-    for (int i = 0; i < 10; i++)
-    {
-      network->layers[0].neurons[count].out = entries[i][j];
-      count++;
-    }
-  }
+	int count = 0;
+	int j = 0;
+	while (j < 10) {
+		int i = 0;
+		while (i < 10) {
+			network->layers[0].neurons[count].out = entries[i][j];
+			count++;
+			++i;
+		}
+		++j;
+	}
 
-  forwardPropa(network);
-  if (expected != NULL)
-    backPropa(network, expected);
+	forwardPropa(network);
+	if (expected != NULL)
+		backPropa(network, expected);
 }
