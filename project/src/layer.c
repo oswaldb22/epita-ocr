@@ -6,58 +6,65 @@
 
 struct Layer *initializingLayer(int nbNeuron, int nbSynap)
 {
-  struct Layer *layer = malloc(sizeof(struct Layer));
-  layer->nbNeuron = nbNeuron;
+	struct Layer *layer = malloc(sizeof(struct Layer));
+	layer->nbNeuron = nbNeuron;
 
-  layer->neurons = malloc(nbNeuron * sizeof(struct Neuron));
-  for (int i = 0; i < nbNeuron; i++)
-  {
-    layer->neurons[i] = *initializingNeuron(nbSynap);
-  }
+	layer->neurons = malloc(nbNeuron * sizeof(struct Neuron));
+	int i = 0;
+	while(i < nbNeuron){
+		layer->neurons[i] = *initializingNeuron(nbSynap);
+		++i;
+	}
 
-  return layer;
+	return layer;
 }
 
 void computeSum(struct Layer *before, struct Layer *current)
 {
-  for (int i = 0; i < current->nbNeuron; i++)
-  {
-    current->neurons[i].sum = 0;
-    for (int j = 0; j < before->nbNeuron; j++)
-    {
-      current->neurons[i].sum += 
-        before->neurons[j].out * 
-        current->neurons[i].synapses[j];
-    }
-    computeOut(&current->neurons[i]);
-  }
+	int i = 0;
+	while(i < current->nbNeuron)
+	{
+		current->neurons[i].sum = 0;
+		int j = 0;
+		while(j < before->nbNeuron){
+			current->neurons[i].sum +=
+				before->neurons[j].out *
+				current->neurons[i].synapses[j];
+			++j;
+		}
+		computeOut(&current->neurons[i]);
+		++i;
+	}
 }
 
 void updateError(struct Layer *current, struct Layer *next)
 {
-  for (int i = 0; i < current->nbNeuron; i++)
-  {
-    current->neurons[i].deltaError = 0;
-    for (int j = 0; j < next->nbNeuron; j++)
-    {
-      current->neurons[i].deltaError +=
-        next->neurons[j].synapses[i] *
-        next->neurons[j].deltaError;
-
-    }
-  }
+	int i = 0;
+	while(i < current->nbNeuron){
+		current->neurons[i].deltaError = 0;
+		int j = 0;
+		while(j < next->nbNeuron){
+			current->neurons[i].deltaError +=
+				next->neurons[j].synapses[i] *
+				next->neurons[j].deltaError;
+			++j;
+		}
+		++i;
+	}
 }
 
 void updateWeight(struct Layer *before, struct Layer *current)
 {
-  for (int i = 0; i < current->nbNeuron; i++)
-  { 
-    for (int j = 0; j < current->neurons[i].nbSynap; j++)
-    {
-      current->neurons[i].synapses[j] +=
-        current->neurons[i].deltaError * 0.1 *
-        derivateSig(current->neurons[i].sum) * 
-        before->neurons[j].out;
-    }
-  }
+	int i = 0;
+	while(i < current->nbNeuron){
+		int j = 0;
+		while(j < current->neurons[i].nbSynap){
+			current->neurons[i].synapses[j] +=
+				current->neurons[i].deltaError * 0.1 *
+				derivateSig(current->neurons[i].sum) *
+				before->neurons[j].out;
+			++j;
+		}
+		++i;
+	}
 }
