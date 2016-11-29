@@ -1,19 +1,21 @@
 #ifndef N_H
 #define N_H
 
-struct Neuron
-{
-  double *synapses;
-  int nbSynap;
-  double bias;
-  double sum;
-  double deltaError;
-  double out;
-};
+#include "includes.h"
 
-struct Neuron *initializingNeuron(int synapses);
-double sigmoid(double x);
-double derivateSig(double x);
-void computeOut(struct Neuron *neuron);
+typedef struct Neuron
+{
+	double dErr;
+	double out;
+	double bias;
+	double total;
+	int sCount;
+	double *synArray;
+} Neuron;
+
+Neuron *initNeur(int synArray);
+double sig(double d);
+double dSig(double x);
+void workSigmoid(Neuron *ne);
 
 #endif

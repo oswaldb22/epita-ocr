@@ -1,40 +1,32 @@
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
-
 #include "neuron.h"
 
-struct Neuron *initializingNeuron(int nbSynap)
+Neuron *initNeur(int sCount)
 {
-	struct Neuron *neuron = malloc(sizeof(struct Neuron));
-	neuron->nbSynap = nbSynap;
-
-	neuron->synapses = malloc(nbSynap * sizeof(double));
+	Neuron *ne = malloc(sizeof(Neuron));
+	ne->sCount = sCount;
+	ne->synArray = malloc(sCount * sizeof(double));
 	int i = 0;
-	while(i < nbSynap){
-		neuron->synapses[i] = ((double)rand() / (double)RAND_MAX);
+	while(i < sCount){
+		ne->synArray[i] = ((double)rand() / (double)RAND_MAX);
 		++i;
 	}
-
-	neuron->sum = 0;
-	neuron->deltaError = 0;
-	neuron->out = 0;
-	//neuron->bias = 0;
-
-	return neuron;
+	ne->total = 0;
+	ne->dErr = 0;
+	ne->out = 0;
+	return ne;
 }
 
-double sigmoid(double x)
+double sig(double d)
 {
-	return 1 / ( 1 + exp(-x));
+	return 1 / ( 1 + exp(-d));
 }
 
-double derivateSig(double x)
+double dSig(double d)
 {
-	return sigmoid(x) * (1 - sigmoid(x));
+	return sig(d) * (1 - sig(d));
 }
 
-void computeOut(struct Neuron *neuron)
+void workSigmoid(Neuron *ne)
 {
-	neuron->out = sigmoid(neuron->sum /*+ neuron->bias*/);
+	ne->out = sig(ne->total);
 }

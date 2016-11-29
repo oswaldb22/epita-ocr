@@ -2,6 +2,7 @@
 
 #include <stdio.h>		//Input/Output
 #include <stdlib.h>		//Malloc
+#include <math.h>		//Maths
 #include <time.h>		//Time (Mainly for RNG)
 #include <assert.h> 	//Asserts
 //Typedef

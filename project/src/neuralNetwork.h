@@ -1,24 +1,29 @@
 #ifndef NN_H
 #define NN_H
 
+#include "includes.h"
+
 #define VERBOSE_TRAINXOR 0
 
-struct NeuralNetwork
+typedef struct NeuralNetwork
 {
-  struct Layer *layers;
-  int nbLayer;
-  struct Neuron *lastNeuron;
-  int nbLastNeuron;
-};
+	struct Layer *layArray;
+	int layCount;
+	struct Neuron *lastNe;
+	int lastCount;
+} NeuralNetwork;
 
-void runNetwork(struct NeuralNetwork *network, int nbIte);
-void runXorNetwork();
-struct NeuralNetwork *initializingNetwork(int neurons[], int nbLayers);
-double computeError(struct Neuron *neuron, double expected);
-void forwardPropa(struct NeuralNetwork *network);
-void backPropa(struct NeuralNetwork *network, double *expected);
-void trainXOR(struct NeuralNetwork *network, double **entries,
-    double *expected, int entry_th, int nbEntries);
-void train(struct NeuralNetwork *network, double **entries, double *expected);
+#include "layer.h"
+#include "neuron.h"
+#include "saving.h"
+
+void testXOR();
+NeuralNetwork *initNeurNet(int nArray[], int layCount);
+double workErr(Neuron *ne, double res);
+void onward(NeuralNetwork *net);
+void backwards(NeuralNetwork *net, double *res);
+void workoutXOR(NeuralNetwork *net, double **inputs,
+	double *res, int entry_th, int inCount);
+void train(NeuralNetwork *net, double **inputs, double *res);
 
 #endif

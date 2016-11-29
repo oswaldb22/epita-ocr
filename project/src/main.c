@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 		demoShowcase(argv[2], 1);
 		break;
 	case 'X':
-		runXorNetwork();
+		testXOR();
 		break;
 	default:
 		errx(1, "No operations for : %s\n", argv[1]);

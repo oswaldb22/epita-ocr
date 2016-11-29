@@ -1,68 +1,64 @@
-#include <stdlib.h>
-#include <time.h>
-
 #include "layer.h"
-#include "neuron.h"
 
-struct Layer *initializingLayer(int nbNeuron, int nbSynap)
+struct Layer *initLay(int nCount, int sCount)
 {
 	struct Layer *layer = malloc(sizeof(struct Layer));
-	layer->nbNeuron = nbNeuron;
+	layer->nCount = nCount;
 
-	layer->neurons = malloc(nbNeuron * sizeof(struct Neuron));
+	layer->nArray = malloc(nCount * sizeof(Neuron));
 	int i = 0;
-	while(i < nbNeuron){
-		layer->neurons[i] = *initializingNeuron(nbSynap);
+	while(i < nCount){
+		layer->nArray[i] = *initNeur(sCount);
 		++i;
 	}
 
 	return layer;
 }
 
-void computeSum(struct Layer *before, struct Layer *current)
+void workoutTotal(struct Layer *before, struct Layer *current)
 {
 	int i = 0;
-	while(i < current->nbNeuron)
+	while(i < current->nCount)
 	{
-		current->neurons[i].sum = 0;
+		current->nArray[i].total = 0;
 		int j = 0;
-		while(j < before->nbNeuron){
-			current->neurons[i].sum +=
-				before->neurons[j].out *
-				current->neurons[i].synapses[j];
+		while(j < before->nCount){
+			current->nArray[i].total +=
+				before->nArray[j].out *
+				current->nArray[i].synArray[j];
 			++j;
 		}
-		computeOut(&current->neurons[i]);
+		workSigmoid(&current->nArray[i]);
 		++i;
 	}
 }
 
-void updateError(struct Layer *current, struct Layer *next)
+void workoutErr(struct Layer *current, struct Layer *next)
 {
 	int i = 0;
-	while(i < current->nbNeuron){
-		current->neurons[i].deltaError = 0;
+	while(i < current->nCount){
+		current->nArray[i].dErr = 0;
 		int j = 0;
-		while(j < next->nbNeuron){
-			current->neurons[i].deltaError +=
-				next->neurons[j].synapses[i] *
-				next->neurons[j].deltaError;
+		while(j < next->nCount){
+			current->nArray[i].dErr +=
+				next->nArray[j].synArray[i] *
+				next->nArray[j].dErr;
 			++j;
 		}
 		++i;
 	}
 }
 
-void updateWeight(struct Layer *before, struct Layer *current)
+void workoutWeight(struct Layer *before, struct Layer *current)
 {
 	int i = 0;
-	while(i < current->nbNeuron){
+	while(i < current->nCount){
 		int j = 0;
-		while(j < current->neurons[i].nbSynap){
-			current->neurons[i].synapses[j] +=
-				current->neurons[i].deltaError * 0.1 *
-				derivateSig(current->neurons[i].sum) *
-				before->neurons[j].out;
+		while(j < current->nArray[i].sCount){
+			current->nArray[i].synArray[j] +=
+				current->nArray[i].dErr * 0.1 *
+				dSig(current->nArray[i].total) *
+				before->nArray[j].out;
 			++j;
 		}
 		++i;
