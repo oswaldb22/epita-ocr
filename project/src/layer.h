@@ -4,11 +4,11 @@
 #include "includes.h"
 #include "neuron.h"
 
-struct Layer
+typedef struct Layer
 {
   Neuron *nArray;
   int nCount;
-};
+} Layer;
 
 struct Layer *initLay(int nCount, int sCount);
 void workoutTotal(struct Layer *before, struct Layer *current);
