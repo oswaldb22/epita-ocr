@@ -86,7 +86,7 @@ NeuralNetwork *initNeurNet(int nArray[], int layCount)
 {
 	NeuralNetwork *net = malloc(sizeof(NeuralNetwork));
 	net->layCount = layCount;
-	net->layArray = malloc(layCount * sizeof(struct Layer));
+	net->layArray = malloc(layCount * sizeof(Layer));
 
 	int i = 0;
 	srand(2);	//total random

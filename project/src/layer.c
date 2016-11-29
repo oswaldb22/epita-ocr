@@ -1,8 +1,8 @@
 #include "layer.h"
 
-struct Layer *initLay(int nCount, int sCount)
+Layer *initLay(int nCount, int sCount)
 {
-	struct Layer *layer = malloc(sizeof(struct Layer));
+	Layer *layer = malloc(sizeof(Layer));
 	layer->nCount = nCount;
 
 	layer->nArray = malloc(nCount * sizeof(Neuron));
@@ -15,7 +15,7 @@ struct Layer *initLay(int nCount, int sCount)
 	return layer;
 }
 
-void workoutTotal(struct Layer *before, struct Layer *current)
+void workoutTotal(Layer *before, Layer *current)
 {
 	int i = 0;
 	while(i < current->nCount)
@@ -33,7 +33,7 @@ void workoutTotal(struct Layer *before, struct Layer *current)
 	}
 }
 
-void workoutErr(struct Layer *current, struct Layer *next)
+void workoutErr(Layer *current, Layer *next)
 {
 	int i = 0;
 	while(i < current->nCount){
@@ -49,7 +49,7 @@ void workoutErr(struct Layer *current, struct Layer *next)
 	}
 }
 
-void workoutWeight(struct Layer *before, struct Layer *current)
+void workoutWeight(Layer *before, Layer *current)
 {
 	int i = 0;
 	while(i < current->nCount){
