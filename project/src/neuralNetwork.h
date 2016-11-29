@@ -1,5 +1,5 @@
-#ifndef NEURALNETWORK_H_DEFINE
-#define NEURALNETWORK_H_DEFINE
+#ifndef NN_H
+#define NN_H
 
 #define VERBOSE_TRAINXOR 0
 

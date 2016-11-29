@@ -1,5 +1,5 @@
-#ifndef NEURON_H_DEFINE
-#define NEURON_H_DEFINE
+#ifndef N_H
+#define N_H
 
 struct Neuron
 {

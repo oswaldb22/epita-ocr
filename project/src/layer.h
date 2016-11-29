@@ -1,7 +1,7 @@
-#ifndef LAYER_H_DEFINE
-#define LAYER_H_DEFINE
+#ifndef L_H
+#define L_H
 
-struct Layer 
+struct Layer
 {
   struct Neuron *neurons;
   int nbNeuron;
