@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 		errx(1, "%s", usage);
 	switch (argv[1][0]) {
 	case '!':
-		printf("Hello World!");
+		printf("Hello World!\n");
 		break;
 	case '0':
 		demoShowcase(argv[2], 0);
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 		errx(1, "No operations for : %s\n", argv[1]);
 		break;
 	}
-
+	fflush(stdout);
 	//*/
 
 	/*/BLOC 2

@@ -18,7 +18,7 @@ void bwMatrixListFree(bwMatrixList *bwML);
 void bwMatrixListPush(bwMatrixList *bwML, bwMatrixList *elm);
 bwMatrixList *bwMatrixListPop(bwMatrixList *bwML);
 bwMatrixList *bwMatrixListGet(bwMatrixList *bwML, int i);
-
+void bwMatrixListDebugPrint(bwMatrixList *bwML);
 /*
 void bwMatrixListInit(bwMatrixList *bwML);
 void bwMatrixListFree(bwMatrixList *bwML);

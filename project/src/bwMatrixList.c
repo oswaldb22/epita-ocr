@@ -51,12 +51,12 @@ bwMatrixList *bwMatrixListGet(bwMatrixList *bwML, int i) {
 
 void bwMatrixListDebugPrint(bwMatrixList *bwML) {
 	bwMatrixList *cur = bwML->next;
-	printf("=== BEGIN BWMLIST PRINT ===");
+	printf("=== BEGIN BWMLIST PRINT ===\n");
 	while (cur) {
 		bwMatrixPrintCompact(cur->data, Advanced);
 		cur = cur->next;
 	}
-	printf("=== END BWMLIST PRINT ===");
+	printf("=== END BWMLIST PRINT ===\n");
 }
 
 /*

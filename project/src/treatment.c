@@ -7,7 +7,7 @@ void demoShowcase(char *imgPath, int isCharMode) {
 	SDL_Surface* img = NULL;
 
 	img = load_image(imgPath);
-	display_image(img);
+	//display_image(img);
 
 	bwMatrix bwM;
 	bwMatrixInit(&bwM, img->w, img->h);
@@ -36,12 +36,12 @@ void demoShowcase(char *imgPath, int isCharMode) {
 
 	convertBwToBmp(&bwM, img);
 
-	display_image(img);
+	//display_image(img);
 
 	bndBoxListFree(&drawList_lines);
 	bndBoxListFree(&drawList_chars);
-	bwMatrixListFree(bwMList_lines);
-	bwMatrixListFree(bwMList_chars);
+	//bwMatrixListFree(bwMList_lines);
+	//bwMatrixListFree(bwMList_chars);
 	bwMatrixFree(&bwM);
 }
 
@@ -401,34 +401,34 @@ void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out,
 
 	for (ulong i = 0; i < lineList.size; i++)
 	{
-		bwMatrix line;
+		bwMatrix *line = malloc(sizeof(bwMatrix));
 		bndBox linebox = lineList.list[i];
-		bwMatrixInit(&line, bndBoxGetWidth(&linebox),
+		bwMatrixInit(line, bndBoxGetWidth(&linebox),
 			bndBoxGetHeight(&linebox));
-		cropUsingBox(bwM_block_in, &line, &linebox);
+		cropUsingBox(bwM_block_in, line, &linebox);
 
 		//Adds to list of lines
 		bwMatrixList *lineToAdd = malloc(sizeof(bwMatrixList));
 		bwMatrixListInit(lineToAdd);
-		lineToAdd->data = &line;
+		lineToAdd->data = line;
 		bwMatrixListPush(bwMList_lines_out, lineToAdd);
 
 		bndBoxList charList;
 		bndBoxListInit(&charList);
-		getChars(&line, &charList, bndList_draw_chars, linebox.x1, linebox.y1);
+		getChars(line, &charList, bndList_draw_chars, linebox.x1, linebox.y1);
 
 		for (ulong j = 0; j < charList.size; j++)
 		{
-			bwMatrix charac;
+			bwMatrix *charac = malloc(sizeof(bwMatrix));
 			bndBox charbox = charList.list[j];
-			bwMatrixInit(&charac, bndBoxGetWidth(&charbox),
+			bwMatrixInit(charac, bndBoxGetWidth(&charbox),
 				bndBoxGetHeight(&charbox));
-			cropUsingBox(&line, &charac, &charbox);
+			cropUsingBox(line, charac, &charbox);
 
 			//Adds to list of chars
 			bwMatrixList *charToAdd = malloc(sizeof(bwMatrixList));
 			bwMatrixListInit(charToAdd);
-			charToAdd->data = &charac;
+			charToAdd->data = charac;
 			bwMatrixListPush(bwMList_chars_out, charToAdd);
 
 			//bwMatrixFree(&charac);
