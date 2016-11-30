@@ -4,7 +4,7 @@
 
 void testXOR()
 {
-	printf(" ===== BEGIN XOR TEST =====\n");
+	printf("===== BEGIN XOR TEST =====\n");
 	const int in_count = 4;
 	const int in_size = 2;
 	//const int out_size = 1;
@@ -82,7 +82,7 @@ void testXOR()
 		}
 	}
 	//save(net, "networks/XOR_trained");
-	printf(" ===== END XOR TEST =====\n");
+	printf("===== END XOR TEST =====\n");
 }
 
 NeuralNetwork *initNeurNet(int nArray[], int layCount)

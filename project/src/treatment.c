@@ -14,11 +14,11 @@ void demoShowcase(char *imgPath, int isCharMode) {
 
 	load_bwM(&bwM, img);
 
-	bwMatrixList bwMList_lines;
-	bwMatrixListInit(&bwMList_lines);
+	bwMatrixList *bwMList_lines = malloc(sizeof(bwMatrixList));
+	bwMatrixListInit(bwMList_lines);
 
-	bwMatrixList bwMList_chars;
-	bwMatrixListInit(&bwMList_chars);
+	bwMatrixList *bwMList_chars = malloc(sizeof(bwMatrixList));
+	bwMatrixListInit(bwMList_chars);
 
 	bndBoxList drawList_lines;
 	bndBoxListInit(&drawList_lines);
@@ -26,7 +26,7 @@ void demoShowcase(char *imgPath, int isCharMode) {
 	bndBoxList drawList_chars;
 	bndBoxListInit(&drawList_chars);
 
-	getEverything(&bwM, &bwMList_lines, &bwMList_chars,
+	getEverything(&bwM, bwMList_lines, bwMList_chars,
 		&drawList_lines, &drawList_chars);
 
 	if (isCharMode)
@@ -40,8 +40,8 @@ void demoShowcase(char *imgPath, int isCharMode) {
 
 	bndBoxListFree(&drawList_lines);
 	bndBoxListFree(&drawList_chars);
-	bwMatrixListFree(&bwMList_lines);
-	bwMatrixListFree(&bwMList_chars);
+	bwMatrixListFree(bwMList_lines);
+	bwMatrixListFree(bwMList_chars);
 	bwMatrixFree(&bwM);
 }
 
@@ -154,7 +154,6 @@ void drawBoundingBoxesRgb(rgbMatrix *rgbM_in, bndBoxList *bndList_draw) {
 	}
 }
 
-// TODO : here be demons, to modify as soon as possible
 void drawBoundingBoxesBw(bwMatrix *bwM_in, bndBoxList *bndList_draw) {
 
 	ulong maxW = bwM_in->width;
@@ -185,7 +184,6 @@ void drawBoundingBoxesBw(bwMatrix *bwM_in, bndBoxList *bndList_draw) {
 
 	}
 }
-
 
 void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
 
@@ -408,7 +406,12 @@ void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out,
 		bwMatrixInit(&line, bndBoxGetWidth(&linebox),
 			bndBoxGetHeight(&linebox));
 		cropUsingBox(bwM_block_in, &line, &linebox);
-		//bwMatrixListAdd(bwMList_lines_out, line);
+
+		//Adds to list of lines
+		bwMatrixList *lineToAdd = malloc(sizeof(bwMatrixList));
+		bwMatrixListInit(lineToAdd);
+		lineToAdd->data = &line;
+		bwMatrixListPush(bwMList_lines_out, lineToAdd);
 
 		bndBoxList charList;
 		bndBoxListInit(&charList);
@@ -421,13 +424,18 @@ void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out,
 			bwMatrixInit(&charac, bndBoxGetWidth(&charbox),
 				bndBoxGetHeight(&charbox));
 			cropUsingBox(&line, &charac, &charbox);
-			//bwMatrixListAdd(bwMList_chars_out, charac);
 
-			bwMatrixFree(&charac);
+			//Adds to list of chars
+			bwMatrixList *charToAdd = malloc(sizeof(bwMatrixList));
+			bwMatrixListInit(charToAdd);
+			charToAdd->data = &charac;
+			bwMatrixListPush(bwMList_chars_out, charToAdd);
+
+			//bwMatrixFree(&charac);
 		}
 
 		bndBoxListFree(&charList);
-		bwMatrixFree(&line);
+		//bwMatrixFree(&line);
 	}
 
 	bndBoxListFree(&lineList);

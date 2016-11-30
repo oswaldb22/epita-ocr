@@ -9,8 +9,6 @@
 |
 */
 
-//TODO : Maybe make a big includes.h folder ?
-
 #include "includes.h"
 #include "bwMatrix.h"
 #include "quicktests.h"

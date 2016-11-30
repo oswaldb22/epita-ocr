@@ -24,7 +24,7 @@
 #ifndef BWMATRIX
 #define BWMATRIX
 
-typedef enum { Simple, Advanced } PrintMode;
+typedef enum PrintMode { Simple, Advanced } PrintMode;
 
 /* Structure defining an array supposed to contain 0 and 1 only */
 typedef struct bwMatrix

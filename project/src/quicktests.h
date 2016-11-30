@@ -31,11 +31,11 @@ void TestBounding() {
 
 	load_bwM(&bwM, img);
 
-	bwMatrixList bwMList_lines;
-	bwMatrixListInit(&bwMList_lines);
+	bwMatrixList *bwMList_lines = malloc(sizeof(bwMatrixList));
+	bwMatrixListInit(bwMList_lines);
 
-	bwMatrixList bwMList_chars;
-	bwMatrixListInit(&bwMList_chars);
+	bwMatrixList *bwMList_chars = malloc(sizeof(bwMatrixList));
+	bwMatrixListInit(bwMList_chars);
 
 	bndBoxList drawList_lines;
 	bndBoxListInit(&drawList_lines);
@@ -45,8 +45,8 @@ void TestBounding() {
 
 	//bwMatrixPrintCompact(&bwM, Advanced);
 
-	getEverything(&bwM, &bwMList_lines,
-		&bwMList_chars, &drawList_lines, &drawList_chars);
+	getEverything(&bwM, bwMList_lines,
+		bwMList_chars, &drawList_lines, &drawList_chars);
 
 	//drawBoundingBoxesBw(&bwM, &drawList_lines);
 	drawBoundingBoxesBw(&bwM, &drawList_chars);
@@ -57,8 +57,8 @@ void TestBounding() {
 
 	bndBoxListFree(&drawList_lines);
 	bndBoxListFree(&drawList_chars);
-	bwMatrixListFree(&bwMList_lines);
-	bwMatrixListFree(&bwMList_chars);
+	bwMatrixListFree(bwMList_lines);
+	bwMatrixListFree(bwMList_chars);
 	//rgbFree(&rgbM);
 	bwMatrixFree(&bwM);
 }
@@ -116,11 +116,11 @@ void TestCut() {
 	bwMatrixSetValue(&test, 8, 2, 1);
 	bwMatrixSetValue(&test, 8, 4, 1);
 
-	bwMatrixList bwMList_lines;
-	bwMatrixListInit(&bwMList_lines);
+	bwMatrixList *bwMList_lines = malloc(sizeof(bwMatrixList));
+	bwMatrixListInit(bwMList_lines);
 
-	bwMatrixList bwMList_chars;
-	bwMatrixListInit(&bwMList_chars);
+	bwMatrixList *bwMList_chars = malloc(sizeof(bwMatrixList));
+	bwMatrixListInit(bwMList_chars);
 
 	bndBoxList drawList_lines;
 	bndBoxListInit(&drawList_lines);
@@ -128,13 +128,13 @@ void TestCut() {
 	bndBoxList drawList_chars;
 	bndBoxListInit(&drawList_chars);
 
-	getEverything(&test, &bwMList_lines, &bwMList_chars,
+	getEverything(&test, bwMList_lines, bwMList_chars,
 		&drawList_lines, &drawList_chars);
 
 	bndBoxListFree(&drawList_lines);
 	bndBoxListFree(&drawList_chars);
-	bwMatrixListFree(&bwMList_lines);
-	bwMatrixListFree(&bwMList_chars);
+	bwMatrixListFree(bwMList_lines);
+	bwMatrixListFree(bwMList_chars);
 	bwMatrixFree(&test);
 }
 
