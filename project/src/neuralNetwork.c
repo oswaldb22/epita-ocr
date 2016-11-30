@@ -142,6 +142,25 @@ void backwards(NeuralNetwork *net, double *wonted)
 	}
 }
 
+void train(NeuralNetwork *net, double **inputs, double *wonted)
+{
+	int count = 0;
+	int j = 0;
+	while (j < 10) {
+		int i = 0;
+		while (i < 10) {
+			net->layArray[0].nArray[count].out = inputs[i][j];
+			count++;
+			++i;
+		}
+		++j;
+	}
+
+	onward(net);
+	if (wonted != NULL)
+		backwards(net, wonted);
+}
+
 void workoutXOR(NeuralNetwork *net, double **inputs,
 	double *wonted,
 	int inputsCount, int inCount)
@@ -172,23 +191,4 @@ void workoutXOR(NeuralNetwork *net, double **inputs,
 		}
 		++i;
 	}
-}
-
-void train(NeuralNetwork *net, double **inputs, double *wonted)
-{
-	int count = 0;
-	int j = 0;
-	while (j < 10) {
-		int i = 0;
-		while (i < 10) {
-			net->layArray[0].nArray[count].out = inputs[i][j];
-			count++;
-			++i;
-		}
-		++j;
-	}
-
-	onward(net);
-	if (wonted != NULL)
-		backwards(net, wonted);
 }
