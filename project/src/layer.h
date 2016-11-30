@@ -11,8 +11,8 @@ typedef struct Layer
 } Layer;
 
 Layer *initLay(int nCount, int sCount);
-void workoutTotal(Layer *before, Layer *current);
-void workoutErr(Layer *current, Layer *next);
-void workoutWeight(Layer *before, Layer *current);
+void workoutTotal(Layer *prev, Layer *cur);
+void workoutErr(Layer *cur, Layer *next);
+void workoutWeight(Layer *prev, Layer *cur);
 
 #endif
