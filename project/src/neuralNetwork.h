@@ -3,14 +3,12 @@
 
 #include "includes.h"
 
-#define VERBOSE_TRAINXOR 0
-
 typedef struct NeuralNetwork
 {
-	struct Layer *layArray;
 	int layCount;
-	struct Neuron *lastNe;
+	struct Layer *layArray;
 	int lastCount;
+	struct Neuron *lastNe;
 } NeuralNetwork;
 
 #include "layer.h"
@@ -19,11 +17,11 @@ typedef struct NeuralNetwork
 
 void testXOR();
 NeuralNetwork *initNeurNet(int nArray[], int layCount);
-double workErr(Neuron *ne, double res);
+double workErr(Neuron *ne, double wonted);
 void onward(NeuralNetwork *net);
-void backwards(NeuralNetwork *net, double *res);
+void backwards(NeuralNetwork *net, double *wonted);
 void workoutXOR(NeuralNetwork *net, double **inputs,
-	double *res, int entry_th, int inCount);
-void train(NeuralNetwork *net, double **inputs, double *res);
+	double *wonted, int inputsCount, int inCount);
+void train(NeuralNetwork *net, double **inputs, double *wonted);
 
 #endif

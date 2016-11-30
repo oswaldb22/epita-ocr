@@ -4,7 +4,7 @@
 #include "includes.h"
 #include "neuron.h"
 
-typedef Layer
+typedef struct Layer
 {
   Neuron *nArray;
   int nCount;
