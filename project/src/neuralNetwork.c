@@ -4,11 +4,12 @@
 
 void testXOR()
 {
+	printf(" ===== BEGIN XOR TEST =====\n");
 	const int in_count = 4;
 	const int in_size = 2;
-	const int out_size = 1;
+	//const int out_size = 1;
 
-	int data[3] = { in_count, in_size, out_size };
+	//int data[3] = { in_count, in_size, out_size };
 	double **inputs = malloc(in_count * sizeof(int*));
 
 	int i = 0;
@@ -28,12 +29,11 @@ void testXOR()
 	wonted[2] = 1;
 	wonted[3] = 0;
 
-	NeuralNetwork *net = initNeurNet(data, 3);
-	//NeuralNetwork *net = load("data/net_XOR");
+	//NeuralNetwork *net = initNeurNet(data, 3);
+	NeuralNetwork *net = load("networks/XOR_trained");
 
 	if (net != NULL)
 	{
-		printf("\nL");
 		do
 		{
 			switch (time(NULL) % 4)
@@ -55,7 +55,7 @@ void testXOR()
 		} while (net->lastNe->dErr > 0.1
 			|| net->lastNe->dErr < -0.1);
 
-		printf("\r \n");
+		printf("\r \r");
 
 		int i = 0;
 		while (i < in_count) {
@@ -81,7 +81,8 @@ void testXOR()
 			++i;
 		}
 	}
-	//save(net, "data/XOR_trained");
+	//save(net, "networks/XOR_trained");
+	printf(" ===== END XOR TEST =====\n");
 }
 
 NeuralNetwork *initNeurNet(int nArray[], int layCount)

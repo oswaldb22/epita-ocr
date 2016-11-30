@@ -2,9 +2,10 @@
 
 void save(NeuralNetwork *net, char path[])
 {
-	FILE* fichier = fopen(path, "w");
+	FILE* file = fopen(path, "w");
+	printf("Writing to : %s\n", path);
 
-	if (fichier == NULL)
+	if (!file)
 	{
 		printf("*** ERROR *** Cannot create file !\n");
 	}
@@ -12,59 +13,60 @@ void save(NeuralNetwork *net, char path[])
 	{
 		for (int i = 0; i < net->layCount; i++)
 		{
-			fprintf(fichier, "L");
+			fprintf(file, "L");
 			for (int j = 0; j < net->layArray[i].nCount; j++)
 			{
-				fprintf(fichier, "N");
+				fprintf(file, "N");
 				for (int k = 0; k < net->layArray[i].nArray[j].sCount; k++)
 				{
-					fprintf(fichier,
+					fprintf(file,
 						"S%f",
 						net->layArray[i].nArray[j].synArray[k]);
 				}
 			}
 		}
-		fclose(fichier);
+		fclose(file);
 	}
 }
 
 NeuralNetwork *load(char path[])
 {
-	FILE *fichier = fopen(path, "r");
+	FILE *file = fopen(path, "r");
+	printf("Loading from : %s\n", path);
 
-	if (fichier == NULL)
+	if (file == NULL)
 	{
 		printf("*** ERROR *** File doesn't exist !\n");
 		return NULL;
 	}
 
-	int currentChar = 0;
+	int curChar = 0;
 	int nCount = 0;
-	int layer_th = 0;
+	int layIterator = 0;
 	int *tab = NULL;
 
 	int sCount = 0;
 	double *synArray = NULL;
-	currentChar = fgetc(fichier);
+	curChar = fgetc(file);
 	do
 	{
-		if (currentChar == 'L')
+		if (curChar == 'L')
 		{
-			tab = realloc(tab, (layer_th + 1) * sizeof(int));
-			if (layer_th != 0)
+			tab = realloc(tab, (layIterator + 1) * sizeof(int));
+			if (layIterator != 0)
 			{
-				tab[layer_th - 1] = nCount;
+				tab[layIterator - 1] = nCount;
 				nCount = 0;
 			}
-			layer_th++;
-			currentChar = fgetc(fichier);
+			layIterator++;
+			curChar = fgetc(file);
 		}
-		else if (currentChar == 'N')
+		else if (curChar == 'N')
 		{
 			nCount++;
-			currentChar = fgetc(fichier);
+			curChar = fgetc(file);
 		}
-		else if (currentChar == 'S')
+		else if (curChar == 'S')
 		{
 			if (synArray == NULL)
 			{
@@ -75,21 +77,21 @@ NeuralNetwork *load(char path[])
 				synArray = realloc(synArray, (sCount + 1) * sizeof(double));
 			}
 
-			currentChar = fgetc(fichier);
+			curChar = fgetc(file);
 
-			if (currentChar == '-')
+			if (curChar == '-')
 			{
 				char tab[10] = "";
-				currentChar = fseek(fichier, -1, SEEK_CUR);
-				char* z = fgets(tab, 10, fichier);
+				curChar = fseek(file, -1, SEEK_CUR);
+				char* z = fgets(tab, 10, file);
 				(void)(z);
 				synArray[sCount] = atof(tab);
 			}
 			else
 			{
 				char tab[9] = "";
-				currentChar = fseek(fichier, -1, SEEK_CUR);
-				char* z = fgets(tab, 9, fichier);
+				curChar = fseek(file, -1, SEEK_CUR);
+				char* z = fgets(tab, 9, file);
 				(void)(z);
 				synArray[sCount] = atof(tab);
 			}
@@ -97,14 +99,14 @@ NeuralNetwork *load(char path[])
 		}
 		else
 		{
-			currentChar = fgetc(fichier);
+			curChar = fgetc(file);
 		}
 
-		if (currentChar == EOF)
-			tab[layer_th - 1] = nCount;
-	} while (currentChar != EOF);
+		if (curChar == EOF)
+			tab[layIterator - 1] = nCount;
+	} while (curChar != EOF);
 
-	NeuralNetwork *net = initNeurNet(tab, layer_th);
+	NeuralNetwork *net = initNeurNet(tab, layIterator);
 	sCount = 0;
 
 	for (int i = 1; i < net->layCount; i++)
@@ -115,7 +117,7 @@ NeuralNetwork *load(char path[])
 				sCount++;
 			}
 
-	fclose(fichier);
+	fclose(file);
 
 	return net;
 }
