@@ -44,4 +44,6 @@ void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode mode);
 
 void load_bwM(bwMatrix *bwM, SDL_Surface* img);
 
+bwMatrix* bwMatrixResize(bwMatrix *bwM,ulong size);
+
 #endif

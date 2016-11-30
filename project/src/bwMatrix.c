@@ -111,3 +111,33 @@ void load_bwM(bwMatrix *bwM, SDL_Surface* img) {
 	}
 
 }
+
+/*Resize the matrix with size*/
+
+bwMatrix* bwMatrixResize(bwMatrix *bwM,ulong size) {
+	ulong diff;
+	if(bwM->width <= bwM->height){
+			diff=bwM->width-bwM->height;
+	}
+	if(bwM->width >= bwM->height){
+			diff=bwM->height-bwM->width;
+	}
+
+	if(diff<size){
+		diff+=diff-size;
+	}
+
+	bwMatrix *new=bwMatrixNew(diff,diff);
+
+
+	if(diff>0){
+		for(ulong i=0; i<bwM->width; i++){
+			for(ulong j=0;j<bwM->height;j++){
+					bwMatrixSetValue(new,i,j,bwMatrixGetValue(bwM,i,j));
+			}
+		}
+	}
+
+	bwMatrixFree(bwM);
+	return new;
+}
