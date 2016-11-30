@@ -117,9 +117,9 @@ void load_bwM(bwMatrix *bwM, SDL_Surface* img) {
 bwMatrix* bwMatrixResize(bwMatrix *bwM,ulong size) {
 	/*BETTER IMPLEMENTATION*/
 	assert(size>0);
-	ulong Xratio=bwM->width/size;
-	ulong Yratio=bwM->height/size;
-
+	float Xratio=(float)bwM->width/(float)size;
+	float Yratio=(float)bwM->height/(float)size;
+	
 	bwMatrix *new=bwMatrixNew(size,size);
 
 	ulong px,py;

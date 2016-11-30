@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 	bwMatrixPrintCompact(&bwM,Simple);
 	bwMatrixPrintCompact(&bwM,Advanced);
 
-	bwMatrix *new=bwMatrixResize(&bwM,bwM.width*0.5);
+	bwMatrix *new=bwMatrixResize(&bwM,bwM.width*1.25);
 
 	bwMatrixPrintCompact(new,Simple);
 	bwMatrixPrintCompact(new,Advanced);
