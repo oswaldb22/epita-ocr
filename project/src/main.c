@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 	UNUSED(argv);
 	//*/
 
-	/*// BLOC 1 - Used for quicktests
+	// BLOC 1 - Used for quicktests
 	if (argc < 2)
 		errx(1, "%s", usage);
 	switch (argv[1][0]) {
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 	fflush(stdout);
 	//*/
 
-	//BLOC 2
+	/*//BLOC 2
 	if (argc < 2)
 		return 1;
 	init_sdl();
