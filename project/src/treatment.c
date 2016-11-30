@@ -40,8 +40,8 @@ void demoShowcase(char *imgPath, int isCharMode) {
 
 	bndBoxListFree(&drawList_lines);
 	bndBoxListFree(&drawList_chars);
-	//bwMatrixListFree(bwMList_lines);
-	//bwMatrixListFree(bwMList_chars);
+	bwMatrixListFree(bwMList_lines);
+	bwMatrixListFree(bwMList_chars);
 	bwMatrixFree(&bwM);
 }
 
