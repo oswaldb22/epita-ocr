@@ -128,7 +128,7 @@ bwMatrix* bwMatrixResize(bwMatrix *bwM,ulong size) {
 		for (ulong j = 0;j<size; j++) {
 			px=j*Xratio;
 			py=i*Yratio;
-			bwMatrixSetValue(new,i,j,bwMatrixGetValue(bwM,(int)px,(int)py));
+			bwMatrixSetValue(new,j,i,bwMatrixGetValue(bwM,(int)px,(int)py));
 		}
 	}
 
