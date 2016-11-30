@@ -127,7 +127,7 @@ bwMatrix* bwMatrixResize(bwMatrix *bwM,ulong size) {
 		diff+=diff-size;
 	}
 
-	bwMatrix *new=bwMatrixNew(diff,diff);
+	bwMatrix *new=bwMatrixNew(size,size);
 
 
 	if(diff>0){
