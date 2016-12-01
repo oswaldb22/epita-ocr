@@ -56,6 +56,7 @@ void bwMatrixSetValue(bwMatrix *bwM, ULONG w, ULONG h, UINT val) {
 
 void bwMatrixPrintCompact(const bwMatrix *bwM, PrintMode mode) {
 	printf("\n");
+	printf("W: %lu H: %lu\n", bwM->width, bwM->height);
 	for (ulong h = 0; h < bwM->height; ++h)
 	{
 		for (ulong w = 0; w < bwM->width; ++w)

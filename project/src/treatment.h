@@ -14,6 +14,7 @@
 #include "rgbMatrix.h"
 
 void invertImg(SDL_Surface *img);
+void formatTrainingData(char *imgPath);
 void demoShowcase(char *imgPath, int isCharMode);
 
 void convertRbgToBmp(rgbMatrix *rgbM_in, SDL_Surface *surface_out);

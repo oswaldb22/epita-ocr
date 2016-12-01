@@ -1,5 +1,46 @@
 #include "treatment.h"
 
+void formatTrainingData(char *imgPath) {
+	init_sdl();
+	SDL_Surface* img = NULL;
+
+	img = load_image(imgPath);
+
+	bwMatrix *bwM = malloc(sizeof(bwMatrix));
+	bwMatrixInit(bwM, img->w, img->h);
+	load_bwM(bwM, img);
+
+	bndBox *box = malloc(sizeof(bndBox));
+	bndBoxInit(box, 0, 0, img->w, img->h);
+	//bndBoxDebugPrint(box);
+	removeWhiteSpaces(bwM, box);
+	//bndBoxDebugPrint(box);
+	bwMatrix *cropped = bwMatrixNew(bndBoxGetWidth(box), bndBoxGetHeight(box));
+	//bwMatrixPrintCompact(bwM, Advanced);
+	cropUsingBox(bwM, cropped, box);
+	//bwMatrixPrintCompact(cropped, Advanced);
+	bwMatrix *res = bwMatrixResize(cropped, 16);
+	//bwMatrixPrintCompact(res, Advanced);
+
+	SDL_Surface *disp;
+	disp = SDL_CreateRGBSurface(0, 16, 16, 32, 0, 0, 0, 0);
+	convertBwToBmp(res, disp);
+
+	char *pExt = strrchr(imgPath, '.');
+	printf("%s\n", pExt);
+	strcpy(pExt, "format.bmp");
+	printf("%s\n", imgPath);
+
+	int sdl = SDL_SaveBMP(disp, imgPath);
+	printf("SDL_Save: %d\n", sdl);
+
+	bwMatrixFree(res);
+	bwMatrixFree(cropped);
+	bwMatrixFree(bwM);
+	free(box);
+	free(bwM);
+}
+
 void demoShowcase(char *imgPath, int isCharMode) {
 
 	//Initialize display
@@ -201,7 +242,7 @@ void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
 		if (box_toResize->x1 == box_toResize->x2)
 			break;
 		for (ulong i = box_toResize->y1; i < box_toResize->y2; ++i) {
-			if (bwMatrixGetValue(bwM_noModify, box_toResize->x1, i) != 0) {
+			if (bwMatrixGetValue(bwM_noModify, box_toResize->x1, i) == 1) {
 				getOut = 1;
 				break;
 			}
@@ -209,13 +250,15 @@ void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
 		if (!getOut)
 			++box_toResize->x1;
 	}
+	bndBoxDebugPrint(box_toResize);
 	//Right
 	getOut = 0;
 	while (!getOut) {
-		if (box_toResize->x1 == box_toResize->x2)
+		if (box_toResize->x1 == box_toResize->x2) {
 			break;
-		for (ulong i = box_toResize->y1; i < box_toResize->y2; ++i) {
-			if (bwMatrixGetValue(bwM_noModify, box_toResize->x2, i) != 0) {
+		}
+		for (ulong i = box_toResize->y1; i < box_toResize->y2 - 1; ++i) {
+			if (bwMatrixGetValue(bwM_noModify, box_toResize->x2, i) == 1) {
 				getOut = 1;
 				break;
 			}
@@ -223,13 +266,14 @@ void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
 		if (!getOut)
 			--box_toResize->x2;
 	}
+	bndBoxDebugPrint(box_toResize);
 	//Top
 	getOut = 0;
 	while (!getOut) {
 		if (box_toResize->y1 == box_toResize->y2)
 			break;
 		for (ulong i = box_toResize->x1; i < box_toResize->x2; ++i) {
-			if (bwMatrixGetValue(bwM_noModify, i, box_toResize->y1) != 0) {
+			if (bwMatrixGetValue(bwM_noModify, i, box_toResize->y1) == 1) {
 				getOut = 1;
 				break;
 			}
@@ -244,13 +288,14 @@ void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
 		if (box_toResize->y1 == box_toResize->y2)
 			break;
 		for (ulong i = box_toResize->x1; i < box_toResize->x2; ++i) {
-			if (bwMatrixGetValue(bwM_noModify, i, box_toResize->y2) != 0) {
+			if (bwMatrixGetValue(bwM_noModify, i, box_toResize->y2) == 1) {
 				getOut = 1;
 				break;
 			}
 		}
-		if (!getOut)
+		if (!getOut) {
 			--box_toResize->y2;
+		}
 	}
 }
 

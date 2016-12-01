@@ -42,6 +42,9 @@ int main(int argc, char* argv[])
 	case '1':
 		demoShowcase(argv[2], 1);
 		break;
+	case 'F':
+		formatTrainingData(argv[2]);
+		break;
 	case 'X':
 		testXOR();
 		break;

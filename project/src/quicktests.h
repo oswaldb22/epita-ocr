@@ -8,7 +8,6 @@
 #include "load_to_bw.h"
 #include "rgbMatrix.h"
 
-
 void TestBounding() {
 	init_sdl();
 	SDL_Surface* img = NULL;
