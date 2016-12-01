@@ -27,12 +27,18 @@ void formatTrainingData(char *imgPath) {
 	convertBwToBmp(res, disp);
 
 	char *pExt = strrchr(imgPath, '.');
-	printf("%s\n", pExt);
+	//printf("%s\n", pExt);
 	strcpy(pExt, "format.bmp");
-	printf("%s\n", imgPath);
+	//printf("%s\n", imgPath);
 
 	int sdl = SDL_SaveBMP(disp, imgPath);
-	printf("SDL_Save: %d\n", sdl);
+	if(sdl >= 0){
+		printf("[  OK  ] %s\n", imgPath);
+	}else{
+		printf("[ FAIL ] XXXXX %s\n", imgPath);
+	}
+
+	//printf("SDL_Save: %d\n", sdl);
 
 	bwMatrixFree(res);
 	bwMatrixFree(cropped);
@@ -250,7 +256,7 @@ void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
 		if (!getOut)
 			++box_toResize->x1;
 	}
-	bndBoxDebugPrint(box_toResize);
+	//bndBoxDebugPrint(box_toResize);
 	//Right
 	getOut = 0;
 	while (!getOut) {
@@ -266,7 +272,7 @@ void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize) {
 		if (!getOut)
 			--box_toResize->x2;
 	}
-	bndBoxDebugPrint(box_toResize);
+	//bndBoxDebugPrint(box_toResize);
 	//Top
 	getOut = 0;
 	while (!getOut) {
