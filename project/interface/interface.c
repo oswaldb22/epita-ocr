@@ -7,6 +7,8 @@
 // make with : gcc -o interface interface.c $(pkg-config --cflags --libs gtk+-3.0 gmodule-2.0)
 
 
+
+
 int main(int argc, char **argv)
 {
     GtkBuilder *builder;
@@ -28,7 +30,7 @@ int main(int argc, char **argv)
     }
 
     
-    window = GTK_WIDGET(gtk_builder_get_object(builder, "window1"));
+    window = GTK_WIDGET(gtk_builder_get_object(builder, "MainWindow"));
 
     //Connect signals
     gtk_builder_connect_signals(builder, NULL);
@@ -37,7 +39,7 @@ int main(int argc, char **argv)
     g_object_unref(G_OBJECT( builder));
 
     //Show window
-    gtk_widget_show(window);
+    gtk_widget_show_all(window);
 
     // Start main loop
     gtk_main();
@@ -46,18 +48,19 @@ int main(int argc, char **argv)
     return(0);
 }
 
-void getn(GtkFileChooser *filechooserbutton1)
-{
-  gchar *current = gtk_file_chooser_get_filename( filechooserbutton1);
-}
 
-void on_startTest_clicked() (GtkButton *button, gpointer user_data)
+void on_StartTest_clicked(GtkButton *button, GtkLabel *user)
 {
   //Lancer les tests
-  
-
   //Récuperer le text
 
   //Afficher le text dans le display label
+  gchar *test = "Texte reconnu";
+  gtk_label_set_text(user,test); 
+}
 
+void display(GtkWidget *button, GtkWidget *user)
+{
+  char *filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(button));
+  gtk_image_set_from_file(GTK_IMAGE(user),filename);
 }
