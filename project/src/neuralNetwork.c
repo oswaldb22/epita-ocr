@@ -2,6 +2,31 @@
 
 #define VERBOSE_TRAINXOR 0
 
+void workoutNetwork() {
+
+	/*
+	const int in_count = 62;
+	const int in_size = 256;
+	const int out_size = 62;
+
+	int data[3] = { in_count, in_size, out_size };
+	double **inputs = malloc(in_count * sizeof(int*));
+
+	int i = 0;
+	while (i < in_count) {
+		inputs[i] = malloc(in_size * sizeof(int));
+		++i;
+	}
+	//insert loading
+
+	double *wonted = malloc(in_count * sizeof(double));
+	for()
+
+	NeuralNetwork *net = initNeurNet(data, 3);
+	*/
+
+}
+
 void testXOR()
 {
 	printf("===== BEGIN XOR TEST =====\n");
@@ -52,8 +77,7 @@ void testXOR()
 				break;
 			}
 			workoutXOR(net, inputs, wonted, in_count, in_size);
-		} while (net->lastNe->dErr > 0.1
-			|| net->lastNe->dErr < -0.1);
+		} while (net->lastNe->dErr > 0.1 || net->lastNe->dErr < -0.1);
 
 		printf("\r \r");
 
