@@ -11,10 +11,18 @@ typedef struct NeuralNetwork
 	struct Neuron *lastNe;
 } NeuralNetwork;
 
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
+#include "pixel_operations.h"
+#include "load_to_bw.h"
+
+#include "bwMatrix.h"
+#include "bwMatrixList.h"
 #include "layer.h"
 #include "neuron.h"
 #include "saving.h"
 
+void workoutNetwork();
 void testXOR();
 NeuralNetwork *initNeurNet(int nArray[], int layCount);
 double workErr(Neuron *ne, double wonted);

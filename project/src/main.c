@@ -48,6 +48,9 @@ int main(int argc, char* argv[])
 	case 'X':
 		testXOR();
 		break;
+	case 'L':
+		workoutNetwork();
+		break;
 	default:
 		errx(1, "No operations for : %s\n", argv[1]);
 		break;

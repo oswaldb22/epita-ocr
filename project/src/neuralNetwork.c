@@ -2,14 +2,29 @@
 
 #define VERBOSE_TRAINXOR 0
 
+char *table = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+int kbhit(void)
+{
+	int ch = getch();
+
+	if (ch != ERR) {
+		ungetch(ch);
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
 void workoutNetwork() {
 
-	/*
 	const int in_count = 62;
 	const int in_size = 256;
 	const int out_size = 62;
 
 	int data[3] = { in_count, in_size, out_size };
+	(void)(data);
 	double **inputs = malloc(in_count * sizeof(int*));
 
 	int i = 0;
@@ -17,14 +32,109 @@ void workoutNetwork() {
 		inputs[i] = malloc(in_size * sizeof(int));
 		++i;
 	}
-	//insert loading
 
-	double *wonted = malloc(in_count * sizeof(double));
-	for()
+	init_sdl();
+	SDL_Surface* img = NULL;
+	bwMatrix *bwM = malloc(sizeof(bwMatrix));
+	bwMatrixInit(bwM, 16, 16);
 
-	NeuralNetwork *net = initNeurNet(data, 3);
-	*/
+	//Define last layer wonted output
+	double **wonted = malloc(in_count * out_size * sizeof(double));
+	for (int i = 0; i < in_count; ++i)
+	{
 
+		wonted[i] = malloc(out_size * sizeof(double));
+		for (int j = 0; j < out_size; ++j) {
+			wonted[i][j] = i == j;
+		}
+
+	}
+
+	//Defines first layer inputs
+	for (int i = 0; i < in_count; ++i) {
+
+		char path[35];
+		strcpy(path, "./trainingdata/");
+		char got = table[i];
+		char c[2];
+		c[1] = '\0';
+		c[0] = got;
+		if (i > 35) {
+			strcat(path, "_");
+			strcat(path, c);
+		}
+		else {
+			strcat(path, c);
+		}
+		strcat(path, "/00");
+		strcat(path, "85");
+		strcat(path, "format.bmp");
+		printf("Loading : %s\n", path);
+		img = load_image(path);
+		load_bwM(bwM, img);
+
+		for (int j = 0; j < in_size; ++j)
+		{
+			inputs[i][j] = bwM->matrix[j];
+		}
+	}
+
+	//NeuralNetwork *net = initNeurNet(data, 3);
+	NeuralNetwork *net = load("networks/SOME2_trained");
+
+	printf("\r \r");
+
+	nodelay(stdscr, 1);
+	int t = 1;
+	while (!kbhit()) {
+		printf("\rLoop : %d\n", t);
+		if (t % 1000 == 0) {
+			save(net, "networks/SOME2_trained");
+		}
+		for (int i = 0; i < in_count; ++i) {
+			for (int j = 0; j < in_size; ++j)
+			{
+				net->layArray[0].nArray[j].out = inputs[i][j];
+			}
+			onward(net);
+			backwards(net, wonted[i]);
+		}
+		++t;
+	}
+
+
+	for (int i = 0; i < in_count; ++i) {
+		for (int j = 0; j < in_size; ++j)
+		{
+			net->layArray[0].nArray[j].out = inputs[i][j];
+		}
+		onward(net);
+		backwards(net, wonted[i]);
+		//int in_A = table[i];
+		float delta = net->lastNe->dErr;
+		float out = net->lastNe->out;
+		int wonted = 0;
+		float max = 0;
+		for (int z = 0; z < out_size; ++z) {
+			float out = net->lastNe[z].out;
+			if (out > max) {
+				max = out;
+				wonted = z;
+			}
+		}
+
+		printf("\rIN[ %c ] \t(%f) \t%f \tOUT[ %c ] %d\n",
+			table[i],
+			delta,
+			out,
+			table[wonted],
+			table[i] == table[wonted]);
+	}
+
+	save(net, "networks/SOME2_trained");
+
+	bwMatrixFree(bwM);
+	free(bwM);
 }
 
 void testXOR()

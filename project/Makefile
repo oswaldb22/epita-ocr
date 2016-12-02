@@ -7,7 +7,7 @@ CC=gcc
 CPPFLAGS= `pkg-config --cflags sdl` -MMD 
 CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2 
 LDFLAGS= 
-LDLIBS=`pkg-config --libs sdl` -lSDL -lSDL_image -lm
+LDLIBS=`pkg-config --libs sdl` -lSDL -lSDL_image -lm -lncurses
 
 # make		-> Build the project
 # make remove 	-> Remove .o .d and exe
