@@ -48,6 +48,9 @@ int main(int argc, char* argv[])
 	case 'X':
 		testXOR();
 		break;
+	case 'B':
+		printf("%s\n",convertToBwList());
+		break;
 	case 'L':
 		workoutNetwork(atoi(argv[2]));
 		break;

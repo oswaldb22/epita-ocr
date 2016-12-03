@@ -36,6 +36,7 @@ void getChars(bwMatrix *bwM_line, bndBoxList *bndList_out,
 	this will remove the whitespaces
 	and modify the bndBox to fit the new size */
 void removeWhiteSpaces(bwMatrix *bwM_noModify, bndBox *box_toResize);
+char *convertToBwList();
 
 /* Returns the bwMatrix cropped from given bwMatrix
 	using bndBox as boundaries (included) */

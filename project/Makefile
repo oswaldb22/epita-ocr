@@ -1,12 +1,12 @@
-# EPITA Project S3 - 2016/2017 
-# Makefile 
-# TODO : Put names  
+# EPITA Project S3 - 2016/2017
+# Makefile
+# TODO : Put names
 
-# Compilers and options 
-CC=gcc 
-CPPFLAGS= `pkg-config --cflags sdl` -MMD 
-CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2 
-LDFLAGS= 
+# Compilers and options
+CC=gcc
+CPPFLAGS= `pkg-config --cflags sdl` -MMD
+CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2
+LDFLAGS=
 LDLIBS=`pkg-config --libs sdl` -lSDL -lSDL_image -lm -lncurses
 
 # make		-> Build the project
@@ -39,23 +39,23 @@ $(BINDIR)/$(TARGET): $(OBJECTS)
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo -e "[\e[42mOK\e[0m] Compiled "$<""
+	@echo -e "[\e[92mOK\e[0m] Compiled "$<""
 
 makedirs:
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(BINDIR)
-	@echo -e "[\e[42mOK\e[0m] Created directories : $(BINDIR) $(OBJDIR)"
+	@echo -e "[\e[92mOK\e[0m] Created directories : $(BINDIR) $(OBJDIR)"
 
 .PHONEY: remove
 remove:
 	$(rm) $(OBJECTS)
-	@echo -e "[\e[42mOK\e[0m] Cleanup complete!"
+	@echo -e "[\e[92mOK\e[0m] Cleanup complete!"
 
 .PHONEY: clean
 clean: remove
 	$(rm) $(BINDIR)/$(TARGET)
-	@echo -e "[\e[42mOK\e[0m] Executable removed!"
-	
+	@echo -e "[\e[92mOK\e[0m] Executable removed!"
+
 .PHONEY: remdep
 remdep:
 	$(rm) $(DEPENDS)

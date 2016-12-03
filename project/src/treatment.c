@@ -494,3 +494,16 @@ void getEverything(bwMatrix *bwM_block_in, bwMatrixList *bwMList_lines_out,
 	//bwMatrixListDebugPrint(bwMList_lines_out);
 	//bwMatrixListDebugPrint(bwMList_chars_out);
 }
+
+char *convertToBwList(){
+	static char res[256 * 20];
+	strcpy(res, "<<");
+	FILE* file = fopen("./data/string_recognized", "r");
+    char line[256];
+    while (fgets(line, sizeof(line), file)) {
+		strcat(res, line);
+    }
+    fclose(file);
+	return res;
+}
+
