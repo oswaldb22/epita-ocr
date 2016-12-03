@@ -6,6 +6,7 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 
+#include "neuralNetwork.h"
 #include "pixel_operations.h"
 #include "load_to_bw.h"
 #include "bndBoxList.h"

@@ -35,7 +35,7 @@ void formatTrainingData(char *imgPath) {
 	if(sdl >= 0){
 		printf("[  OK  ] %s\n", imgPath);
 	}else{
-		printf("[ FAIL ] XXXXX %s\n", imgPath);
+		printf("[=FAIL=] %s\n", imgPath);
 	}
 
 	//printf("SDL_Save: %d\n", sdl);
@@ -54,7 +54,7 @@ void demoShowcase(char *imgPath, int isCharMode) {
 	SDL_Surface* img = NULL;
 
 	img = load_image(imgPath);
-	//display_image(img);
+	display_image(img);
 
 	bwMatrix bwM;
 	bwMatrixInit(&bwM, img->w, img->h);
@@ -83,7 +83,7 @@ void demoShowcase(char *imgPath, int isCharMode) {
 
 	convertBwToBmp(&bwM, img);
 
-	//display_image(img);
+	display_image(img);
 
 	bndBoxListFree(&drawList_lines);
 	bndBoxListFree(&drawList_chars);

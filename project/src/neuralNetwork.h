@@ -16,13 +16,15 @@ typedef struct NeuralNetwork
 #include "pixel_operations.h"
 #include "load_to_bw.h"
 
+#include <curses.h>
 #include "bwMatrix.h"
 #include "bwMatrixList.h"
 #include "layer.h"
 #include "neuron.h"
 #include "saving.h"
 
-void workoutNetwork();
+int recognize(bwMatrix *bwM);
+void workoutNetwork(int ite);
 void testXOR();
 NeuralNetwork *initNeurNet(int nArray[], int layCount);
 double workErr(Neuron *ne, double wonted);

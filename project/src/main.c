@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 		testXOR();
 		break;
 	case 'L':
-		workoutNetwork();
+		workoutNetwork(atoi(argv[2]));
 		break;
 	default:
 		errx(1, "No operations for : %s\n", argv[1]);

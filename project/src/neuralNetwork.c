@@ -17,20 +17,38 @@ char table2[10][3] = {
 	"85",
 };
 
-int kbhit(void)
-{
-	int ch = getch();
+NeuralNetwork *global = NULL;
 
-	if (ch != ERR) {
-		ungetch(ch);
-		return 1;
+int recognize(bwMatrix *bwM){
+	if(global == NULL){
+		global = load("networks/62x85_trained");
 	}
-	else {
-		return 0;
+
+	bwMatrixPrintCompact(bwM, Advanced);
+
+	for (int j = 0; j < 256; ++j)
+	{
+		global->layArray[0].nArray[j].out = bwM->matrix[j];
 	}
+
+	onward(global);
+
+	int wonted = 0;
+	float max = 0;
+	for (int z = 0; z < 62; ++z) {
+		float out = global->lastNe[z].out;
+		if (out > max) {
+			max = out;
+			wonted = z;
+		}
+	}
+	printf("%d\n", wonted);
+	int res = table[wonted];
+	printf("%c\n", res);
+	return res;
 }
 
-void workoutNetwork() {
+void workoutNetwork(int ite) {
 
 	const int in_count = 62;
 	const int in_size = 256;
@@ -104,10 +122,9 @@ void workoutNetwork() {
 
 	printf("\r \r");
 
-	nodelay(stdscr, 1);
 	int t = 1;
-	while (t < 10000) {
-		printf("\rLoop : %d\n", t);
+	while (t < 1000 && t < ite) {
+		printf("Loop : %d\n", t);
 		if (t % 100 == 0) {
 			save(net, "networks/62x85_trained");
 		}
@@ -121,7 +138,6 @@ void workoutNetwork() {
 		}
 		++t;
 	}
-
 
 	for (int i = 0; i < in_count; ++i) {
 		for (int j = 0; j < in_size; ++j)
@@ -142,12 +158,12 @@ void workoutNetwork() {
 			}
 		}
 
-		printf("\rIN[ %c ] \t(%f) \t%f \tOUT[ %c ] %d\n",
-			table[i % 62],
-			delta,
-			out,
-			table[wonted],
-			table[i % 62] == table[wonted]);
+		printf("IN[ %c ] \t(%f) \t%f \tOUT[ %c ] %d\n",
+				table[i % 62],
+				delta,
+				out,
+				table[wonted],
+				table[i % 62] == table[wonted]);
 	}
 
 	save(net, "networks/62x85_trained");
@@ -192,18 +208,18 @@ void testXOR()
 		{
 			switch (time(NULL) % 4)
 			{
-			case 0:
-				printf("\r|");
-				break;
-			case 1:
-				printf("\r/");
-				break;
-			case 2:
-				printf("\r-");
-				break;
-			case 3:
-				printf("\r\\");
-				break;
+				case 0:
+					printf("\r|");
+					break;
+				case 1:
+					printf("\r/");
+					break;
+				case 2:
+					printf("\r-");
+					break;
+				case 3:
+					printf("\r\\");
+					break;
 			}
 			workoutXOR(net, inputs, wonted, in_count, in_size);
 		} while (net->lastNe->dErr > 0.1 || net->lastNe->dErr < -0.1);
@@ -226,11 +242,11 @@ void testXOR()
 			int wonted = out > 0.5;
 
 			printf("IN[ %d , %d ] \t(%f) \t%f \tOUT[ %d ]\n",
-				in_A,
-				in_B,
-				delta,
-				out,
-				wonted);
+					in_A,
+					in_B,
+					delta,
+					out,
+					wonted);
 			++i;
 		}
 	}
@@ -295,28 +311,9 @@ void backwards(NeuralNetwork *net, double *wonted)
 	}
 }
 
-void train(NeuralNetwork *net, double **inputs, double *wonted)
-{
-	int count = 0;
-	int j = 0;
-	while (j < 10) {
-		int i = 0;
-		while (i < 10) {
-			net->layArray[0].nArray[count].out = inputs[i][j];
-			count++;
-			++i;
-		}
-		++j;
-	}
-
-	onward(net);
-	if (wonted != NULL)
-		backwards(net, wonted);
-}
-
 void workoutXOR(NeuralNetwork *net, double **inputs,
-	double *wonted,
-	int inputsCount, int inCount)
+		double *wonted,
+		int inputsCount, int inCount)
 {
 	int i = 0;
 	while (i < inputsCount) {
@@ -336,11 +333,11 @@ void workoutXOR(NeuralNetwork *net, double **inputs,
 			int wonted = out > 0.5;
 
 			printf("IN[ %d , %d ] \t(%f) \t%f \tOUT[ %d ]\n",
-				in_A,
-				in_B,
-				delta,
-				out,
-				wonted);
+					in_A,
+					in_B,
+					delta,
+					out,
+					wonted);
 		}
 		++i;
 	}
