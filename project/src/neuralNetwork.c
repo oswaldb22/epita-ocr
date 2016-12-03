@@ -4,6 +4,19 @@
 
 char *table = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
+char table2[10][3] = {
+	"00",
+	"01",
+	"04",
+	"05",
+	"08",
+	"09",
+	"12",
+	"13",
+	"16",
+	"85",
+};
+
 int kbhit(void)
 {
 	int ch = getch();
@@ -50,16 +63,17 @@ void workoutNetwork() {
 
 	}
 
+	int counter = 0;
 	//Defines first layer inputs
 	for (int i = 0; i < in_count; ++i) {
 
 		char path[35];
 		strcpy(path, "./trainingdata/");
-		char got = table[i];
+		char got = table[i % 62];
 		char c[2];
 		c[1] = '\0';
 		c[0] = got;
-		if (i > 35) {
+		if (i % 62 > 35) {
 			strcat(path, "_");
 			strcat(path, c);
 		}
@@ -77,19 +91,25 @@ void workoutNetwork() {
 		{
 			inputs[i][j] = bwM->matrix[j];
 		}
-	}
+		if ((i + 1) % 62 == 0) {
+			counter++;
+			if (counter > 9) {
+				counter = 0;
+			}
+		}
 
+	}
 	//NeuralNetwork *net = initNeurNet(data, 3);
-	NeuralNetwork *net = load("networks/SOME2_trained");
+	NeuralNetwork *net = load("networks/62x85_trained");
 
 	printf("\r \r");
 
 	nodelay(stdscr, 1);
 	int t = 1;
-	while (!kbhit()) {
+	while (t < 10000) {
 		printf("\rLoop : %d\n", t);
-		if (t % 1000 == 0) {
-			save(net, "networks/SOME2_trained");
+		if (t % 100 == 0) {
+			save(net, "networks/62x85_trained");
 		}
 		for (int i = 0; i < in_count; ++i) {
 			for (int j = 0; j < in_size; ++j)
@@ -110,7 +130,6 @@ void workoutNetwork() {
 		}
 		onward(net);
 		backwards(net, wonted[i]);
-		//int in_A = table[i];
 		float delta = net->lastNe->dErr;
 		float out = net->lastNe->out;
 		int wonted = 0;
@@ -124,15 +143,14 @@ void workoutNetwork() {
 		}
 
 		printf("\rIN[ %c ] \t(%f) \t%f \tOUT[ %c ] %d\n",
-			table[i],
+			table[i % 62],
 			delta,
 			out,
 			table[wonted],
-			table[i] == table[wonted]);
+			table[i % 62] == table[wonted]);
 	}
 
-	save(net, "networks/SOME2_trained");
-
+	save(net, "networks/62x85_trained");
 	bwMatrixFree(bwM);
 	free(bwM);
 }
@@ -142,9 +160,10 @@ void testXOR()
 	printf("===== BEGIN XOR TEST =====\n");
 	const int in_count = 4;
 	const int in_size = 2;
-	//const int out_size = 1;
+	const int out_size = 1;
 
-	//int data[3] = { in_count, in_size, out_size };
+	int data[3] = { in_count, in_size, out_size };
+	(void)(data);
 	double **inputs = malloc(in_count * sizeof(int*));
 
 	int i = 0;
@@ -164,8 +183,8 @@ void testXOR()
 	wonted[2] = 1;
 	wonted[3] = 0;
 
-	//NeuralNetwork *net = initNeurNet(data, 3);
-	NeuralNetwork *net = load("networks/XOR_trained");
+	NeuralNetwork *net = initNeurNet(data, 3);
+	//NeuralNetwork *net = load("networks/XOR_trained");
 
 	if (net != NULL)
 	{
