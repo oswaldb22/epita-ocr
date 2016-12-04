@@ -16,34 +16,26 @@
 #include "rgbMatrix.h"
 #include "neuralNetwork.h"
 
-const char usage[] =
-" <op> <filepath>\n"
-"\tOperators:\n"
-"\t\t0: Lines\n"
-"\t\t1: Chars\n";
+//const char usage[] =
+//" <op> <filepath>\n"
+//"\tOperators:\n"
+//"\t\t0: Lines\n"
+//"\t\t1: Chars\n";
 /*
-int main(int argc, char* argv[])
+void tests(char testtodo)
 {
-	/// BLOC 0 - Used to remove warning when testing without args
-	UNUSED(argc);
-	UNUSED(argv);
-	///
-
-	// BLOC 1 - Used for quicktests
-	if (argc < 2)
-		errx(1, "%s", usage);
-	switch (argv[1][0]) {
+	switch (testtodo) {
 	case '!':
 		printf("Hello World!\n");
 		break;
 	case '0':
-		demoShowcase(argv[2], 0);
+		demoShowcase("./data/Lorem-ju.bmp", 0);
 		break;
 	case '1':
-		demoShowcase(argv[2], 1);
+		demoShowcase("./data/Lorem-ju.bmp", 1);
 		break;
 	case 'F':
-		formatTrainingData(argv[2]);
+		//formatTrainingData(argv[2]);
 		break;
 	case 'X':
 		testXOR();
@@ -52,16 +44,15 @@ int main(int argc, char* argv[])
 		printf("%s\n",convertToBwList());
 		break;
 	case 'L':
-		workoutNetwork(atoi(argv[2]));
+		workoutNetwork(10);
 		break;
 	default:
-		errx(1, "No operations for : %s\n", argv[1]);
+		errx(1, "No operations for : %s\n", testtodo);
 		break;
 	}
 	fflush(stdout);
-	///
 
-	///BLOC 2
+	//BLOC 2
 	if (argc < 2)
 		return 1;
 	init_sdl();
@@ -92,7 +83,8 @@ int main(int argc, char* argv[])
 	bwMatrixPrintCompact(new,Advanced);
 	///
 
-	return 0;
+	//return 0;
 }
-
 */
+
+

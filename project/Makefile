@@ -48,16 +48,16 @@ makedirs:
 
 .PHONEY: remove
 remove:
-	$(rm) $(OBJECTS)
+	@$(rm) $(OBJECTS)
 	@echo -e "[\e[92mOK\e[0m] Cleanup complete!"
 
 .PHONEY: clean
 clean: remove remdep
-	$(rm) $(BINDIR)/$(TARGET)
+	@$(rm) $(BINDIR)/$(TARGET)
 	@echo -e "[\e[92mOK\e[0m] Executable removed!"
 
 .PHONEY: remdep
 remdep:
-	$(rm) $(DEPENDS)
-	@echo "Dependencies removed!"
+	@$(rm) $(DEPENDS)
+	@echo -e "[\e[92mOK\e[0m] Dependencies removed!"
 # END

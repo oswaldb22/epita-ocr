@@ -1,5 +1,8 @@
 /* You can put all your quick structure/functions tests in this file */
 
+#ifndef QT
+#define QT
+
 #include "includes.h"
 #include "bwMatrix.h"
 #include "bndBox.h"
@@ -192,3 +195,5 @@ void TestbndBoxList() {
 		bndBoxListFree(&myboxlist);
 		*/
 }
+
+#endif
