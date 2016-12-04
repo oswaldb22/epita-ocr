@@ -3,8 +3,13 @@
 # include <string.h>
 # include <gtk/gtk.h>
 
+#include "includes.h"
+#include "bwMatrix.h"
+#include "quicktests.h"
+#include "load_to_bw.h"
+#include "rgbMatrix.h"
+#include "neuralNetwork.h"
 
-// make with : gcc -o interface interface.c $(pkg-config --cflags --libs gtk+-3.0 gmodule-2.0)
 
 
 
@@ -49,6 +54,7 @@ int main(int argc, char **argv)
 
 void on_StartTest_clicked(GtkButton *button, GtkLabel *user)
 {
+  (void)(button);
   //Lancer les tests
   //Récuperer le text
 
