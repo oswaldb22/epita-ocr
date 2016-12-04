@@ -4,10 +4,10 @@
 
 # Compilers and options
 CC=gcc
-CPPFLAGS= `pkg-config --cflags sdl` -MMD
+CPPFLAGS= `pkg-config --cflags sdl gtk+-3.0` -MMD
 CFLAGS= -Wall -Wextra -std=c99 -pedantic -O2
 LDFLAGS=
-LDLIBS=`pkg-config --libs sdl` -lSDL -lSDL_image -lm #-lncurses
+LDLIBS=`pkg-config --libs sdl` `pkg-config  --libs gtk+-3.0 gmodule-2.0` -lSDL -lSDL_image -lm 
 
 # make		-> Build the project
 # make remove 	-> Remove .o .d and exe
@@ -38,7 +38,7 @@ $(BINDIR)/$(TARGET): $(OBJECTS)
 	@echo "Linking complete!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 	@echo -e "[\e[92mOK\e[0m] Compiled "$<""
 
 makedirs:
@@ -52,7 +52,7 @@ remove:
 	@echo -e "[\e[92mOK\e[0m] Cleanup complete!"
 
 .PHONEY: clean
-clean: remove
+clean: remove remdep
 	$(rm) $(BINDIR)/$(TARGET)
 	@echo -e "[\e[92mOK\e[0m] Executable removed!"
 

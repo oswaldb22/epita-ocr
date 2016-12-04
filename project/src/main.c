@@ -11,7 +11,7 @@
 
 #include "includes.h"
 #include "bwMatrix.h"
-#include "quicktests.h"
+//#include "quicktests.h"
 #include "load_to_bw.h"
 #include "rgbMatrix.h"
 #include "neuralNetwork.h"
@@ -21,13 +21,13 @@ const char usage[] =
 "\tOperators:\n"
 "\t\t0: Lines\n"
 "\t\t1: Chars\n";
-
+/*
 int main(int argc, char* argv[])
 {
-	//*/ BLOC 0 - Used to remove warning when testing without args
+	/// BLOC 0 - Used to remove warning when testing without args
 	UNUSED(argc);
 	UNUSED(argv);
-	//*/
+	///
 
 	// BLOC 1 - Used for quicktests
 	if (argc < 2)
@@ -59,9 +59,9 @@ int main(int argc, char* argv[])
 		break;
 	}
 	fflush(stdout);
-	//*/
+	///
 
-	/*//BLOC 2
+	///BLOC 2
 	if (argc < 2)
 		return 1;
 	init_sdl();
@@ -90,7 +90,9 @@ int main(int argc, char* argv[])
 
 	bwMatrixPrintCompact(new,Simple);
 	bwMatrixPrintCompact(new,Advanced);
-	//*/
+	///
 
 	return 0;
 }
+
+*/
