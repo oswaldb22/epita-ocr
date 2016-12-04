@@ -158,7 +158,7 @@ void workoutNetwork(int ite) {
 			}
 		}
 
-		printf("IN[ %c ] \t(%f) \t%f \tOUT[ %c ] %d\n",
+		printf("IN[ %c ]  (%f) \t%f \tOUT[ %c ] %d\n",
 				table[i % 62],
 				delta,
 				out,
