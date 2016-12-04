@@ -86,7 +86,7 @@ void workoutNetwork(int ite) {
 	for (int i = 0; i < in_count; ++i) {
 
 		char path[35];
-		strcpy(path, "./trainingdata/");
+		strcpy(path, "./training/");
 		char got = table[i % 62];
 		char c[2];
 		c[1] = '\0';
