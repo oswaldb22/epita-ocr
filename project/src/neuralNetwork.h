@@ -16,7 +16,7 @@ typedef struct NeuralNetwork
 #include "pixel_operations.h"
 #include "load_to_bw.h"
 
-#include <curses.h>
+//#include <curses.h>
 #include "bwMatrix.h"
 #include "bwMatrixList.h"
 #include "layer.h"
