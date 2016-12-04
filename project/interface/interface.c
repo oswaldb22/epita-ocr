@@ -15,7 +15,7 @@ int main(int argc, char **argv)
     GtkWidget  *window;
     GError     *error = NULL;
 
-    //Initialise 
+    //Initialise
     gtk_init( &argc, &argv );
 
     //Create a builder
@@ -29,7 +29,6 @@ int main(int argc, char **argv)
         return(1);
     }
 
-    
     window = GTK_WIDGET(gtk_builder_get_object(builder, "MainWindow"));
 
     //Connect signals
@@ -43,7 +42,6 @@ int main(int argc, char **argv)
 
     // Start main loop
     gtk_main();
-    
 
     return(0);
 }
@@ -55,8 +53,10 @@ void on_StartTest_clicked(GtkButton *button, GtkLabel *user)
   //Récuperer le text
 
   //Afficher le text dans le display label
-  gchar *test = "Texte reconnu";
-  gtk_label_set_text(user,test); 
+  gchar *test = "Lorem ipsum dolor sit amet_ consectetur adipiscing elit_ \n\
+  Ut facilisis_ urna vel scelerisque pulvinar diam quam fini▒us ante_ Sed erat mi_\n\
+  lacinia nec accumsan eu_ elementum vel sapien_ Pellentesque auctor leo purus_ at p";
+  gtk_label_set_text(user, test);
 }
 
 void display(GtkWidget *button, GtkWidget *user)
